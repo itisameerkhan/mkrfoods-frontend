@@ -1,0 +1,23 @@
+body {
+  background-color: #fafafa;
+  color: #333;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  user-select: none;
+}
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1.6;
+}

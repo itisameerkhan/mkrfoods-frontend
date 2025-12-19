@@ -1,0 +1,184 @@
+/* Description component styles - responsive and mobile-first */
+.description {
+  width: 100%;
+  padding: 2rem 1rem;
+  background: transparent;
+
+  .desc-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+  }
+
+  .desc-top {
+    text-align: center;
+
+    h2 {
+      font-size: clamp(1.6rem, 4.5vw, 2.25rem);
+      font-weight: 800;
+      color: #222;
+
+      span {
+        color: #d33131;
+      }
+    }
+
+    .desc-sub {
+      margin-top: 0.6rem;
+      color: #666;
+      font-size: clamp(0.95rem, 2.4vw, 1.05rem);
+    }
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    .feature {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.2rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+
+      .icon-box {
+        min-width: 56px;
+        min-height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(211, 49, 49, 0.06);
+        border-radius: 12px;
+        color: #d33131;
+        font-size: 1.15rem;
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 1.05rem;
+        color: #222;
+        font-weight: 700;
+      }
+
+      p {
+        margin: 0.45rem 0 0 0;
+        color: #777;
+        font-size: 0.95rem;
+        line-height: 1.45;
+      }
+    }
+  }
+
+  .stats-wrap {
+    margin-top: 0.75rem;
+
+    .stats {
+      background: #d33131;
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      align-items: center;
+      color: #fff;
+
+      .stat {
+        text-align: center;
+
+        .stat-num {
+          font-size: clamp(1.25rem, 3.5vw, 2rem);
+          font-weight: 800;
+        }
+
+        .stat-label {
+          font-size: 0.95rem;
+          opacity: 0.9;
+          margin-top: 0.25rem;
+        }
+      }
+    }
+  }
+}
+
+/* Larger screens: 4 feature columns */
+@media (min-width: 992px) {
+  .description .features {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+
+    .feature {
+      padding: 1.6rem;
+      flex-direction: column;
+      align-items: flex-start;
+
+      .icon-box {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        font-size: 1.25rem;
+      }
+
+      h3 {
+        margin-top: 0.8rem;
+      }
+      p {
+        margin-top: 0.4rem;
+      }
+    }
+  }
+
+  .description .stats {
+    padding: 1.6rem 1.25rem;
+    border-radius: 22px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 991px) and (min-width: 601px) {
+  .description .features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .description {
+    padding: 1.4rem 0.9rem;
+  }
+
+  .description .features {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+
+    .feature {
+      flex-direction: row;
+      padding: 1rem;
+
+      .icon-box {
+        min-width: 48px;
+        min-height: 48px;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .description .stats {
+    .stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      padding: 1rem;
+
+      .stat .stat-num {
+        font-size: 1.25rem;
+      }
+      .stat .stat-label {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
