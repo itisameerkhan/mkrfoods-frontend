@@ -26,7 +26,7 @@ dist-ssr
 .env
 .env.local
 .env.*.local
-config/firebase.js
+# config/firebase.js
 
 # Sensitive API keys and credentials
 .env.production
