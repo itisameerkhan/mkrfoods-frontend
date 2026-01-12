@@ -3,11 +3,13 @@
 ## Environment Configuration
 
 ### 1. Firebase Configuration
+
 The Firebase configuration file is not included in the repository for security reasons.
 
 **To set up Firebase locally:**
 
 1. Copy the example file:
+
    ```bash
    cp config/firebase.config.example.js config/firebase.js
    ```
@@ -28,11 +30,13 @@ The Firebase configuration file is not included in the repository for security r
    ```
 
 ### 2. Environment Variables
+
 The `.env` file is not included in the repository for security reasons.
 
 **To set up environment variables locally:**
 
 1. Copy the example file:
+
    ```bash
    cp .env.example .env
    ```
@@ -45,6 +49,7 @@ The `.env` file is not included in the repository for security reasons.
 ## Installation & Running
 
 1. Install dependencies:
+
    ```bash
    npm install
    ```
@@ -60,4 +65,3 @@ The `.env` file is not included in the repository for security reasons.
 - These files are automatically ignored by Git (.gitignore)
 - Always use the `.example` files as templates for configuration
 - If you accidentally commit sensitive files, immediately rotate your credentials in Firebase Console
-

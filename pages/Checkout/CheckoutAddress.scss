@@ -1,0 +1,143 @@
+.checkout-address {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 2rem 1rem;
+  margin-top: 70px;
+
+  .checkout-container {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    color: #1a1a1a;
+    font-weight: 900;
+    margin-bottom: 2rem;
+  }
+
+  .address-form {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 0.5rem;
+      }
+
+      input {
+        padding: 0.9rem 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: all 200ms ease;
+
+        &:focus {
+          outline: none;
+          border-color: #ff6b6b;
+          box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+        }
+
+        &:disabled {
+          background: #f5f5f5;
+          cursor: not-allowed;
+        }
+      }
+
+      &.checkbox {
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+
+        input {
+          width: 20px;
+          height: 20px;
+          cursor: pointer;
+          margin: 0;
+        }
+
+        label {
+          margin: 0;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+
+      @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+
+      @media (max-width: 600px) {
+        flex-direction: column;
+      }
+
+      button {
+        padding: 1rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 200ms ease;
+      }
+
+      .btn-continue {
+        flex: 1;
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+        color: white;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+        }
+      }
+
+      .btn-back {
+        flex: 1;
+        background: white;
+        border: 2px solid #e0e0e0;
+        color: #1a1a1a;
+
+        &:hover {
+          border-color: #ff6b6b;
+          color: #ff6b6b;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    padding: 1rem;
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .address-form {
+      padding: 1.5rem;
+      gap: 1rem;
+    }
+  }
+}

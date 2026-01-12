@@ -4,7 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 const Header = () => {
   return (
     <div className="header">
-      <div className="header-temp"></div>
+      {/* <div className="header-temp"></div> */}
       <div className="header-main">
         <div className="header-main-1">
           <Link to={"/"}>
@@ -15,7 +15,7 @@ const Header = () => {
           <NavLink to={"/cart"}>
             <i class="fa-solid fa-cart-shopping"></i>
           </NavLink>
-          <NavLink to={"/myaccount"}>
+          <NavLink to={"/profile"}>
             <i class="fa-solid fa-user"></i>
           </NavLink>
         </div>

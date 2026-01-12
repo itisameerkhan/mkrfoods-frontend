@@ -1,0 +1,232 @@
+// Variables
+$primary-color: #7B61FF;
+$background-color: #f0f2f5;
+$card-background: #ffffff;
+$text-color: #1a202c;
+$text-color-light: #718096;
+$border-color: #e2e8f0;
+
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.otp-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); // Modal backdrop
+  padding: 20px;
+  z-index: 1000;
+}
+
+.otp-card {
+  background: $card-background;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  padding: 48px;
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 0.3s ease-out;
+  position: relative; // For potential close button
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.otp-header {
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .otp-icon {
+    width: 72px;
+    height: 72px;
+    background-color: #f3f0ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    color: $primary-color;
+  }
+
+  h1 {
+    color: $text-color;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
+  }
+
+  .otp-subtitle {
+    color: $text-color-light;
+    font-size: 16px;
+    margin: 0;
+    line-height: 1.5;
+    max-width: 320px;
+
+    strong {
+      color: $text-color;
+      font-weight: 600;
+    }
+  }
+}
+
+.otp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.otp-inputs {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.otp-input {
+  width: 52px;
+  height: 60px;
+  border: 1px solid $border-color;
+  border-radius: 12px;
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  color: $text-color;
+  background: #f7fafc;
+  transition: all 0.2s ease;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    background: $card-background;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+  }
+
+  &:disabled {
+    background: #edf2f7;
+    cursor: not-allowed;
+  }
+
+  // Hide the number input spinners
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+.verify-btn {
+  background: $primary-color;
+  color: #ffffff;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  margin-top: 8px;
+
+  &:hover:not(:disabled) {
+    background: darken($primary-color, 8%);
+    box-shadow: 0 8px 25px rgba($primary-color, 0.3);
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    background: #c9c1ff;
+    cursor: not-allowed;
+  }
+}
+
+.otp-footer {
+  margin-top: 32px;
+  
+  p {
+    color: $text-color-light;
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .resend-btn {
+    background: none;
+    border: none;
+    color: $primary-color;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: color 0.2s ease;
+
+    &:hover:not(:disabled) {
+      color: darken($primary-color, 10%);
+      text-decoration: underline;
+    }
+
+    &:disabled {
+      color: #b3a9e6;
+      cursor: not-allowed;
+      text-decoration: none;
+    }
+  }
+}
+
+
+// Mobile responsive
+@media (max-width: 500px) {
+  .otp-container {
+    padding: 0;
+    background-color: $card-background;
+  }
+
+  .otp-card {
+    border-radius: 0;
+    box-shadow: none;
+    padding: 40px 24px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .otp-header {
+    margin-bottom: 28px;
+  }
+
+  .otp-inputs {
+    gap: 8px;
+  }
+
+  .otp-input {
+    width: 44px;
+    height: 52px;
+    font-size: 22px;
+  }
+
+  .otp-footer {
+    margin-top: 24px;
+  }
+}
