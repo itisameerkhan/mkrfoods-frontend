@@ -6,10 +6,11 @@ import {
   updateProfile,
   GoogleAuthProvider,
   signInWithPopup,
+  fetchSignInMethodsForEmail,
 } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { auth, db } from "../../config/firebase";
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import validator from 'validator';
 import { sendSignupOtp, verifySignupOtp, resendSignupOtp } from '../../src/services/otpService';
 import './Account.scss';
@@ -57,6 +58,33 @@ const Account = () => {
         toast.success('Signed in successfully!');
         navigate('/');
       } else {
+        // Check if user already exists in Firebase (Auth methods check)
+        try {
+          const methods = await fetchSignInMethodsForEmail(auth, formData.email);
+          if (methods.length > 0) {
+            toast.error("User with this email already exists. Please sign in.");
+            setLoading(false);
+            return;
+          }
+        } catch (checkError) {
+             console.error("Error checking auth methods:", checkError);
+        }
+
+        // Check if user exists in Firestore (Direct collection check)
+        try {
+          const usersRef = collection(db, "users");
+          const q = query(usersRef, where("email", "==", formData.email));
+          const querySnapshot = await getDocs(q);
+          if (!querySnapshot.empty) {
+            toast.error("User with this email already exists. Please sign in.");
+            setLoading(false);
+            return;
+          }
+        } catch (firestoreError) {
+          console.error("Error checking firestore:", firestoreError);
+          // Continue if permission denied or other error, fallback to backend (which needs admin sdk)
+        }
+
         // Step 1: Send OTP to the backend, but don't create user yet
         await sendSignupOtp({
           name: formData.name,
