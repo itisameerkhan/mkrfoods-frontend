@@ -6,6 +6,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { addUser, removeUser } from "../config/userSlice";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
+import ScrollToTop from "./utils/ScrollToTop";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ const App = () => {
 
   return (
     <div className="app">
+      <ScrollToTop />
       <Header />
       <Outlet />
       <Footer />

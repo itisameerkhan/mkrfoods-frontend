@@ -17,6 +17,7 @@ import { loadCartFromStorage } from "../config/cartSlice";
 import CheckoutAuth from "../pages/Checkout/CheckoutAuth.jsx";
 import CheckoutAddress from "../pages/Checkout/CheckoutAddress.jsx";
 import OtpVerification from "../pages/OtpVerification/OtpVerification.jsx";
+import AmeerKhan from "../pages/AmeerKhan/AmeerKhan.jsx";
 
 // Load cart from localStorage and initialize Redux
 const initialCart = loadCartFromStorage();
@@ -62,6 +63,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/checkout/address",
         element: <CheckoutAddress />,
+      },
+      {
+        path: "/ameerkhan",
+        element: <AmeerKhan />,
       },
     ],
   },

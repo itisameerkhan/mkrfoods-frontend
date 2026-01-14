@@ -6,7 +6,9 @@ $border: #e2e8f0;
 .account-page-wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 8rem;
+  padding-bottom: 4rem;
   min-height: 100vh;
   background-color: #f8fafc;
   position: relative;
@@ -96,6 +98,55 @@ $border: #e2e8f0;
         transform: translateY(0);
       }
 
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+      color: $gray;
+      font-size: 0.85rem;
+      font-weight: 500;
+      
+      &::before,
+      &::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: $border;
+      }
+      
+      span {
+        padding: 0 1rem;
+      }
+    }
+
+    .btn-google {
+      width: 100%;
+      background: #fff;
+      color: #3c4043;
+      padding: 0.8rem;
+      border: 1px solid $border;
+      border-radius: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+      
+      &:hover:not(:disabled) {
+        background-color: #f8fafc;
+        border-color: darken($border, 10%);
+        box-shadow: 0 1px 2px 0 rgba(60,64,67, .3), 0 1px 3px 1px rgba(60,64,67, .15);
+      }
+      
       &:disabled {
         opacity: 0.6;
         cursor: not-allowed;
@@ -233,8 +284,27 @@ $border: #e2e8f0;
       gap: 0.75rem;
       padding: 1rem 2rem;
       width: 100%;
-      background: linear-gradient(135deg, $blue 0%, #3b5bdb 100%);
-      box-shadow: 0 6px 20px rgba(66, 133, 244, 0.35);
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 800;
+      border-radius: 50px; // Pill shape is often more premium
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+      }
 
       svg {
         width: 1.25rem;
@@ -243,9 +313,13 @@ $border: #e2e8f0;
       }
 
       &:hover:not(:disabled) {
-        background: linear-gradient(135deg, #3b5bdb 0%, #2951c6 100%);
+        background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
         transform: translateY(-2px);
-        box-shadow: 0 10px 28px rgba(66, 133, 244, 0.45);
+        box-shadow: 0 8px 25px rgba(124, 58, 237, 0.5);
+
+        &::before {
+          left: 100%;
+        }
 
         svg {
           transform: translateX(5px);

@@ -57,9 +57,11 @@ const LatestProducts = () => {
             {placeholders.map((_, i) => (
               <div className="skeleton-card" key={i}>
                 <div className="skel-img" />
-                <div className="skel-line title" />
-                <div className="skel-line sub" />
-                <div className="skel-line price" />
+                <div className="skel-details">
+                  <div className="skel-line title" />
+                  <div className="skel-line sizes" />
+                  <div className="skel-line action" />
+                </div>
               </div>
             ))}
           </div>

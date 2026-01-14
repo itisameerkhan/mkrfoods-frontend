@@ -16,6 +16,7 @@
   min-height: 100vh;
   background: var(--bg-light);
   font-family: "Poppins", sans-serif;
+  padding-top: 70px; // Match header height exactly
 
   /* SIDEBAR */
   .sidebar {
@@ -25,6 +26,10 @@
     padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
+    position: sticky; // Make it sticky
+    top: 70px; // Stick just below the header
+    height: calc(100vh - 70px); // Fill the remaining height
+    overflow-y: auto; // Allow scrolling within sidebar if needed
 
     .logo {
       font-size: 1.5rem;
@@ -94,7 +99,8 @@
       background: var(--card-bg);
       border-radius: 16px;
       padding: 2.5rem;
-      max-width: 900px;
+      width: 100%; // Ensure it takes full width
+      max-width: 100%; // Remove the 900px limit
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
       border: 1px solid #f0f0f0;
       margin-top: 1.5rem;
@@ -271,11 +277,54 @@
         }
       }
 
-      .empty {
-        color: var(--text-secondary);
-        font-size: 1rem;
+      .empty-orders {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 3rem 1rem;
         text-align: center;
-        padding: 2rem;
+
+        img {
+          width: 200px;
+          height: auto;
+          margin-bottom: 2rem;
+          opacity: 0.9;
+        }
+
+        .no-order-text {
+          font-size: 1.5rem;
+          font-weight: 700;
+          color: var(--text-primary);
+          margin-bottom: 0.5rem;
+        }
+
+        .no-order-subtext {
+          font-size: 1rem;
+          color: var(--text-secondary);
+          max-width: 400px;
+          line-height: 1.6;
+          margin-bottom: 2rem;
+        }
+
+        .explore-btn {
+          background: #d33131;
+          color: white;
+          border: none;
+          padding: 1rem 3rem;
+          font-size: 1.1rem;
+          font-weight: 600;
+          border-radius: 50px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          box-shadow: 0 4px 15px rgba(211, 49, 49, 0.3);
+
+          &:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(211, 49, 49, 0.4);
+            background: #b92b2b;
+          }
+        }
       }
     }
   }
@@ -289,6 +338,7 @@
     .sidebar {
       width: 100%;
       height: auto;
+      position: static; // Disable sticky on mobile
       flex-direction: column;
       padding: 1rem;
 
@@ -321,6 +371,12 @@
 
   .sidebar nav {
     flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-dashboard {
+    padding-top: 60px; // Match mobile header height
   }
 }
 
@@ -719,15 +775,33 @@
   }
 
   .no-addresses {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
     text-align: center;
-    padding: 3rem 2rem;
-    background: var(--bg-light);
-    border-radius: 8px;
+    background: transparent;
 
-    p {
-      color: var(--text-secondary);
+    img {
+      width: 120px;
+      height: auto;
+      margin-bottom: 1.5rem;
+      opacity: 0.8;
+    }
+
+    .no-address-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .no-address-subtext {
       font-size: 1rem;
-      margin: 0;
+      color: var(--text-secondary);
+      max-width: 400px;
+      line-height: 1.6;
     }
   }
 

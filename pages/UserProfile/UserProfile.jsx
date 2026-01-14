@@ -466,7 +466,15 @@ const UserProfile = () => {
 
             {addresses.length === 0 ? (
               <div className="no-addresses">
-                <p>No addresses saved yet. Add your first address!</p>
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/535/535239.png"
+                  alt="No address"
+                />
+                <p className="no-address-text">No Address Added</p>
+                <p className="no-address-subtext">
+                  It seems you haven't added any addresses yet. Add a new
+                  address to speed up your checkout process.
+                </p>
               </div>
             ) : (
               <div className="addresses-grid">
@@ -719,7 +727,23 @@ const UserProfile = () => {
         {active === "orders" && (
           <section className="card">
             <h3>Order History</h3>
-            <div className="empty">No orders yet</div>
+            <div className="empty-orders">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/4076/4076432.png"
+                alt="No orders yet"
+              />
+              <p className="no-order-text">No order placed yet.</p>
+              <p className="no-order-subtext">
+                You have not placed an order yet. Please add items to your cart
+                and checkout when you are ready.
+              </p>
+              <button
+                className="explore-btn"
+                onClick={() => navigate("/")} // Assuming navigate to home or products page
+              >
+                Explore Products
+              </button>
+            </div>
           </section>
         )}
       </main>
