@@ -151,6 +151,53 @@
       }
     }
 
+    // --- Skeleton Loader Styles ---
+    .address-card.skeleton {
+        cursor: default;
+        pointer-events: none;
+        
+        .card-header {
+            margin-bottom: 1rem;
+            
+            .skeleton-circle {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background: #eee;
+                margin-right: 1rem;
+                animation: shimmer 1.5s infinite linear;
+            }
+            
+            .skeleton-title {
+                width: 150px;
+                height: 20px;
+                background: #eee;
+                border-radius: 4px;
+                animation: shimmer 1.5s infinite linear;
+            }
+        }
+        
+        .card-body {
+            .skeleton-line {
+                height: 14px;
+                background: #eee;
+                margin-bottom: 0.8rem;
+                border-radius: 4px;
+                animation: shimmer 1.5s infinite linear;
+                
+                &.long { width: 90%; }
+                &.medium { width: 70%; }
+                &.short { width: 40%; }
+            }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200px 0; background-color: #f0f0f0; }
+            50% { background-color: #e0e0e0; }
+            100% { background-position: 200px 0; background-color: #f0f0f0; }
+        }
+    }
+
     // --- Modal Styles ---
     .modal-overlay {
         position: fixed;
@@ -295,41 +342,7 @@
 
   // --- Right Side: Summary Section ---
   .summary-section {
-    .delivery-estimates {
-      margin-bottom: 1rem;
-      
-      h4 {
-        font-size: 0.8rem;
-        color: #535766;
-        margin-bottom: 0.8rem;
-        font-weight: 700;
-        text-transform: uppercase;
-      }
 
-      .estimate-items {
-         background: white;
-         border-radius: 4px; // Simplified
-         
-         .estimate-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 0.8rem;
-            
-            img {
-                width: 40px;
-                height: 50px;
-                object-fit: contain;
-                border-radius: 2px;
-            }
-            
-            .est-details {
-                font-size: 0.9rem;
-                color: #333;
-            }
-         }
-      }
-    }
 
     .price-details-card {
       background: white;

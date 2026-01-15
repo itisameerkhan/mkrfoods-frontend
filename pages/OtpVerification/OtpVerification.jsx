@@ -90,7 +90,7 @@ const OtpVerification = () => {
 
         try {
             // Verify OTP with backend
-            const response = await fetch('http://localhost:8080/api/verify-otp', {
+            const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/api/verify-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, otp: otpValue }),
@@ -143,7 +143,7 @@ const OtpVerification = () => {
         setLoading(true);
 
         try {
-            const response = await fetch('http://localhost:8080/api/resend-otp', {
+            const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/api/resend-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email }),

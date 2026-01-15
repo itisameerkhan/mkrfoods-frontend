@@ -1,0 +1,285 @@
+.checkout-payment-page {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 80px; // Spacing for header
+    min-height: 80vh;
+    background-color: #f4f6f8; // Light background
+
+    .payment-layout {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-top: 2rem;
+
+        @media (max-width: 900px) {
+            grid-template-columns: 1fr;
+        }
+
+        // --- Common Card Styles ---
+        .section-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+
+            .card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1rem;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 0.8rem;
+
+                h3 {
+                    font-size: 1.1rem;
+                    color: #444;
+                    font-weight: 600;
+                    margin: 0;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                }
+            }
+        }
+
+        // --- Left Column ---
+        .main-section {
+            
+            // Address Preview
+            .address-preview {
+                .btn-change {
+                    border: 1px solid #e74c3c;
+                    background: transparent;
+                    color: #e74c3c;
+                    padding: 5px 12px;
+                    border-radius: 4px;
+                    font-size: 0.8rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        background: #e74c3c;
+                        color: white;
+                    }
+                }
+
+                .address-details {
+                    .name-tag {
+                        background: #eee;
+                        color: #666;
+                        padding: 2px 8px;
+                        border-radius: 4px;
+                        font-size: 0.7rem;
+                        vertical-align: middle;
+                        margin-right: 10px;
+                        text-transform: uppercase;
+                    }
+
+                    h4 {
+                        margin: 0.5rem 0;
+                        font-size: 1.1rem;
+                        color: #333;
+                        display: flex;
+                        align-items: center;
+
+                        span { // Mobile number
+                            margin-left: 15px;
+                            font-weight: 500;
+                            color: #666;
+                            font-size: 0.95rem;
+                        }
+                    }
+
+                    p {
+                        color: #555;
+                        font-size: 0.95rem;
+                        line-height: 1.5;
+                        margin: 0;
+                    }
+                }
+            }
+
+            // Payment Methods
+            .payment-methods {
+                .methods-list {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+
+                .method-item {
+                    display: flex;
+                    align-items: flex-start;
+                    padding: 1rem;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    transition: all 0.2s;
+
+                    &:hover:not(.disabled) {
+                        border-color: #e74c3c;
+                        background: #fffcfc;
+                    }
+
+                    &.selected {
+                        border-color: #e74c3c;
+                        background: #fff5f5;
+                        box-shadow: 0 0 0 1px #e74c3c inset;
+                    }
+
+                    &.disabled {
+                        opacity: 0.6;
+                        cursor: not-allowed;
+                        background: #f9f9f9;
+                    }
+
+                    .radio-circle {
+                        width: 20px;
+                        height: 20px;
+                        border: 2px solid #ccc;
+                        border-radius: 50%;
+                        margin-right: 15px;
+                        margin-top: 3px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        .inner-circle {
+                            width: 10px;
+                            height: 10px;
+                            background: #e74c3c;
+                            border-radius: 50%;
+                        }
+                    }
+                    &.selected .radio-circle {
+                        border-color: #e74c3c;
+                    }
+
+                    .method-info {
+                        flex: 1;
+
+                        .method-title {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            font-weight: 600;
+                            color: #333;
+                            font-size: 1rem;
+                            margin-bottom: 5px;
+
+                            .icons-row {
+                                display: flex;
+                                gap: 8px;
+                                font-size: 1.2rem;
+                            }
+                        }
+
+                        .method-desc {
+                            margin: 0;
+                            font-size: 0.85rem;
+                            color: #777;
+                        }
+                    }
+                }
+            }
+
+            .secure-badge {
+                text-align: center;
+                color: #777;
+                font-size: 0.9rem;
+                margin-top: 1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+
+                i {
+                    color: #27ae60;
+                }
+            }
+        }
+
+        // --- Right Column ---
+        .sidebar-section {
+            .price-card {
+                background: white;
+                border-radius: 8px;
+                padding: 1.5rem;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+                h3 {
+                    margin-top: 0;
+                    margin-bottom: 1.5rem;
+                    text-transform: uppercase;
+                    color: #777;
+                    font-size: 0.9rem;
+                    letter-spacing: 0.5px;
+                    font-weight: 700;
+                }
+
+                .price-row {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 1rem;
+                    font-size: 0.95rem;
+                    color: #333;
+
+                    &.discount {
+                        color: #27ae60;
+                    }
+
+                    .free {
+                        color: #27ae60;
+                        font-weight: 600;
+                    }
+
+                    &.total {
+                        font-weight: 700;
+                        font-size: 1.1rem;
+                        color: #000;
+                        margin-top: 1rem;
+                        margin-bottom: 0;
+                    }
+                }
+
+                .divider {
+                    border-bottom: 1px dashed #ddd;
+                    margin: 1rem 0;
+                }
+
+                .total-savings {
+                    margin-top: 1rem;
+                    padding: 10px;
+                    background: #f0fff4;
+                    color: #27ae60;
+                    font-size: 0.9rem;
+                    text-align: center;
+                    border-radius: 4px;
+                    border: 1px dashed #27ae60;
+                }
+
+                .btn-pay-now {
+                    width: 100%;
+                    padding: 14px;
+                    background: #e74c3c; // Brand Red
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    font-size: 1rem;
+                    font-weight: 700;
+                    margin-top: 1.5rem;
+                    cursor: pointer;
+                    text-transform: uppercase;
+                    box-shadow: 0 4px 6px rgba(231, 76, 60, 0.2);
+                    transition: background 0.2s;
+
+                    &:hover {
+                        background: #c0392b;
+                    }
+                }
+            }
+        }
+    }
+}

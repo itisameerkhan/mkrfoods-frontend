@@ -4,6 +4,7 @@ import "./Cart.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { db } from "../../config/firebase";
+import CheckoutHeader from "../../components/CheckoutHeader/CheckoutHeader";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -79,11 +80,13 @@ const Cart = () => {
       }
 
       // Apply coupon
-      setAppliedCoupon({
+      const couponPayload = {
         code: couponData.code,
         discount: parseInt(couponData.discountPrice),
         minimumOrder: parseInt(couponData.minimumOrder)
-      });
+      };
+      setAppliedCoupon(couponPayload);
+      localStorage.setItem("appliedCoupon", JSON.stringify(couponPayload)); // Persist to local storage
       setCouponCode("");
       setCouponError("");
     } catch (error) {
@@ -97,6 +100,7 @@ const Cart = () => {
   // Remove Coupon Function
   const handleRemoveCoupon = () => {
     setAppliedCoupon(null);
+    localStorage.removeItem("appliedCoupon"); // Remove from local storage
     setCouponCode("");
     setCouponError("");
   };
@@ -108,20 +112,33 @@ const Cart = () => {
       navigate("/checkout/address");
     } else {
       // User is not logged in, redirect to login/signup
-      navigate("/checkout/address");
+      navigate("/account");
     }
   };
 
+  // Load coupon from local storage on mount
+  useEffect(() => {
+    const savedCoupon = localStorage.getItem("appliedCoupon");
+    if (savedCoupon) {
+      try {
+        setAppliedCoupon(JSON.parse(savedCoupon));
+      } catch (error) {
+        console.error("Error parsing saved coupon:", error);
+        localStorage.removeItem("appliedCoupon");
+      }
+    }
+  }, []);
+
   // Validate coupon when cart total changes
   useEffect(() => {
-    console.log("Cart updated:", cartItems);
-
     // Check if applied coupon is still valid based on cart total
-    if (appliedCoupon && cartTotal < appliedCoupon.minimumOrder) {
-      setAppliedCoupon(null);
-      setCouponError(`Coupon removed: Minimum order of ₹${appliedCoupon.minimumOrder} required`);
-      // Clear error message after 3 seconds
-      setTimeout(() => setCouponError(""), 3000);
+    if (appliedCoupon) {
+        if (cartTotal < appliedCoupon.minimumOrder) {
+            setAppliedCoupon(null);
+            localStorage.removeItem("appliedCoupon"); // Remove invalid coupon
+            setCouponError(`Coupon removed: Minimum order of ₹${appliedCoupon.minimumOrder} required`);
+            setTimeout(() => setCouponError(""), 3000);
+        }
     }
   }, [cartItems, cartTotal, appliedCoupon]);
 
@@ -143,6 +160,7 @@ const Cart = () => {
   return (
     <div className="cart">
       <div className="cart-container">
+        <CheckoutHeader activeStep="cart" />
         <div className="cart-top">
           <h1>Shopping Cart</h1>
           <div className="cart-controls">

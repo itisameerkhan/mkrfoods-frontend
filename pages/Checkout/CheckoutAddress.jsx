@@ -15,6 +15,7 @@ import {
 import { db } from "../../config/firebase";
 import "./CheckoutAddress.scss";
 import { toast } from "react-toastify";
+import CheckoutHeader from "../../components/CheckoutHeader/CheckoutHeader";
 
 const CheckoutAddress = () => {
     const user = useSelector(state => state.user);
@@ -41,6 +42,9 @@ const CheckoutAddress = () => {
         type: "HOME"
     });
 
+    const [couponDiscount, setCouponDiscount] = useState(0);
+
+
     // --- Price Calculation ---
     const cartTotal = cartItems.reduce((sum, product) => {
         const productTotal = product.variants.reduce((variantSum, variant) =>
@@ -48,14 +52,57 @@ const CheckoutAddress = () => {
         return sum + productTotal;
     }, 0);
 
-    const platformFee = 23; 
-    const finalAmount = cartTotal + platformFee;
+    // Load coupon from local storage
+    useEffect(() => {
+        const savedCoupon = localStorage.getItem("appliedCoupon");
+        if (savedCoupon) {
+            try {
+                const coupon = JSON.parse(savedCoupon);
+                if (cartTotal >= coupon.minimumOrder) {
+                    setCouponDiscount(coupon.discount);
+                } else {
+                    // Coupon invalid due to cart update
+                    if (couponDiscount !== 0) {
+                        setCouponDiscount(0);
+                        localStorage.removeItem("appliedCoupon");
+                         toast.info(`Coupon removed: Order must be above ₹${coupon.minimumOrder}`);
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading coupon:", error);
+                setCouponDiscount(0);
+            }
+        } else {
+            setCouponDiscount(0);
+        }
+    }, [cartTotal]);
+
+    const finalAmount = cartTotal - couponDiscount;
 
     // --- Effects ---
+    // Sync selection to session storage so header navigation works
+    useEffect(() => {
+        if (savedAddresses.length > 0 && selectedAddressIndex !== null && savedAddresses[selectedAddressIndex]) {
+             const selectedAddress = savedAddresses[selectedAddressIndex];
+             sessionStorage.setItem("checkoutAddress", JSON.stringify(selectedAddress));
+             
+             const pricingDetails = {
+                cartTotal,
+                couponDiscount,
+                finalAmount
+            };
+            sessionStorage.setItem("checkoutPricing", JSON.stringify(pricingDetails));
+        } else {
+            // If no address selected or list empty, clear from session to block header nav
+            sessionStorage.removeItem("checkoutAddress");
+            sessionStorage.removeItem("checkoutPricing");
+        }
+    }, [selectedAddressIndex, savedAddresses, cartTotal, couponDiscount, finalAmount]);
+
     useEffect(() => {
         const auth = getAuth();
         if (!auth.currentUser && !user) {
-            navigate("/checkout/auth");
+            navigate("/account");
             return;
         }
 
@@ -196,13 +243,21 @@ const CheckoutAddress = () => {
 
         const selectedAddress = savedAddresses[selectedAddressIndex];
         sessionStorage.setItem("checkoutAddress", JSON.stringify(selectedAddress));
-        navigate("/checkout/review");
-    };
+        
+        // Save pricing details including coupon
+        const pricingDetails = {
+            cartTotal,
+            couponDiscount,
+            finalAmount
+        };
+        sessionStorage.setItem("checkoutPricing", JSON.stringify(pricingDetails));
 
-    if (loading) return <div className="loading">Loading addresses...</div>;
+        navigate("/checkout/payment");
+    };
 
     return (
         <div className="checkout-address-page">
+            <CheckoutHeader activeStep="address" />
             <div className="checkout-layout">
                 {/* Left Column: Address Selection */}
                 <div className="address-section">
@@ -215,7 +270,22 @@ const CheckoutAddress = () => {
 
                     {/* Always show address list */}
                     <div className="address-list">
-                        {savedAddresses.length === 0 ? (
+                        {loading ? (
+                             // Skeleton Loader
+                            [1, 2, 3].map((i) => (
+                                <div key={i} className="address-card skeleton">
+                                    <div className="card-header">
+                                        <div className="skeleton-circle"></div>
+                                        <div className="skeleton-title"></div>
+                                    </div>
+                                    <div className="card-body">
+                                        <div className="skeleton-line long"></div>
+                                        <div className="skeleton-line medium"></div>
+                                        <div className="skeleton-line short"></div>
+                                    </div>
+                                </div>
+                            ))
+                        ) : savedAddresses.length === 0 ? (
                             <p className="no-address">No saved addresses. Please add one.</p>
                         ) : (
                             savedAddresses.map((addr, index) => (
@@ -328,19 +398,6 @@ const CheckoutAddress = () => {
 
                 {/* Right Column: Order Summary */}
                 <div className="summary-section">
-                    <div className="delivery-estimates">
-                        <h4>DELIVERY ESTIMATES</h4>
-                        <div className="estimate-items">
-                            {cartItems.map(item => (
-                                <div key={item.productId} className="estimate-item">
-                                    <img src={item.image} alt="product" />
-                                    <div className="est-details">
-                                        <span>Estimated delivery by <strong>{new Date(Date.now() + 5*86400000).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year:'numeric' })}</strong></span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
 
                     <div className="price-details-card">
                         <h4>PRICE DETAILS ({cartItems.reduce((acc, item) => acc + item.variants.reduce((vAcc, v) => vAcc + v.quantity, 0),0)} Items)</h4>
@@ -348,17 +405,19 @@ const CheckoutAddress = () => {
                             <span>Total MRP</span>
                             <span>₹{cartTotal.toFixed(2)}</span>
                         </div>
-                        <div className="price-row">
-                            <span>Platform Fee</span>
-                            <span>₹{platformFee}</span>
-                        </div>
+                        
                         <div className="price-divider"></div>
                         <div className="price-row total">
                             <span>Total Amount</span>
                             <span>₹{finalAmount.toFixed(2)}</span>
                         </div>
 
-                        <button className="btn-continue-blob" onClick={handleContinue}>
+                        <button 
+                            className={`btn-continue-blob ${(!savedAddresses.length || selectedAddressIndex === null) ? 'disabled' : ''}`}
+                            onClick={handleContinue}
+                            disabled={!savedAddresses.length || selectedAddressIndex === null}
+                            style={{ opacity: (!savedAddresses.length || selectedAddressIndex === null) ? 0.5 : 1, cursor: (!savedAddresses.length || selectedAddressIndex === null) ? 'not-allowed' : 'pointer' }}
+                        >
                             CONTINUE
                         </button>
                     </div>

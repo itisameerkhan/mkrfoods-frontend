@@ -1,0 +1,42 @@
+.checkout-header {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  font-family: 'Inter', sans-serif;
+
+  .steps-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .step {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #696e79;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      position: relative;
+      cursor: pointer;
+      text-decoration: none;
+
+      &.active {
+        color: #20bd99; // Greenish color from screenshot
+        border-bottom: 2px solid #20bd99;
+        padding-bottom: 4px;
+      }
+      
+      &.completed {
+         // Logic for completed steps if we want different style
+         // For now, keep active style logic simple
+         color: #20bd99; 
+      }
+    }
+
+    .step-separator {
+      color: #d4d5d9;
+      letter-spacing: 2px;
+      font-size: 0.8rem;
+    }
+  }
+}

@@ -14,8 +14,9 @@ import Category from "../pages/Category/Category.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loadCartFromStorage } from "../config/cartSlice";
-import CheckoutAuth from "../pages/Checkout/CheckoutAuth.jsx";
+
 import CheckoutAddress from "../pages/Checkout/CheckoutAddress.jsx";
+import CheckoutPayment from "../pages/Checkout/CheckoutPayment.jsx";
 import OtpVerification from "../pages/OtpVerification/OtpVerification.jsx";
 import AmeerKhan from "../pages/AmeerKhan/AmeerKhan.jsx";
 
@@ -56,13 +57,14 @@ const appRouter = createBrowserRouter([
         path: "/category/:category",
         element: <Category />,
       },
-      {
-        path: "/checkout/auth",
-        element: <CheckoutAuth />,
-      },
+
       {
         path: "/checkout/address",
         element: <CheckoutAddress />,
+      },
+      {
+        path: "/checkout/payment",
+        element: <CheckoutPayment />,
       },
       {
         path: "/ameerkhan",
