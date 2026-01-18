@@ -673,3 +673,38 @@
     width: 120px;
   }
 }
+
+/* Reordering for Tablet and Mobile (Standard E-commerce Layout) */
+@media (max-width: 991px) {
+  .product .product-inner {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 
+     Use display: contents to unwrap product-left so its children 
+     can be re-ordered alongside product-right 
+  */
+  .product-left {
+    display: contents;
+  }
+
+  /* Order 1: Image */
+  .gallery {
+    order: 1;
+    width: 100%;
+  }
+
+  /* Order 2: Title, Price, Actions (Right Column content) */
+  .product-right {
+    order: 2;
+    width: 100%;
+  }
+
+  /* Order 3: Description, Ingredients */
+  .product-details-wrapper {
+    order: 3;
+    width: 100%;
+    margin-top: 1rem;
+  }
+}

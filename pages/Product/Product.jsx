@@ -159,17 +159,19 @@ const Product = () => {
                         </div>
                     </div>
 
-                    <AboutProduct name={product.name} description={product.description} />
+                    <div className="product-details-wrapper">
+                        <AboutProduct name={product.name} description={product.description} />
 
-                    <div className="ingredients">
-                        <h4>Ingredients</h4>
-                        <div className="ing-list">
-                            {Array.isArray(product.ingredients) &&
-                                product.ingredients.map((ing, idx) => (
-                                    <span key={idx} className="chip">
-                                        {ing}
-                                    </span>
-                                ))}
+                        <div className="ingredients">
+                            <h4>Ingredients</h4>
+                            <div className="ing-list">
+                                {Array.isArray(product.ingredients) &&
+                                    product.ingredients.map((ing, idx) => (
+                                        <span key={idx} className="chip">
+                                            {ing}
+                                        </span>
+                                    ))}
+                            </div>
                         </div>
                     </div>
                 </div>

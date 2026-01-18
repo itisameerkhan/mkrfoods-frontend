@@ -12,6 +12,8 @@ const CheckoutPayment = () => {
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
 
+  const cartItems = useSelector((store) => store.cart.items);
+
   // Local state for UI
   const [paymentMethod, setPaymentMethod] = useState("RAZORPAY");
   const [address, setAddress] = useState(null);
@@ -20,8 +22,15 @@ const CheckoutPayment = () => {
     couponDiscount: 0,
     finalAmount: 0
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    // Check if cart is empty
+    if (cartItems.length === 0) {
+        navigate("/cart");
+        return;
+    }
+
     // Load data from session storage
     const savedAddressStr = sessionStorage.getItem("checkoutAddress");
     const savedPricingStr = sessionStorage.getItem("checkoutPricing");
@@ -36,7 +45,7 @@ const CheckoutPayment = () => {
     if (savedPricingStr) {
       setPricing(JSON.parse(savedPricingStr));
     }
-  }, [navigate]);
+  }, [navigate, cartItems]);
 
 
 
@@ -47,23 +56,42 @@ const CheckoutPayment = () => {
         return;
       }
 
+      setIsLoading(true);
+
       const auth = getAuth();
       const currentUser = auth.currentUser;
       
       if (!currentUser) {
            alert("User not authenticated. Please log in.");
+           setIsLoading(false);
            navigate("/account");
            return;
       }
 
       const token = await currentUser.getIdToken();
 
+      const cartPayload = {
+        items: cartItems.map(item => ({
+          productId: item.productId || item._id || item.id,
+          name: item.name,
+          image: item.image,
+          variants: item.variants.map(v => ({
+            weight: v.weight,
+            price: v.price,
+            quantity: v.quantity
+          })),
+          totalPrice: item.variants.reduce((acc, v) => acc + (v.price * v.quantity), 0)
+        }))
+      };
+
       const paymentData = {
         userId: user?.uid,
         amount: pricing.finalAmount,
         name: address.fullName || user?.displayName,
         email: user?.email,
-        phone: address.mobileNumber
+        phone: address.mobileNumber,
+        cart: cartPayload,
+        address: address
       };
 
       const response = await axios.post(
@@ -91,6 +119,8 @@ const CheckoutPayment = () => {
                   email: user?.email,
                   phone: address.mobileNumber
               },
+              cart: cartPayload,
+              address: address,
               status: "created",
               createdAt: new Date().toISOString(),
               updatedAt: new Date().toISOString()
@@ -121,6 +151,7 @@ const CheckoutPayment = () => {
         },
         handler: async function (response) {
             try {
+                setIsLoading(true);
                 // Sync to Firestore (Status: Success)
                 try {
                     await updateDoc(doc(db, "payments", response.razorpay_order_id), {
@@ -142,28 +173,39 @@ const CheckoutPayment = () => {
                 );
 
                 if (verifyRes.data.success) {
-                  alert("Payment Successful!");
-                  // navigate('/order-success');
+                  // alert("Payment Successful!");
+                  navigate('/my/orders');
                 } else {
                   alert("Payment Verification Failed");
                 }
             } catch (error) {
                 console.error("Verification Error:", error);
                 alert("Payment Verification Failed");
+            } finally {
+                setIsLoading(false);
             }
         }
       };
 
+      // Hide loader just before opening Razorpay, as it has its own UI
+      setIsLoading(false);
       const rzp = new window.Razorpay(options);
       rzp.open();
     } catch (error) {
       console.error("Error creating payment order:", error);
       alert("Failed to initiate payment. Please try again.");
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="checkout-payment-page">
+      {isLoading && (
+        <div className="full-page-loader">
+          <div className="loader-spinner"></div>
+          <p>Processing Payment...</p>
+        </div>
+      )}
       <CheckoutHeader activeStep="payment" />
       
       <div className="payment-layout">

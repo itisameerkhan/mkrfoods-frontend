@@ -144,14 +144,25 @@ const Cart = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="cart">
-        <div className="cart-empty">
-          <i className="fas fa-shopping-cart"></i>
-          <h2>Your cart is empty</h2>
-          <p>Add some delicious items to get started!</p>
-          <Link to="/" className="btn-continue-shopping">
-            Continue Shopping
-          </Link>
+      <div className="cart-empty-maximalist">
+        <div className="floating-shapes">
+            <span className="shape shape-1">🍕</span>
+            <span className="shape shape-2">🍔</span>
+            <span className="shape shape-3">🍟</span>
+            <span className="shape shape-4">🌭</span>
+            <span className="shape shape-5">🍿</span>
+            <span className="shape shape-6">🥗</span>
+        </div>
+        
+        <div className="content-wrapper">
+            <h1 className="maximal-title">OOPS!</h1>
+            <h2 className="maximal-subtitle">YOUR CART IS <br/><span>EMPTY</span></h2>
+            <p className="maximal-desc">It looks like you haven't made your choice yet. <br/> our shelves are full of delicious items waiting for you.</p>
+            
+            <Link to="/" className="btn-maximal-action">
+                <span>START SHOPPING</span>
+                <i className="fas fa-arrow-right"></i>
+            </Link>
         </div>
       </div>
     );

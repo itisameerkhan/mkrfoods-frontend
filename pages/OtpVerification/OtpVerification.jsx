@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import './OtpVerification.scss';
 import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc } from 'firebase/firestore'; 
 
 const OtpVerification = () => {
     const location = useLocation();

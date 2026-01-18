@@ -1,0 +1,141 @@
+.instagram-reels-section {
+  padding: 80px 20px;
+  background: #f9f9f9;
+  overflow: hidden;
+
+  .content-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+
+    @media (max-width: 900px) {
+      flex-direction: column;
+      text-align: center;
+      gap: 40px;
+    }
+  }
+
+  .text-content {
+    flex: 1;
+    max-width: 500px;
+
+    h2 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .btn-follow {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #ff6b6b; // Or brand color
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+
+      &:hover {
+        background: #ff5252;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+      }
+    }
+  }
+
+  .reels-container {
+    flex: 1;
+    position: relative;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // Perspective for 3D effect if needed, but simple tilt works well
+    
+    /* Mobile/Tablet Responsive Styles */
+    @media (max-width: 900px) {
+      width: 100%;
+      height: auto;
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding: 20px 0;
+      gap: 20px;
+      
+      /* Hide scrollbar for cleaner look */
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .reel-card {
+      position: absolute;
+      width: 220px;
+      height: 360px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+      border: 4px solid white;
+      
+      .card-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        background: #000;
+        
+        iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+          display: block;
+        }
+      }
+
+      // Desktop layout (Tilted)
+      @media (min-width: 901px) {
+        &.card-1 {
+          transform: translateX(-120px) translateY(20px) rotate(-15deg);
+          z-index: 1;
+        }
+
+        &.card-2 {
+          transform: translateX(0px) translateY(-10px) rotate(-5deg);
+          z-index: 2;
+        }
+
+        &.card-3 {
+          transform: translateX(120px) translateY(30px) rotate(15deg);
+          z-index: 3;
+        }
+      }
+
+      // Tablet/Mobile Layout (Horizontal Scroll / Stacked)
+      @media (max-width: 900px) {
+        position: relative; // Reset from absolute
+        transform: none !important; // Remove all rotation/translation
+        flex-shrink: 0; // Prevent shrinking in flex container
+        width: 200px; // Slightly smaller card width
+        height: 320px;
+        margin: 0;
+        left: auto !important;
+        top: auto !important;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      }
+    }
+  }
+}

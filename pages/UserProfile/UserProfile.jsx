@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import validator from "validator";
 import "./UserProfile.scss";
 import { useSelector } from "react-redux";
+import MyOrders from "../MyOrders/MyOrders";
 
 const UserProfile = () => {
   const navigate = useNavigate();
@@ -385,7 +386,7 @@ const UserProfile = () => {
 
           <button
             className={active === "orders" ? "active" : ""}
-            onClick={() => setActive("orders")}
+            onClick={() => navigate('/my/orders')}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -726,24 +727,8 @@ const UserProfile = () => {
 
         {active === "orders" && (
           <section className="card">
-            <h3>Order History</h3>
-            <div className="empty-orders">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/4076/4076432.png"
-                alt="No orders yet"
-              />
-              <p className="no-order-text">No order placed yet.</p>
-              <p className="no-order-subtext">
-                You have not placed an order yet. Please add items to your cart
-                and checkout when you are ready.
-              </p>
-              <button
-                className="explore-btn"
-                onClick={() => navigate("/")} // Assuming navigate to home or products page
-              >
-                Explore Products
-              </button>
-            </div>
+            <h3 style={{marginBottom: "1.5rem"}}>Order History</h3>
+            <MyOrders embedded={true} />
           </section>
         )}
       </main>

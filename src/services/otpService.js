@@ -1,6 +1,10 @@
 import axios from 'axios';
 
-const API_URL = `${import.meta.env.VITE_REACT_APP_API_URL}/api`;
+const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL || "https://mkrfoodsbackend.onrender.com";
+const API_URL = `${BASE_URL}/api`;
+
+console.log("OTP Service API URL:", API_URL); // Debugging log
+ 
 
 /**
  * Request to send an OTP for account signup.
