@@ -1,7 +1,7 @@
-import axios from 'axios';
+// Hardcoded URL to prevent "undefined" error
+const API_URL = "https://mkrfoodsbackend.onrender.com/api";
 
-const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL || "https://mkrfoodsbackend.onrender.com";
-const API_URL = `${BASE_URL}/api`;
+console.log("OTP Service API URL:", API_URL);
 
 console.log("OTP Service API URL:", API_URL); // Debugging log
  
@@ -29,3 +29,4 @@ export const verifySignupOtp = (otpData) => {
 export const resendSignupOtp = (emailData) => {
   return axios.post(`${API_URL}/resend-otp`, emailData);
 };
+
