@@ -4,4 +4,13 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://mkrfoodsbackend.onrender.com',
+        changeOrigin: true,
+        secure: false,        
+      }
+    }
+  }
 })
