@@ -131,4 +131,14 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
+
+  // Mobile Skeleton Adjustments
+  .skel-line.sizes {
+    height: 35px; // Reduced from 50px
+  }
+
+  .skel-line.action {
+    height: 30px; // Reduced from 40px
+    margin-top: 2px;
+  }
 }

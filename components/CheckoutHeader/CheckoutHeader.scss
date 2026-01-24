@@ -53,11 +53,12 @@
       .step {
         flex: 1;
         text-align: center;
-        padding-bottom: 0.8rem;
-        font-size: 0.8rem;
+        padding-bottom: 0.5rem; // Reduced from 0.8rem to bring line closer
+        font-size: 0.85rem; // Slightly larger text
         color: #888;
-        border-bottom: 3px solid transparent; // Prepare for active state
-        margin-bottom: -1px; // Overlap base border
+        border-bottom: 3px solid transparent; 
+        margin-bottom: -1px; 
+        position: relative; // Ensure good positioning
 
         &.active {
           color: #20bd99;
