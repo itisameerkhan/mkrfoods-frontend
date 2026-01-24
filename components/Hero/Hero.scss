@@ -10,17 +10,11 @@
     touch-action: pan-y;
   }
 
-  .splide__track {
-    height: 100%;
-  }
-
-  .splide__list {
-    height: 100%;
-  }
-
+  .splide__track,
+  .splide__list,
   .splide__slide {
     height: 100%;
-    width: 100%;
+    touch-action: pan-y;
   }
 }
 
