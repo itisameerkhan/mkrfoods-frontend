@@ -37,6 +37,10 @@
       color: #d4d5d9;
       letter-spacing: 2px;
       font-size: 0.8rem;
+      
+      @media (max-width: 600px) {
+        display: none; // Hide dashed lines on mobile
+      }
     }
   }
 }
