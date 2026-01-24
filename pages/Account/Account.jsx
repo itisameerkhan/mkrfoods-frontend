@@ -74,7 +74,7 @@ const Account = () => {
       import.meta.env.VITE_EMAILJS_PUBLIC_KEY
     );
 
-    alert(`EmailJS Response: ${response.status} ${response.text}`); // DEBUG: Remove later
+
     return code;
   };
 
