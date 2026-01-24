@@ -47,11 +47,11 @@ const Hero = () => {
           type: "loop",
           perPage: 1,
           autoplay: true,
-          interval: 4000,
+          interval: 2500,
           arrows: false,
           pagination: false,
           pauseOnHover: false,
-          speed: 2000,
+          speed: 250,
           easing: "ease",
         }}
         aria-label="Hero Images"
