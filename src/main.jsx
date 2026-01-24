@@ -79,8 +79,11 @@ const appRouter = createBrowserRouter([
   },
 ]);
 
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary.jsx";
+
 createRoot(document.getElementById("root")).render(
-  <Provider store={appStore}>
+  <ErrorBoundary>
+    <Provider store={appStore}>
     <RouterProvider router={appRouter} />
     <ToastContainer
       position="bottom-right"
@@ -96,4 +99,5 @@ createRoot(document.getElementById("root")).render(
       toastClassName="custom-toast-container"
     />
   </Provider>
+  </ErrorBoundary>
 );

@@ -7,6 +7,7 @@
   .splide {
     height: 100vh;
     width: 100%;
+    touch-action: pan-y;
   }
 
   .splide__track {
