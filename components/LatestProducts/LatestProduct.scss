@@ -152,5 +152,28 @@
   .product-cards {
     grid-template-columns: repeat(2, 1fr); // Force 2 columns
     gap: 0.8rem;
+    
+    // Ensure links behave exactly like block containers
+    a {
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        color: inherit;
+        box-sizing: border-box;
+    }
   }
+}
+
+// Global reset within this component to ensure padding doesn't break width
+.latest-products * {
+    box-sizing: border-box;
+}
+
+// Match skeleton border radius to ProductCard exactly
+.skeleton-card {
+    border-radius: 11px; // Match ProductCard 361-480px radius
+    
+    @media (max-width: 360px) {
+        border-radius: 10px; // Match ProductCard <360px radius
+    }
 }
