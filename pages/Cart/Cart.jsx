@@ -338,6 +338,19 @@ const Cart = () => {
           </div>
         </div>
       </div>
+      
+      {/* Mobile Sticky Checkout Bar */}
+      <div className="mobile-checkout-bar">
+        <div className="mobile-total">
+          <span className="label">Total:</span>
+          <span className="amount">
+            ₹ {appliedCoupon ? (cartTotal - appliedCoupon.discount).toFixed(2) : cartTotal.toFixed(2)}
+          </span>
+        </div>
+        <button className="btn-mobile-checkout" onClick={handleCheckout}>
+          Proceed to Buy ({itemCount} items)
+        </button>
+      </div>
     </div>
   );
 };
