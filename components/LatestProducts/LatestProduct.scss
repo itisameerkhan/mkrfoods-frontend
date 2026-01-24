@@ -107,8 +107,30 @@
   }
 
   .product-cards {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1.2rem;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); // Smaller minmax for mobile fit
+    gap: 0.8rem;
+  }
+
+  // SKELETON OVERRIDES FOR MOBILE/TABLET
+  // Forces compact look to match real card
+  .skel-details {
+    padding: 8px !important;
+    gap: 6px !important;
+  }
+
+  .skel-line.title {
+    height: 12px;
+    margin-bottom: 4px;
+  }
+
+  .skel-line.sizes {
+    height: 28px !important; // Match real size card height approx
+  }
+
+  .skel-line.action {
+    height: 30px !important; // Match real add button height approx
+    border-radius: 6px;
+    margin-top: 2px !important;
   }
 }
 
@@ -128,27 +150,7 @@
   }
 
   .product-cards {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem; // Tighter gap
-  }
-
-  // Mobile Skeleton Adjustments - Match ProductCard Exactly
-  .skel-details {
-    padding: 8px !important; 
-    gap: 6px !important; // Match ProductCard gap
-  }
-
-  .skel-line.title {
-      height: 12px;
-  }
-
-  .skel-line.sizes {
-    height: 25px !important; // Single row of small size buttons
-  }
-
-  .skel-line.action {
-    height: 28px !important; // Match small mobile button
-    margin-top: 2px !important;
-    border-radius: 8px;
+    grid-template-columns: repeat(2, 1fr); // Force 2 columns
+    gap: 0.8rem;
   }
 }
