@@ -647,6 +647,11 @@
     margin-top: 65px;
   }
 
+  // Mobile Coupon Section (Hidden on Desktop)
+  .mobile-coupon-section {
+      display: none;
+  }
+
   // --- MOBILE AMAZON-LIKE REDESIGN ---
   
   // Mobile Checkout Bar (Default Hidden)
@@ -701,6 +706,75 @@
     // Hide Desktop Summary
     .cart-summary-section {
       display: none; 
+    }
+
+    // Show Mobile Coupon Section
+    .mobile-coupon-section {
+        display: block;
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 5rem; // Space for sticky footer
+        border: 1px solid #D5D9D9;
+
+        h3 {
+            font-size: 1rem;
+            margin: 0 0 0.8rem 0;
+            color: #1a1a1a;
+        }
+
+        .coupon-container {
+            .input-group {
+                display: flex;
+                gap: 0.5rem;
+                
+                input {
+                    flex: 1;
+                    padding: 0.7rem;
+                    border: 1px solid #ccc;
+                    border-radius: 6px;
+                    font-size: 0.9rem;
+                    &:focus { outline: none; border-color: #e47911; }
+                }
+
+                button {
+                    background: #e47911; // Amazon orange
+                    color: white;
+                    border: none;
+                    padding: 0 1.2rem;
+                    border-radius: 6px;
+                    font-weight: 600;
+                    cursor: pointer;
+                }
+            }
+
+            .applied-success {
+                background: #f0fdf4;
+                border: 1px solid #4caf50;
+                padding: 0.8rem;
+                border-radius: 6px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: #2e7d32;
+                font-weight: 500;
+
+                button {
+                    background: white;
+                    border: 1px solid #4caf50;
+                    color: #4caf50;
+                    padding: 0.3rem 0.8rem;
+                    border-radius: 4px;
+                    font-size: 0.8rem;
+                }
+            }
+
+            .error-msg {
+                color: #d32f2f;
+                font-size: 0.85rem;
+                margin-top: 0.5rem;
+            }
+        }
     }
 
     // Mobile Checkout Bar - STICKY

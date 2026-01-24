@@ -256,6 +256,39 @@ const Cart = () => {
               ))}
             </div>
           </div>
+          
+          {/* Mobile Coupon Section (Visible only on mobile) */}
+          <div className="mobile-coupon-section">
+             <h3>Apply Coupon</h3>
+             <div className="coupon-container">
+                {!appliedCoupon ? (
+                  <div className="input-group">
+                    <input
+                      type="text"
+                      placeholder="Enter coupon code"
+                      value={couponCode}
+                      onChange={(e) => {
+                        setCouponCode(e.target.value);
+                        if (couponError) setCouponError("");
+                      }}
+                      disabled={couponLoading}
+                    />
+                    <button
+                      onClick={handleApplyCoupon}
+                      disabled={couponLoading}
+                    >
+                      {couponLoading ? "..." : "Apply"}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="applied-success">
+                    <span>Code "{appliedCoupon.code}" applied</span>
+                    <button onClick={handleRemoveCoupon}>Remove</button>
+                  </div>
+                )}
+                {couponError && <p className="error-msg">{couponError}</p>}
+             </div>
+          </div>
 
           {/* Cart Summary Sidebar */}
           <div className="cart-summary-section">
