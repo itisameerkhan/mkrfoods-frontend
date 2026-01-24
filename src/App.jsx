@@ -9,6 +9,7 @@ import Footer from "../components/Footer/Footer";
 import ScrollToTop from "./utils/ScrollToTop";
 
 import BackendStatus from "../components/BackendStatus/BackendStatus";
+import { Analytics } from "@vercel/analytics/react";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -60,6 +61,7 @@ const App = () => {
       <Header />
       <Outlet />
       <Footer />
+      <Analytics />
     </div>
   );
 };
