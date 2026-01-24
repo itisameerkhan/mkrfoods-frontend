@@ -64,40 +64,9 @@ const MyOrders = () => {
                     <h1>My Orders</h1>
                     <p>Track your past purchases and status</p>
                 </div>
-                <div className="skeleton-loading">
-                    {[1, 2].map((n) => (
-                        <div key={n} className="skeleton-card">
-                            <div className="skeleton-header">
-                                <div className="s-meta">
-                                    <div className="s-id"></div>
-                                    <div className="s-date"></div>
-                                </div>
-                                <div className="s-status"></div>
-                            </div>
-                            <div className="skeleton-body">
-                                <div className="s-item">
-                                    <div className="s-img"></div>
-                                    <div className="s-details">
-                                        <div className="s-title"></div>
-                                        <div className="s-variant"></div>
-                                    </div>
-                                    <div className="s-price"></div>
-                                </div>
-                                <div className="s-item">
-                                    <div className="s-img"></div>
-                                    <div className="s-details">
-                                        <div className="s-title"></div>
-                                        <div className="s-variant"></div>
-                                    </div>
-                                    <div className="s-price"></div>
-                                </div>
-                            </div>
-                            <div className="skeleton-footer">
-                                <div className="s-total-label"></div>
-                                <div className="s-total-value"></div>
-                            </div>
-                        </div>
-                    ))}
+                <div className="orders-loader">
+                    <div className="spinner"></div>
+                    <p>Loading your orders...</p>
                 </div>
             </div>
         );
@@ -131,21 +100,32 @@ const MyOrders = () => {
                     {orders.filter(order => order.status === 'success' || order.status === 'captured').map((order) => (
                         <div key={order._id} className="order-card">
                             <div className="order-header">
-                                <div className="order-meta">
-                                    <span className="order-id">Order #{order.orderId ? order.orderId.slice(-8).toUpperCase() : 'N/A'}</span>
-                                    <div className="order-dates">
-                                        <span className="order-date">
-                                            Ordered: {new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                                        </span>
-                                        {/* Display Expected Date */}
-                                        <span className="expected-date">
-                                            <b>Expected: {order.expectedDate || "Updated soon"}</b>
-                                        </span>
-                                    </div>
+                                <div className="header-top">
+                                    <span className="order-id">#{order.orderId ? order.orderId.slice(-8).toUpperCase() : 'N/A'}</span>
+                                    <span className="order-date">
+                                        {new Date(order.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                                    </span>
                                 </div>
-                                {/* Display Order Status (e.g., In Transit, Delivered) */}
-                                <div className={`order-status-badge ${order.orderStatus ? order.orderStatus.toLowerCase().replace(/\s/g, '-') : 'in-transit'}`}>
-                                    {order.orderStatus || "In Transit"}
+                                
+                                <div className="header-status-row">
+                                     <div className="delivery-info">
+                                        <div className="d-icon">
+                                            {/* Truck Icon */}
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M19 17H5C3.89543 17 3 16.1046 3 15V7C3 5.89543 3.89543 5 5 5H15M19 17C20.1046 17 21 16.1046 21 15V11C21 10.4477 20.5523 10 20 10H15M19 17V17.5M15 5V10M15 10V17M15 17H8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                                <circle cx="8" cy="17" r="2" stroke="currentColor" strokeWidth="1.5"/>
+                                                <circle cx="18" cy="17" r="2" stroke="currentColor" strokeWidth="1.5"/>
+                                            </svg>
+                                        </div>
+                                        <div className="d-text">
+                                            <span className="label">Expected Delivery</span>
+                                            <span className="value">{order.expectedDate || "Arriving soon"}</span>
+                                        </div>
+                                     </div>
+
+                                    <div className={`order-status-badge ${order.orderStatus ? order.orderStatus.toLowerCase().replace(/\s/g, '-') : 'in-transit'}`}>
+                                        {order.orderStatus || "In Transit"}
+                                    </div>
                                 </div>
                             </div>
 
