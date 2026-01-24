@@ -730,21 +730,23 @@
                 
                 input {
                     flex: 1;
+                    min-width: 0; // Prevent input from overflowing container
                     padding: 0.7rem;
                     border: 1px solid #ccc;
                     border-radius: 6px;
                     font-size: 0.9rem;
-                    &:focus { outline: none; border-color: #e47911; }
+                    &:focus { outline: none; border-color: #D33131; }
                 }
 
                 button {
-                    background: #e47911; // Amazon orange
+                    background: #D33131; // Changed to red as requested
                     color: white;
                     border: none;
                     padding: 0 1.2rem;
                     border-radius: 6px;
                     font-weight: 600;
                     cursor: pointer;
+                    white-space: nowrap; // Prevent text wrapping
                 }
             }
 
