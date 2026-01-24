@@ -14,6 +14,7 @@ import { doc, setDoc, getDoc, collection, query, where, getDocs } from 'firebase
 import validator from 'validator';
 import emailjs from '@emailjs/browser';
 import './Account.scss';
+import '../OtpVerification/OtpVerification.scss';
 
 const Account = () => {
   const navigate = useNavigate();
@@ -378,41 +379,64 @@ const Account = () => {
       </div>
 
       {isOtpSent && (
-        <div className="otp-overlay">
-          <div className="otp-modal">
-            <button className="close-btn" onClick={() => setIsOtpSent(false)}>&times;</button>
-            <div className="otp-modal-content">
-              <h1>OTP VERIFICATION</h1>
-              <p>An authentication code has been sent to <strong>{formData.email}</strong></p>
+        <div className="otp-container">
+          <div className="otp-card">
+            <button className="close-btn" onClick={() => setIsOtpSent(false)}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div className="otp-header">
+                <div className="otp-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        <path d="M9 12l2 2 4-4"></path>
+                    </svg>
+                </div>
+                <h1>Verification Code</h1>
+                <p className="otp-subtitle">
+                    We have sent a verification code to<br />
+                    <strong>{formData.email}</strong>
+                </p>
+            </div>
 
-              <div className="otp-input-container">
-                {otp.map((data, index) => (
-                  <input
-                    key={index}
-                    ref={(el) => (inputRefs.current[index] = el)}
-                    type="text"
-                    inputMode="numeric"
-                    pattern="\d{1}"
-                    maxLength="1"
-                    value={data}
-                    onChange={(e) => handleOtpChange(index, e.target.value)}
-                    onKeyDown={(e) => handleKeyDown(index, e)}
-                    onFocus={(e) => e.target.select()}
-                    onPaste={handlePaste}
-                  />
-                ))}
-              </div>
+            <div className="otp-form">
+                <div className="otp-inputs">
+                    {otp.map((data, index) => (
+                    <input
+                        key={index}
+                        ref={(el) => (inputRefs.current[index] = el)}
+                        type="text"
+                        inputMode="numeric"
+                        pattern="\d{1}"
+                        maxLength="1"
+                        value={data}
+                        onChange={(e) => handleOtpChange(index, e.target.value)}
+                        onKeyDown={(e) => handleKeyDown(index, e)}
+                        onFocus={(e) => e.target.select()}
+                        onPaste={handlePaste}
+                        className="otp-input"
+                        disabled={loading}
+                    />
+                    ))}
+                </div>
 
-              <button onClick={verifyOtp} disabled={loading} className="btn-primary btn-verify">
-                {loading ? 'Verifying...' : 'VERIFY'}
-              </button>
+                <button onClick={verifyOtp} disabled={loading} className="verify-btn">
+                    {loading ? 'Verifying...' : 'Verify Account'}
+                </button>
+            </div>
 
-              <p className="resend-text">
-                 Didn't receive the code?{' '}
-                <span className="resend-btn" onClick={handleResendOtp} style={{ pointerEvents: loading ? 'none' : 'auto' }}>
-                  Resend OTP
-                </span>
-              </p>
+            <div className="otp-footer">
+                <p>Didn't receive the code?</p>
+                <button
+                    className="resend-btn" 
+                    onClick={handleResendOtp}
+                    disabled={loading}
+                >
+                    Resend Code
+                </button>
             </div>
           </div>
         </div>

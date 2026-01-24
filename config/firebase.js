@@ -3,13 +3,13 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC-8Qd9ejnIGR7rJp1c4aQJyp4DJk0GpIQ",
-  authDomain: "mkrfoods2025-1b513.firebaseapp.com",
-  projectId: "mkrfoods2025-1b513",
-  storageBucket: "mkrfoods2025-1b513.firebasestorage.app",
-  messagingSenderId: "1030575240046",
-  appId: "1:1030575240046:web:aedb5669880e1158a3877f",
-  measurementId: "G-Q4VWQDNT93",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);

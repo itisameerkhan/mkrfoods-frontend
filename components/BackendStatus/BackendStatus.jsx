@@ -60,9 +60,9 @@ const BackendStatus = () => {
         </div>
       )}
       {status === 'error' && (
-        <div className="status-content">
+        <div className="status-content error">
           <span className="dot offline"></span>
-          <span>Connecting to server...</span> {/* Keep showing connecting or error? User asked for "loading..." */}
+          <span>This app has some issue, please try again later</span>
         </div>
       )}
     </div>

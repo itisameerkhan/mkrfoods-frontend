@@ -167,16 +167,24 @@ const OtpVerification = () => {
     return (
         <div className="otp-container">
             <div className="otp-card">
+                <button className="close-btn" onClick={() => navigate('/account')}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+                
                 <div className="otp-header">
                     <div className="otp-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <path d="M9 12l2 2 4-4"></path>
                         </svg>
                     </div>
-                    <h1>OTP VERIFICATION</h1>
+                    <h1>Verification Code</h1>
                     <p className="otp-subtitle">
-                        A One Time Password has been sent to <strong>{email}</strong>.
+                        We have sent a verification code to<br />
+                        <strong>{email}</strong>
                     </p>
                 </div>
 
@@ -196,27 +204,30 @@ const OtpVerification = () => {
                                 onPaste={handlePaste}
                                 className="otp-input"
                                 disabled={loading}
+                                autoFocus={index === 0}
                             />
                         ))}
                     </div>
 
                     <button type="submit" disabled={loading || otp.join('').length < 6} className="verify-btn">
-                        {loading ? 'Verifying...' : 'Verify & Continue'}
+                        {loading ? (
+                            <span className="loader">Verifying...</span>
+                        ) : (
+                            'Verify Account'
+                        )}
                     </button>
                 </form>
 
                 <div className="otp-footer">
-                    <p>
-                        Didn't receive the code?{' '}
-                        <button
-                            type="button"
-                            onClick={handleResendOtp}
-                            disabled={resendTimer > 0 || loading}
-                            className="resend-btn"
-                        >
-                            {resendTimer > 0 ? `Resend in ${resendTimer}s` : 'Resend'}
-                        </button>
-                    </p>
+                    <p>Didn't receive the code?</p>
+                    <button
+                        type="button"
+                        onClick={handleResendOtp}
+                        disabled={resendTimer > 0 || loading}
+                        className="resend-btn"
+                    >
+                        {resendTimer > 0 ? `Resend (${resendTimer}s)` : 'Resend Code'}
+                    </button>
                 </div>
             </div>
         </div>
