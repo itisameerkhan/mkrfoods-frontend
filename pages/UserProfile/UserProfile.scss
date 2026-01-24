@@ -347,13 +347,22 @@
       }
 
       nav {
-        flex-direction: row;
-        justify-content: center;
-        gap: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr; // 2 columns for better spacing
+        gap: 0.8rem;
+        width: 100%;
 
         button {
-          flex-grow: 1;
           justify-content: center;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255,255,255,0.1);
+          padding: 1rem;
+          
+          &.logout {
+             margin-top: 0; // Reset auto margin
+             background: rgba(255, 0, 0, 0.1);
+             border: 1px solid rgba(255, 0, 0, 0.2);
+          }
         }
       }
     }

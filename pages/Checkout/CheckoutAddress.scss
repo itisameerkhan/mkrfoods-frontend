@@ -215,6 +215,11 @@
         .modal-content {
             background: white;
             padding: 2rem;
+            
+            @media (max-width: 600px) {
+              padding: 1.2rem; // Reduce padding on mobile
+            }
+
             border-radius: 4px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             width: 100%;
@@ -251,27 +256,38 @@
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 1rem;
-    
+
+                @media (max-width: 600px) {
+                  grid-template-columns: 1fr; // Single column on mobile
+                  gap: 0.8rem;
+                }
+
                 .form-group {
                     display: flex;
                     flex-direction: column;
                     gap: 0.4rem;
-    
+
                     &.full-width {
                         grid-column: span 2;
+                        
+                        @media (max-width: 600px) {
+                          grid-column: span 1; // Reset span
+                        }
                     }
-    
+
                     label {
                         font-size: 0.8rem;
                         color: #666;
                         font-weight: 600;
                     }
-    
+
                     input, textarea {
                         padding: 0.8rem;
                         border: 1px solid #d4d5d9;
                         border-radius: 4px;
                         font-size: 0.9rem;
+                        width: 100%; // Ensure full width
+                        box-sizing: border-box; // Prevent overflow
                         
                         &:focus {
                             border-color: #1a1a1a;
@@ -289,7 +305,7 @@
                     .type-options {
                         display: flex;
                         gap: 1rem;
-                        flex-wrap: wrap; // Handle small screens
+                        flex-wrap: wrap; 
                         
                         button {
                             padding: 0.5rem 1rem;
@@ -298,6 +314,9 @@
                             background: white;
                             cursor: pointer;
                             font-size: 0.85rem;
+                            flex: 1; // Make buttons expand on mobile
+                            text-align: center;
+                            min-width: 70px;
                             
                             &.active {
                                 background: #1a1a1a;
@@ -313,7 +332,12 @@
                     display: flex;
                     gap: 1rem;
                     margin-top: 1rem;
-    
+                    
+                    @media (max-width: 600px) {
+                      grid-column: span 1; // Reset span
+                      flex-direction: column-reverse; // Cancel on bottom/secondary
+                    }
+
                     .btn-save {
                         background: #D33131;
                         color: white;
@@ -322,13 +346,13 @@
                         font-weight: 700;
                         border-radius: 4px;
                         cursor: pointer;
-                        flex: 1; // Full width logic if desired, or fixed
+                        flex: 1; 
                     }
     
                     .btn-cancel {
                         background: white;
                         color: #1a1a1a;
-                        border: 1px solid #d4d5d9; // Add border
+                        border: 1px solid #d4d5d9; 
                         padding: 0.8rem 1rem;
                         cursor: pointer;
                         font-weight: 600;
