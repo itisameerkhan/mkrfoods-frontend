@@ -164,7 +164,7 @@
   }
 }
 
-// Global reset within this component to ensure padding doesn't break width
+// Global reset within this component
 .latest-products * {
     box-sizing: border-box;
 }
@@ -177,3 +177,55 @@
         border-radius: 10px; // Match ProductCard <360px radius
     }
 }
+
+// SKELETON ANIMATIONS & STYLES
+.skel-line, .skel-box, .skel-badge, .skel-btn {
+  background: linear-gradient(90deg, #f0f0f0 8%, #e8e8e8 18%, #f0f0f0 33%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s linear infinite;
+  border-radius: 6px;
+}
+
+.skel-line.title {
+    height: 14px;
+    width: 70%;
+    margin-bottom: 8px;
+}
+
+// Grid Row (Sizes)
+.skel-grid-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 8px;
+    
+    .skel-box {
+        aspect-ratio: 1/0.8; // Roughly squarish/tall
+        height: 40px; // Approx height of size card
+        border-radius: 8px;
+    }
+}
+
+// Footer Row (Badge + Button)
+.skel-footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto; // Push to bottom if needed
+
+    .skel-badge {
+        width: 60px;
+        height: 20px;
+        border-radius: 20px;
+    }
+
+    .skel-btn {
+        flex: 1;
+        height: 32px;
+        border-radius: 8px;
+    }
+}
+
+// Remove old styles
+.skel-line.sizes, .skel-line.action { display: none; }

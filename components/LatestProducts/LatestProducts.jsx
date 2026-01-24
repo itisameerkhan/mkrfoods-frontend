@@ -59,8 +59,15 @@ const LatestProducts = () => {
                 <div className="skel-img" />
                 <div className="skel-details">
                   <div className="skel-line title" />
-                  <div className="skel-line sizes" />
-                  <div className="skel-line action" />
+                  <div className="skel-grid-row">
+                      <div className="skel-box" />
+                      <div className="skel-box" />
+                      <div className="skel-box" />
+                  </div>
+                  <div className="skel-footer-row">
+                      <div className="skel-badge" />
+                      <div className="skel-btn" />
+                  </div>
                 </div>
               </div>
             ))}
