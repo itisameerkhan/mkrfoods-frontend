@@ -129,16 +129,26 @@
 
   .product-cards {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 0.8rem; // Tighter gap
   }
 
-  // Mobile Skeleton Adjustments
+  // Mobile Skeleton Adjustments - Match ProductCard Exactly
+  .skel-details {
+    padding: 8px !important; 
+    gap: 6px !important; // Match ProductCard gap
+  }
+
+  .skel-line.title {
+      height: 12px;
+  }
+
   .skel-line.sizes {
-    height: 35px; // Reduced from 50px
+    height: 25px !important; // Single row of small size buttons
   }
 
   .skel-line.action {
-    height: 30px; // Reduced from 40px
-    margin-top: 2px;
+    height: 28px !important; // Match small mobile button
+    margin-top: 2px !important;
+    border-radius: 8px;
   }
 }
