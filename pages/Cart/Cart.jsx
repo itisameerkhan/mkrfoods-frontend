@@ -348,7 +348,7 @@ const Cart = () => {
           </span>
         </div>
         <button className="btn-mobile-checkout" onClick={handleCheckout}>
-          Proceed to Buy ({itemCount} items)
+          Proceed to Buy
         </button>
       </div>
     </div>

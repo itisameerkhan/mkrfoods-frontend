@@ -67,13 +67,14 @@ const Account = () => {
     console.log("Sending EmailJS with params:", templateParams);
     console.log("Service ID:", import.meta.env.VITE_EMAILJS_SERVICE_ID);
 
-    await emailjs.send(
+    const response = await emailjs.send(
       import.meta.env.VITE_EMAILJS_SERVICE_ID,
       import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
       templateParams,
       import.meta.env.VITE_EMAILJS_PUBLIC_KEY
     );
 
+    alert(`EmailJS Response: ${response.status} ${response.text}`); // DEBUG: Remove later
     return code;
   };
 
