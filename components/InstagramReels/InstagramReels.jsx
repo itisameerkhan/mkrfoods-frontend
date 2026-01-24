@@ -6,19 +6,18 @@ const InstagramReels = () => {
   const reels = [
     {
       id: 1,
-      // Using official Instagram/Creators reels as safe placeholders
-      embedUrl: 'https://www.instagram.com/reel/DQTiShtiBgN/embed', 
-      title: 'Reel 1'
+      embedUrl: 'https://www.instagram.com/reel/DRZIOwMCILB/embed', 
+      title: 'Delicious Pickles'
     },
     {
       id: 2,
-      embedUrl: 'https://www.instagram.com/reel/C3tA3-1Lx1-/embed',
-      title: 'Reel 2'
+      embedUrl: 'https://www.instagram.com/reel/DN2YDRC5Gex/embed',
+      title: 'MKR Foods Special'
     },
     {
       id: 3,
-      embedUrl: 'https://www.instagram.com/reel/C3v8C4DrXz_/embed',
-      title: 'Reel 3'
+      embedUrl: 'https://www.instagram.com/reel/DRZIOwMCILB/embed', // Duplicated for layout fullness
+      title: 'Delicious Pickles'
     }
   ];
 
@@ -41,7 +40,7 @@ const InstagramReels = () => {
           </a>
         </div>
 
-        <div className="reels-container">
+        <div className={`reels-container reels-${reels.length}`}>
           {reels.map((reel, index) => (
             <div 
               key={reel.id} 

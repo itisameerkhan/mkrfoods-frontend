@@ -1,497 +1,324 @@
+$primary: #4f46e5;
+$text-main: #1f2937;
+$text-muted: #6b7280;
+$border: #e5e7eb;
+$bg-page: #f9fafb;
+$white: #ffffff;
+
 .my-orders-page {
-    max-width: 100%; // stretch full max
-    margin: 90px auto 40px;
-    padding: 0 40px;
-    min-height: 60vh;
-    animation: fadeIn 0.5s ease-out;
+  max-width: 1000px;
+  margin: 100px auto 60px; // account for fixed header
+  padding: 0 20px;
+  min-height: 80vh;
+  box-sizing: border-box;
 
-    // ... existing header styles ...
+  .page-header {
+    margin-bottom: 2rem;
+    text-align: center;
 
-    // ... existing loading/error styles ...
+    h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: $text-main;
+      margin: 0;
+      margin-bottom: 0.5rem;
+    }
+    
+    p {
+      color: $text-muted;
+      font-size: 1rem;
+    }
+  }
 
-    // ... existing no-orders styles ...
+  .no-orders {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: $white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
 
-    .orders-list {
+    .icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+    
+    h2 {
+      color: $text-main;
+      margin-bottom: 0.5rem;
+    }
+    
+    p {
+      color: $text-muted;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-shop {
+      padding: 0.75rem 2rem;
+      background: $primary;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      
+      &:hover {
+        background: darken($primary, 5%);
+      }
+    }
+  }
+
+  .orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .order-card {
+    background: $white;
+    border-radius: 16px;
+    border: 1px solid $border;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    
+    &:hover {
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+      transform: translateY(-2px);
+    }
+
+    .order-header {
+      background: #f8fafc;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid $border;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+
+      .order-meta {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .order-card {
-        background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid #eee;
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        width: 100%;
-        animation: slideUp 0.4s ease-out forwards;
-        opacity: 0;
-        transform: translateY(20px);
-
-        // Stagger animation for children using nth-child would be ideal, 
-        // but simple loop works here or just plain CSS keyframes
-        @for $i from 1 through 10 {
-            &:nth-child(#{$i}) {
-                animation-delay: #{$i * 0.1}s;
-            }
-        }
-
-        &:hover {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            border-color: #ffd1d1;
-            transform: translateY(-2px);
-        }
-
-        .order-header {
-            background: #fafafa;
-            padding: 1.2rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #eee;
-
-            .order-meta {
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-
-                .order-id {
-                    font-weight: 800;
-                    color: #333;
-                    font-size: 1.1rem;
-                    letter-spacing: 0.5px;
-                }
-
-                .order-dates {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 0.2rem;
-                    font-size: 0.9rem;
-
-                    .order-date {
-                        color: #888;
-                    }
-                    
-                    .expected-date {
-                        color: #ff6b6b;
-                        font-size: 1rem;
-                        font-weight: 600;
-                        display: flex;
-                        align-items: center;
-                        gap: 0.5rem;
-                        
-                        b {
-                            font-weight: 700;
-                        }
-                    }
-                }
-            }
-
-            .order-status-badge {
-                padding: 0.5rem 1rem;
-                border-radius: 30px;
-                font-size: 0.85rem;
-                font-weight: 600;
-                text-transform: capitalize;
-                white-space: nowrap;
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                justify-content: center;
-                min-width: 100px;
-                
-                &::before {
-                    content: '';
-                    display: inline-block;
-                    width: 8px;
-                    height: 8px;
-                    border-radius: 50%;
-                }
-
-                &.in-transit {
-                    background: #e3f2fd;
-                    color: #1976d2;
-                    &::before { background: #1976d2; }
-                }
-
-                &.delivered {
-                    background: #e8f5e9;
-                    color: #2e7d32;
-                    &::before { background: #2e7d32; }
-                }
-
-                &.cancelled {
-                    background: #ffebee;
-                    color: #c62828;
-                    &::before { background: #c62828; }
-                }
-
-                &.processing {
-                    background: #fff3e0;
-                    color: #ef6c00;
-                    &::before { background: #ef6c00; }
-                }
-
-                &.refunded {
-                    background: #f3e5f5;
-                    color: #7b1fa2;
-                    &::before { background: #7b1fa2; }
-                }
-            }
-        }
-
-        .order-items {
-            padding: 1.5rem;
-
-            .order-item {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                margin-bottom: 1rem;
-                padding-bottom: 1rem;
-                border-bottom: 1px solid #f9f9f9;
-
-                &:last-child {
-                    margin-bottom: 0;
-                    padding-bottom: 0;
-                    border-bottom: none;
-                }
-
-                .item-img {
-                    width: 60px;
-                    height: 60px;
-                    border-radius: 8px;
-                    overflow: hidden;
-                    background: #f5f5f5;
-
-                    img {
-                        width: 100%;
-                        height: 100%;
-                        object-fit: cover;
-                    }
-                }
-
-                .item-details {
-                    flex: 1;
-
-                    h4 {
-                        margin: 0 0 0.3rem 0;
-                        font-size: 1rem;
-                        color: #333;
-                    }
-
-                    .item-variants {
-                        display: flex;
-                        gap: 0.5rem;
-                        flex-wrap: wrap;
-
-                        .variant-badge {
-                            font-size: 0.8rem;
-                            background: #f0f0f0;
-                            padding: 0.2rem 0.6rem;
-                            border-radius: 4px;
-                            color: #666;
-                        }
-                    }
-                }
-
-                .item-price {
-                    font-weight: 600;
-                    color: #333;
-                }
-            }
-        }
-
-        .order-address {
-            padding: 1.5rem 2rem;
-            border-top: 1px solid #f0f0f0;
-            background: linear-gradient(to right, #fafafa, #ffffff);
-            
-            h5 {
-                margin: 0 0 1rem 0;
-                font-size: 0.85rem;
-                font-weight: 700;
-                color: #999;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
-
-            .address-content {
-                display: flex;
-                gap: 1rem;
-                align-items: flex-start;
-
-                .addr-icon {
-                    flex-shrink: 0;
-                    width: 40px;
-                    height: 40px;
-                    background: #ffebee;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    
-                    svg {
-                        width: 20px;
-                        height: 20px;
-                    }
-                }
-
-                .addr-details {
-                    flex: 1;
-                    
-                    p {
-                        margin: 0 0 0.3rem 0;
-                        font-size: 0.95rem;
-                        color: #555;
-                        line-height: 1.5;
-                        
-                        &.addr-name {
-                            font-weight: 700;
-                            color: #222;
-                            font-size: 1rem;
-                            margin-bottom: 0.4rem;
-                        }
-                    }
-
-                    .addr-phone-row {
-                        margin-top: 0.6rem;
-                        display: flex;
-                        align-items: center;
-                        gap: 0.5rem;
-                        color: #666;
-                        font-weight: 500;
-                        
-                        svg {
-                            width: 16px;
-                            height: 16px;
-                            path {
-                                stroke: #888;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        .order-footer {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            .order-total {
-                span {
-                    font-size: 0.9rem;
-                    color: #666;
-                    margin-right: 0.5rem;
-                }
-
-                h3 {
-                    display: inline-block;
-                    margin: 0;
-                    font-size: 1.2rem;
-                    color: #ff6b6b;
-                }
-            }
-        }
-    }
-
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-    // Skeleton Loading Styles
-    .skeleton-loading {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-
-    .skeleton-card {
-        background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        border: 1px solid #e5e5e5; // standardized border
+        gap: 0.25rem;
         
-        .skeleton-header {
-            background: white;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #f0f0f0;
-            
-            .s-meta {
-                display: flex;
-                flex-direction: column;
-                gap: 8px;
-                
-                .s-id {
-                    height: 16px;
-                    width: 140px;
-                    background: #e0e0e0; // Standard skeleton gray
-                    border-radius: 4px;
-                }
-                
-                .s-date {
-                    height: 14px;
-                    width: 100px;
-                    background: #f0f0f0;
-                    border-radius: 4px;
-                }
-            }
-            
-            .s-status {
-                height: 28px;
-                width: 90px;
-                background: #e0e0e0;
-                border-radius: 20px;
-            }
+        .order-id {
+          font-family: monospace;
+          font-weight: 700;
+          color: $text-main;
+          font-size: 1.1rem;
+          background: #e0e7ff;
+          color: $primary;
+          padding: 2px 8px;
+          border-radius: 6px;
+          display: inline-block;
+          width: fit-content;
         }
 
-        .skeleton-body {
-            padding: 1.5rem;
-            
-            .s-item {
-                display: flex;
-                align-items: center;
-                gap: 1rem;
-                margin-bottom: 1rem;
-                padding-bottom: 1rem;
-                border-bottom: 1px solid #f5f5f5;
-                
-                &:last-child {
-                    margin-bottom: 0;
-                    padding-bottom: 0;
-                    border-bottom: none;
-                }
-                
-                .s-img {
-                    width: 60px;
-                    height: 60px;
-                    background: #e0e0e0;
-                    border-radius: 8px;
-                    flex-shrink: 0;
-                }
-                
-                .s-details {
-                    flex: 1;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 8px;
-                    
-                    .s-title {
-                        height: 16px;
-                        background: #e0e0e0;
-                        border-radius: 4px;
-                        width: 50%;
-                    }
-                    
-                    .s-variant {
-                        height: 14px;
-                        background: #f0f0f0;
-                        border-radius: 4px;
-                        width: 30%;
-                    }
-                }
-
-                .s-price {
-                    height: 16px;
-                    width: 70px;
-                    background: #e0e0e0;
-                    border-radius: 4px;
-                }
+        .order-dates {
+          font-size: 0.85rem;
+          color: $text-muted;
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+          
+          .expected-date {
+            b {
+              color: $primary; 
             }
+          }
         }
+      }
 
-        .skeleton-footer {
-            padding: 1rem 1.5rem;
-            border-top: 1px solid #f5f5f5;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            .s-total-label {
-                height: 14px;
-                width: 80px;
-                background: #f0f0f0;
-                border-radius: 4px;
-            }
-
-            .s-total-value {
-                height: 20px;
-                width: 90px;
-                background: #e0e0e0;
-                border-radius: 4px;
-            }
-        }
+      .order-status-badge {
+         padding: 0.4rem 1rem;
+         border-radius: 20px;
+         font-size: 0.8rem;
+         font-weight: 700;
+         text-transform: uppercase;
+         letter-spacing: 0.05em;
+         
+         &.in-transit { background: #eff6ff; color: #3b82f6; border: 1px solid #bfdbfe; }
+         &.delivered { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+         &.cancelled { background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; }
+         &.processing { background: #fff7ed; color: #f97316; border: 1px solid #fed7aa; }
+      }
     }
 
-    // Shimmer Animation - Standard high compatibility
-    .skeleton-card .s-id, 
-    .skeleton-card .s-date, 
-    .skeleton-card .s-status, 
-    .skeleton-card .s-img, 
-    .skeleton-card .s-title, 
-    .skeleton-card .s-variant, 
-    .skeleton-card .s-price,
-    .skeleton-card .s-total-label,
-    .skeleton-card .s-total-value {
-        position: relative;
-        overflow: hidden;
-        &::after {
-            content: "";
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
+    .order-items {
+      padding: 0;
+
+      .order-item {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        border-bottom: 1px solid $border;
+        
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .item-img {
+          width: 80px;
+          height: 80px;
+          border-radius: 12px;
+          overflow: hidden;
+          background: #f3f4f6;
+          flex-shrink: 0;
+          border: 1px solid $border;
+
+          img {
             width: 100%;
             height: 100%;
-            background: linear-gradient(
-                90deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.5) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            transform: translateX(-100%);
-            animation: shimmer 1.5s infinite;
+            object-fit: cover;
+          }
         }
-    }
-}
 
-@keyframes shimmer {
-    100% {
-        transform: translateX(100%);
-    }
-}
+        .item-details {
+          flex: 1;
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+          h4 {
+            font-size: 1.1rem;
+            margin: 0 0 0.5rem 0;
+            color: $text-main;
+            font-weight: 600;
+          }
 
-@media (max-width: 600px) {
-    .my-orders-page {
-        padding: 0 15px;
-        
-        .order-card {
-            .order-header {
-                padding: 1rem;
-            }
+          .item-variants {
+            display: flex;
+            gap: 8px;
             
-            .order-items {
-                padding: 1rem;
+            .variant-badge {
+              font-size: 0.75rem;
+              background: #f3f4f6;
+              padding: 4px 8px;
+              border-radius: 6px;
+              color: $text-muted;
+              font-weight: 500;
             }
+          }
         }
+
+        .item-price {
+          font-weight: 700;
+          font-size: 1.1rem;
+          color: $text-main;
+        }
+      }
     }
+
+    .order-address {
+       background: #fafafa;
+       padding: 1.5rem;
+       border-top: 1px solid $border;
+       
+       h5 {
+         font-size: 0.75rem;
+         text-transform: uppercase;
+         letter-spacing: 0.05em;
+         color: $text-muted;
+         margin: 0 0 1rem 0;
+         font-weight: 700;
+       }
+       
+       .address-content {
+         display: flex;
+         gap: 1rem;
+         
+         .addr-icon {
+           width: 32px;
+           height: 32px;
+           background: #fee2e2;
+           border-radius: 50%;
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           color: #ef4444;
+         }
+         
+         .addr-details {
+           font-size: 0.9rem;
+           color: $text-main;
+           line-height: 1.5;
+           
+           .addr-name {
+             font-weight: 700;
+             margin-bottom: 4px;
+           }
+
+           .addr-phone-row {
+             display: flex;
+             align-items: center;
+             gap: 0.5rem;
+             margin-top: 0.5rem;
+             font-weight: 500;
+             color: $text-muted;
+             
+             svg {
+               color: $primary; /* Make phone icon primary color */
+             }
+           }
+         }
+       }
+    }
+
+    .order-footer {
+      padding: 1.5rem;
+      background: #f8fafc;
+      border-top: 1px solid $border;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1rem;
+
+      .order-total {
+        display: flex;
+        align-items: center; 
+        gap: 1rem;
+        
+        span {
+          font-size: 0.9rem;
+          color: $text-muted;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          font-weight: 600;
+        }
+
+        h3 {
+          margin: 0;
+          font-size: 1.5rem;
+          color: $primary;
+          font-weight: 800;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 640px) {
+    .order-card .order-header {
+      flex-direction: column;
+      align-items: flex-start;
+      
+      .order-status-badge {
+        width: 100%;
+        text-align: center;
+      }
+    }
+    
+    .order-item {
+      padding: 1rem !important;
+      
+      .item-img {
+        width: 60px !important;
+        height: 60px !important;
+      }
+    }
+  }
 }
+
+// Reuse skeleton styles or keep them simplified in the same file if needed.
+// For now omitting full skeleton redraw to focus on main UI, 
+// strictly user asked for "ui change".
+// But keeping blank skeleton classes to avoid break if they exist in JSX
+.skeleton-loading { display: none; } 

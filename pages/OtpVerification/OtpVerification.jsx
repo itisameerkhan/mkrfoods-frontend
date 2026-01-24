@@ -5,6 +5,7 @@ import './OtpVerification.scss';
 import { auth, db } from '../../config/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setDoc, doc } from 'firebase/firestore'; 
+import { verifySignupOtp, resendSignupOtp } from '../../src/services/otpService'; 
 
 const OtpVerification = () => {
     const location = useLocation();
@@ -89,31 +90,36 @@ const OtpVerification = () => {
         setLoading(true);
 
         try {
-            // Verify OTP with backend
-            const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/api/verify-otp`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, otp: otpValue }),
-            });
+            // Verify OTP using the service (handles URL logic correctly)
+            const response = await verifySignupOtp({ email, otp: otpValue });
+            const data = response.data; // Axios returns data in .data
 
-            const data = await response.json();
+            if (data && data.success) { // adjust check based on backend response format
+                 const { email: verifiedEmail, name, password } = data.email ? { email: data.email, ...data } : data; // Fallback mapping depending on exact API response
 
-            if (response.ok && data.data) {
-                const { email: verifiedEmail, name, password } = data.data;
+                 // Note: response.data.data vs response.data depending on axios vs fetch
+                 // Let's look at Account.jsx usage: 
+                 // const { email, name, password } = response.data.data;
+                 
+                 // So we should match that structure.
+                 const userData = data.data || data; // handle flexible response
+                 const userEmail = userData.email;
+                 const userName = userData.name;
+                 const userPassword = userData.password;
 
                 // OTP verified! Now create Firebase account
                 toast.loading('Creating your account...');
 
                 try {
                     // Create Firebase user
-                    const userCredential = await createUserWithEmailAndPassword(auth, verifiedEmail, password);
+                    const userCredential = await createUserWithEmailAndPassword(auth, userEmail, userPassword);
                     const user = userCredential.user;
 
                     // Create Firestore user doc
                     await setDoc(doc(db, 'users', user.uid), {
                         uid: user.uid,
-                        name,
-                        email: verifiedEmail,
+                        name: userName,
+                        email: userEmail,
                         createdAt: new Date().toISOString(),
                         emailVerified: true,
                     });
@@ -133,7 +139,8 @@ const OtpVerification = () => {
                 setLoading(false);
             }
         } catch (err) {
-            toast.error('Error verifying OTP. Please try again.');
+            const msg = err.response?.data?.message || 'Error verifying OTP. Please try again.';
+            toast.error(msg);
             console.error(err);
             setLoading(false);
         }
@@ -143,24 +150,14 @@ const OtpVerification = () => {
         setLoading(true);
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/api/resend-otp`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email }),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                toast.success('OTP resent to your email!');
-                setResendTimer(60);
-                setOtp(['', '', '', '', '', '']);
-                inputRefs.current[0]?.focus();
-            } else {
-                toast.error(data.message || 'Failed to resend OTP');
-            }
+            await resendSignupOtp({ email });
+            toast.success('OTP resent to your email!');
+            setResendTimer(60);
+            setOtp(['', '', '', '', '', '']);
+            inputRefs.current[0]?.focus();
         } catch (err) {
-            toast.error('Error resending OTP. Please try again.');
+            const msg = err.response?.data?.message || 'Error resending OTP. Please try again.';
+            toast.error(msg);
             console.error(err);
         } finally {
             setLoading(false);

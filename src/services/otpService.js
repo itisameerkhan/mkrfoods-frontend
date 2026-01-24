@@ -1,18 +1,11 @@
 import axios from 'axios';
 
-// Dynamic configuration to handle both Local (8080) and Production (Render)
-// This eliminates the need for environment variables that might be undefined
-let API_URL;
-
-if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    API_URL = "http://localhost:8080/api";
-} else {
-    API_URL = "https://mkrfoodsbackend.onrender.com/api";
-}
+// Use environment variable for API URL
+// Use environment variable for API URL (Origin) and append /api
+const BASE_URL = import.meta.env.VITE_REACT_APP_API_URL || "http://localhost:8080";
+const API_URL = `${BASE_URL}/api`;
 
 console.log("OTP Service API URL:", API_URL);
-
-console.log("OTP Service API URL:", API_URL); // Debugging log
  
 
 /**

@@ -13,7 +13,7 @@ const Home = () => {
       <HomeCategory />
       <LatestProducts />
       <Description />
-      <InstagramReels />
+      {/* <InstagramReels /> */}
       <Reviews />
     </div>
   );

@@ -1,105 +1,139 @@
-$blue: #4285f4;
-$gray: #6b7280;
-$dark: #0f172a;
-$border: #e2e8f0;
+$primary: #4f46e5;
+$primary-hover: #4338ca;
+$text: #1f2937;
+$text-light: #6b7280;
+$border: #e5e7eb;
+$bg: #f9fafb;
 
 .account-page-wrapper {
+  // Use padding to clear fixed header (assuming header is ~70-80px)
+  // Use min-height to ensure full screen coverage
+  min-height: 100vh;
+  width: 100%;
+  background-color: $bg;
+  
+  // Flex centering
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding-top: 8rem;
-  padding-bottom: 4rem;
-  min-height: 100vh;
-  background-color: #f8fafc;
-  position: relative;
+  align-items: center;
+  
+  // Important: Add padding top to account for the fixed header
+  // AND prevent the card from touching the top edge
+  padding-top: 100px; 
+  padding-bottom: 40px;
+  box-sizing: border-box;
 
   .auth-card {
-    background: #fff;
+    background: #ffffff;
     width: 100%;
-    max-width: 440px;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+    max-width: 400px;
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    // Ensure no scroll visible on card unless screen is tiny
+    position: relative;
+    overflow: visible; 
   }
 
-  // ... (Keep existing auth-header and auth-form styles from previous step)
   .auth-header {
-    margin-bottom: 1.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+
     .subtitle {
-      color: $gray;
-      font-size: 0.95rem;
-      margin-bottom: 2px;
+      color: $text-light;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
     }
+    
     h1 {
-      margin: 0;
-      font-size: 2rem;
-      color: $dark;
+      color: $text;
+      font-size: 1.875rem;
       font-weight: 800;
+      margin: 0;
+      line-height: 1.2;
     }
   }
 
   .auth-form {
     .form-group {
-      margin-bottom: 0.75rem;
+      margin-bottom: 1.25rem;
+
       label {
         display: block;
-        font-size: 0.9rem;
-        font-weight: 600;
-        margin-bottom: 4px;
-        color: #334155;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: $text;
+        margin-bottom: 0.5rem;
       }
+
       input {
         width: 100%;
-        padding: 0.85rem 1rem;
-        border: 1px solid $border;
-        border-radius: 10px;
+        padding: 0.75rem 1rem;
         font-size: 1rem;
-        box-sizing: border-box;
+        border: 1px solid $border;
+        border-radius: 8px;
+        background: #fff;
+        color: $text;
+        outline: none;
+        transition: all 0.2s;
+        box-sizing: border-box; // Fix width overflow
+
+        &::placeholder {
+          color: #9ca3af;
+        }
+
+        &:focus {
+          border-color: $primary;
+          box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
       }
     }
+
     .form-options {
       display: flex;
-      justify-content: space-between;
-      margin: 1.2rem 0;
-      font-size: 0.9rem;
-      .remember-me {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        color: $dark;
-      }
+      justify-content: flex-end;
+      margin-bottom: 1.5rem;
+
       .forgot-link {
-        background: none;
+        // Reset button styles
+        appearance: none;
+        background: transparent;
         border: none;
-        color: $blue;
+        padding: 0;
+        
+        color: $primary;
+        font-size: 0.875rem;
         font-weight: 600;
         cursor: pointer;
+        
+        &:hover {
+          color: $primary-hover;
+          text-decoration: underline;
+        }
       }
     }
+
     .btn-primary {
       width: 100%;
-      background: $blue;
-      color: #fff;
-      padding: 0.9rem;
+      padding: 0.875rem;
+      background-color: $primary;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 600;
       border: none;
-      border-radius: 10px;
-      font-weight: 700;
+      border-radius: 8px;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
-
+      transition: background-color 0.2s;
+      
       &:hover:not(:disabled) {
-        background: darken($blue, 8%);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(66, 133, 244, 0.4);
+        background-color: $primary-hover;
       }
-
-      &:active:not(:disabled) {
-        transform: translateY(0);
-      }
-
+      
       &:disabled {
-        opacity: 0.6;
+        opacity: 0.7;
         cursor: not-allowed;
       }
     }
@@ -107,17 +141,16 @@ $border: #e2e8f0;
     .divider {
       display: flex;
       align-items: center;
+      text-align: center;
+      color: $text-light;
+      font-size: 0.875rem;
       margin: 1.5rem 0;
-      color: $gray;
-      font-size: 0.85rem;
-      font-weight: 500;
       
       &::before,
       &::after {
-        content: "";
+        content: '';
         flex: 1;
-        height: 1px;
-        background: $border;
+        border-bottom: 1px solid $border;
       }
       
       span {
@@ -127,29 +160,27 @@ $border: #e2e8f0;
 
     .btn-google {
       width: 100%;
-      background: #fff;
-      color: #3c4043;
-      padding: 0.8rem;
-      border: 1px solid $border;
-      border-radius: 10px;
-      font-weight: 500;
-      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 12px;
+      padding: 0.75rem;
+      background-color: #ffffff;
+      border: 1px solid $border;
+      border-radius: 8px;
       font-size: 1rem;
-      transition: all 0.2s ease;
+      font-weight: 500;
+      color: $text;
+      cursor: pointer;
+      transition: background-color 0.2s;
       
-      &:hover:not(:disabled) {
-        background-color: #f8fafc;
-        border-color: darken($border, 10%);
-        box-shadow: 0 1px 2px 0 rgba(60,64,67, .3), 0 1px 3px 1px rgba(60,64,67, .15);
+      &:hover {
+        background-color: #f9fafb;
       }
       
-      &:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
+      // Ensure SVG icon alignment
+      svg {
+        display: block;
       }
     }
   }
@@ -157,190 +188,22 @@ $border: #e2e8f0;
   .footer-text {
     margin-top: 1.5rem;
     text-align: center;
-    font-size: 0.9rem;
-    color: $gray;
+    font-size: 0.875rem;
+    color: $text-light;
+    
     span {
-      color: $blue;
-      font-weight: 700;
+      color: $primary;
+      font-weight: 600;
       cursor: pointer;
-    }
-  }
-
-  // OTP MODAL STYLES
-  .otp-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.6); // Dark blur background
-    backdrop-filter: blur(4px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    animation: fadeIn 0.3s ease-out;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  .otp-modal {
-    background: #fff;
-    padding: 2.5rem;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 420px; // A bit wider for the content
-    text-align: center;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    position: relative; // For close button positioning
-
-    .close-btn {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: none;
-      font-size: 2.5rem;
-      color: #9ca3af; // Lighter gray
-      cursor: pointer;
-      line-height: 1;
-      padding: 0;
-      transition: color 0.2s ease;
-
+      margin-left: 0.25rem;
+      
       &:hover {
-        color: $dark;
+        text-decoration: underline;
       }
-    }
-
-    .otp-header {
-      margin-bottom: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    h2 {
-      margin-bottom: 0.5rem;
-      font-size: 1.5rem;
-      color: $dark;
-      font-weight: 700;
-    }
-    p {
-      color: $gray;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
-    strong {
-      color: $dark;
-      font-weight: 600;
-    }
-
-    .otp-input-container {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 2.5rem;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-
-      input {
-        width: 40px;
-        height: 50px;
-        border: 2px solid $border;
-        border-radius: 8px;
-        text-align: center;
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: $dark;
-        background: #f9fafb;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        flex-shrink: 0;
-
-        &:hover {
-          border-color: darken($border, 15%);
-        }
-
-        &:focus {
-          border-color: $blue;
-          outline: none;
-          background: #fff;
-          box-shadow: 0 0 0 3px rgba($blue, 0.2);
-        }
-      }
-    }
-
-    .btn-primary.btn-verify {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      padding: 1rem 2rem;
-      width: 100%;
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-      color: white;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 800;
-      border-radius: 50px; // Pill shape is often more premium
-      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
-      overflow: hidden;
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-        transition: 0.5s;
-      }
-
-      svg {
-        width: 1.25rem;
-        height: 1.25rem;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      &:hover:not(:disabled) {
-        background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(124, 58, 237, 0.5);
-
-        &::before {
-          left: 100%;
-        }
-
-        svg {
-          transform: translateX(5px);
-        }
-      }
-    }
-
-    .resend-text {
-      margin-top: 1.5rem;
-      font-size: 0.9rem;
-      color: $gray;
-    }
-
-    .resend-btn {
-      background: none;
-      border: none;
-      color: $blue;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 0;
-      display: inline;
     }
   }
 }
+
+// Add these to global or toastStyles, but for now specific to account page logic if needed 
+// (though toast styles are global).
+// Just keeping the file clean.

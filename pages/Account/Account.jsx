@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   signInWithEmailAndPassword,
@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { auth, db } from "../../config/firebase";
 import { doc, setDoc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import validator from 'validator';
-import { sendSignupOtp, verifySignupOtp, resendSignupOtp } from '../../src/services/otpService';
+import emailjs from '@emailjs/browser';
 import './Account.scss';
 
 const Account = () => {
@@ -20,6 +20,7 @@ const Account = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [generatedOtp, setGeneratedOtp] = useState(''); // Store locally generated OTP
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -29,6 +30,7 @@ const Account = () => {
     setIsOtpSent(false);
     setFormData({ name: '', email: '', password: '' });
     setOtp(['', '', '', '', '', '']);
+    setGeneratedOtp('');
   };
 
   const validateForm = () => {
@@ -45,6 +47,33 @@ const Account = () => {
       return false;
     }
     return true;
+  };
+
+  const generateAndSendOtp = async (email, name) => {
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    setGeneratedOtp(code);
+
+    const templateParams = {
+      to_email: email,
+      email: email,
+      reply_to: email,
+      to_name: name,
+      otp: code,
+      passcode: code, // Validation from user screenshot showing {{passcode}}
+      message: `Your OTP is ${code}. Do not share this code.`
+    };
+
+    console.log("Sending EmailJS with params:", templateParams);
+    console.log("Service ID:", import.meta.env.VITE_EMAILJS_SERVICE_ID);
+
+    await emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      templateParams,
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    );
+
+    return code;
   };
 
   const handleSubmit = async (e) => {
@@ -67,10 +96,10 @@ const Account = () => {
             return;
           }
         } catch (checkError) {
-             console.error("Error checking auth methods:", checkError);
+             // Ignoring error as fetchSignInMethodsForEmail can fail for non-existent users
         }
 
-        // Check if user exists in Firestore (Direct collection check)
+        // Check if user exists in Firestore
         try {
           const usersRef = collection(db, "users");
           const q = query(usersRef, where("email", "==", formData.email));
@@ -82,15 +111,11 @@ const Account = () => {
           }
         } catch (firestoreError) {
           console.error("Error checking firestore:", firestoreError);
-          // Continue if permission denied or other error, fallback to backend (which needs admin sdk)
         }
 
-        // Step 1: Send OTP to the backend, but don't create user yet
-        await sendSignupOtp({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-        });
+        // Send OTP via EmailJS (Frontend)
+        await generateAndSendOtp(formData.email, formData.name);
+        
         setIsOtpSent(true);
         toast.success('OTP has been sent to your email!');
       }
@@ -102,7 +127,7 @@ const Account = () => {
     }
   };
 
-  const inputRefs = React.useRef([]);
+  const inputRefs = useRef([]);
 
   const handleOtpChange = (index, value) => {
     if (value.length > 1 || !/^\d*$/.test(value)) return;
@@ -158,35 +183,32 @@ const Account = () => {
       toast.error("Please enter the full 6-digit code");
       return;
     }
+    
+    // Verify Local OTP
+    if (finalOtp !== generatedOtp) {
+        toast.error("Invalid OTP. Please try again.");
+        return;
+    }
+
     setLoading(true);
 
     try {
-      // Step 2: Verify OTP with the backend
-      const response = await verifySignupOtp({
-        email: formData.email,
-        otp: finalOtp,
-      });
-
-      const { email, name, password } = response.data.data;
-
-      // Step 3: Create user in Firebase upon successful verification
-      const res = await createUserWithEmailAndPassword(auth, email, password);
+      // Create user in Firebase upon successful verification
+      const res = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
 
       // Update profile with display name
-      await updateProfile(res.user, { displayName: name });
+      await updateProfile(res.user, { displayName: formData.name });
 
-      // Step 4: Save user data to Firestore with full user profile
+      // Save user data to Firestore
       await setDoc(doc(db, 'users', res.user.uid), {
         uid: res.user.uid,
-        name: name,
-        email: email,
+        name: formData.name,
+        email: formData.email,
         mobile: '',
         verified: true,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        // Multiple addresses - start with empty array
         addresses: [],
-        // Order history - start with empty array
         orderHistory: [],
       });
 
@@ -195,7 +217,7 @@ const Account = () => {
       navigate('/');
 
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message;
+      const errorMessage = err.message;
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -205,12 +227,11 @@ const Account = () => {
   const handleResendOtp = async () => {
     setLoading(true);
     try {
-      await resendSignupOtp({ email: formData.email });
+      await generateAndSendOtp(formData.email, formData.name);
       toast.success("A new OTP has been sent to your email.");
-      navigate('/profile');
     } catch (err) {
-      const errorMessage = err.response?.data?.message || err.message;
-      toast.error(errorMessage);
+      const errorMessage = err.text || err.message;
+      toast.error("Failed to resend OTP: " + errorMessage);
     } finally {
       setLoading(false);
     }
@@ -387,7 +408,7 @@ const Account = () => {
               </button>
 
               <p className="resend-text">
-                Didn't receive the code?{' '}
+                 Didn't receive the code?{' '}
                 <span className="resend-btn" onClick={handleResendOtp} style={{ pointerEvents: loading ? 'none' : 'auto' }}>
                   Resend OTP
                 </span>

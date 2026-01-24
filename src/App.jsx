@@ -8,6 +8,8 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import ScrollToTop from "./utils/ScrollToTop";
 
+import BackendStatus from "../components/BackendStatus/BackendStatus";
+
 const App = () => {
   const dispatch = useDispatch();
   const auth = getAuth();
@@ -53,6 +55,7 @@ const App = () => {
 
   return (
     <div className="app">
+      <BackendStatus />
       <ScrollToTop />
       <Header />
       <Outlet />
