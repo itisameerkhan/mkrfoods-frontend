@@ -290,6 +290,35 @@ const Cart = () => {
              </div>
           </div>
 
+          {/* Mobile Cart Totals Section */}
+          <div className="mobile-cart-totals">
+              <h2>Cart totals</h2>
+
+              <div className="summary-row">
+                <span className="label">Subtotal</span>
+                <span className="amount">₹ {cartTotal.toFixed(2)}</span>
+              </div>
+
+              {appliedCoupon && (
+                <div className="summary-row discount-row">
+                  <span className="label">Discount</span>
+                  <span className="amount discount">−₹ {appliedCoupon.discount.toFixed(2)}</span>
+                </div>
+              )}
+
+              <div className="summary-row">
+                <span className="label">Shipping</span>
+                <span className="amount shipping-free">₹ Free shipping</span>
+              </div>
+
+              <div className="summary-row total-row">
+                <span className="label">Total:</span>
+                <span className="amount total-amount">
+                  ₹ {appliedCoupon ? (cartTotal - appliedCoupon.discount).toFixed(2) : cartTotal.toFixed(2)}
+                </span>
+              </div>
+          </div>
+
           {/* Cart Summary Sidebar */}
           <div className="cart-summary-section">
             <div className="summary-card">

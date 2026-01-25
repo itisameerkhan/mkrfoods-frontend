@@ -652,6 +652,11 @@
       display: none;
   }
 
+  // Mobile Cart Totals Section (Hidden on Desktop)
+  .mobile-cart-totals {
+      display: none;
+  }
+
   // --- MOBILE AMAZON-LIKE REDESIGN ---
   
   // Mobile Checkout Bar (Default Hidden)
@@ -778,6 +783,70 @@
             }
         }
     }
+
+    // Mobile Cart Totals Section (Visible on Mobile)
+    .mobile-cart-totals {
+        display: block;
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        border: 1px solid #D5D9D9; 
+
+        h2 {
+            font-size: 1.1rem;
+            color: #1a1a1a;
+            font-weight: 700;
+            margin: 0 0 1rem 0;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+
+            .label {
+                color: #565959;
+            }
+
+            .amount {
+                color: #1a1a1a;
+                font-weight: 600;
+
+                &.shipping-free {
+                    color: #4caf50;
+                    font-weight: 700;
+                }
+            }
+
+            &.discount-row {
+                .label { color: #4caf50; }
+                .discount { color: #4caf50; font-weight: 700; }
+            }
+
+            &.total-row {
+                margin-top: 1rem;
+                padding-top: 1rem;
+                border-top: 1px solid #eee;
+                font-size: 1.1rem;
+
+                .label {
+                    color: #1a1a1a;
+                    font-weight: 700;
+                }
+
+                .total-amount {
+                    color: #B12704;
+                    font-weight: 800;
+                }
+            }
+        }
+    }
+
 
     // Mobile Checkout Bar - STICKY
     .mobile-checkout-bar {
