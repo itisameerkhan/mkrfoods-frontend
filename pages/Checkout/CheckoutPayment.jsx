@@ -187,6 +187,13 @@ const CheckoutPayment = () => {
         }
       };
 
+      if (!options.key) {
+        console.error("Razorpay Key ID is missing");
+        alert("Configuration Error: Razorpay Key ID is missing. Please check your deployment settings.");
+        setIsLoading(false);
+        return;
+      }
+
       // Hide loader just before opening Razorpay, as it has its own UI
       setIsLoading(false);
       const rzp = new window.Razorpay(options);
