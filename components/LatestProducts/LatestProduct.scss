@@ -233,3 +233,28 @@
 
 // Remove old styles
 .skel-line.sizes, .skel-line.action { display: none; }
+
+// FORCE OVERRIDES for Mobile Skeleton
+@media (max-width: 600px) {
+  .latest-products .product-cards .skeleton-card {
+      display: block !important;
+      width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 1px solid #f0f0f0;
+      
+      .skel-img {
+          width: 100% !important;
+          padding-bottom: 100% !important;
+          height: 0 !important;
+          display: block !important;
+          margin: 0 !important;
+          border-radius: 0 !important; // Ensure no rounded corners cut it off
+      }
+
+      .skel-details {
+          width: 100% !important;
+          padding: 8px !important;
+      }
+  }
+}
