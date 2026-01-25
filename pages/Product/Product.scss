@@ -574,10 +574,17 @@
   }
   .prices-section {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.8rem;
+    gap: 0.5rem; // Reduced gap for more space
   }
   .prices-section .price-row {
-    padding: 1rem 0.8rem;
+    padding: 0.8rem 0.4rem; // Reduced side padding
+  }
+  .price-label .weight {
+      font-size: 0.9rem;
+  }
+  .price-label .price {
+      font-size: 1rem; // Reduced font size
+      white-space: nowrap; // Prevent wrapping
   }
   .spice-level {
     flex-direction: column;
