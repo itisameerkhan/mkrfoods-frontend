@@ -487,7 +487,7 @@ const UserProfile = () => {
                     }`}
                   >
                     {defaultAddressId === addr.id && (
-                      <div className="default-badge">Default: amazon</div>
+                      <div className="default-badge">Default</div>
                     )}
                     <h4>{addr.fullName}</h4>
                     <p className="address-text">
