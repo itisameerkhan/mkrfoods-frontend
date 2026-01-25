@@ -78,56 +78,74 @@ export default function QuantitySelector({
     return (
         <div className={`qs-container ${disabled ? 'qs-disabled' : ''}`} aria-live="polite">
             <div className="qs-header">
-                <h3 className="qs-title">Select Size & Quantity</h3>
-                <div className="qs-summary">
-                    <div className="qs-summary-item">
-                        <span className="qs-label">Total Items:</span>
-                        <span className="qs-value">{totalItems}</span>
-                    </div>
-                    <div className="qs-summary-divider"></div>
-                    <div className="qs-summary-item">
-                        <span className="qs-label">Total Price:</span>
-                        <span className="qs-total-price">₹{totalPrice.toLocaleString()}</span>
-                    </div>
+                <div className="qs-header-top">
+                    <h3 className="qs-title">Select Size & Quantity</h3>
+                    {totalItems > 0 && (
+                        <div className="qs-summary-badge">
+                            <span className="qs-summary-count">{totalItems} items</span>
+                            <span className="qs-summary-sep">•</span>
+                            <span className="qs-summary-total">₹{totalPrice.toLocaleString()}</span>
+                        </div>
+                    )}
                 </div>
             </div>
 
-            <div className="qs-list">
+            <div className="qs-grid">
                 {WEIGHTS.map((w) => {
                     const qty = quantities[w.size] || 0;
                     const minusDisabled = disabled || qty === 0;
                     const plusDisabled = disabled || globalPlusDisabled;
                     const unitPrice = Number(priceMap[w.size] || 0);
-                    const itemTotal = qty * unitPrice;
+                    const isSelected = qty > 0;
+
                     return (
-                        <div key={w.size} className="qs-item">
-                            <div className="qs-item-info">
-                                <div className="qs-item-weight">{w.label}</div>
-                                <div className="qs-item-price">₹{unitPrice}</div>
+                        <div 
+                            key={w.size} 
+                            className={`qs-card ${isSelected ? 'qs-card-selected' : ''}`}
+                        >
+                            <div className="qs-card-header">
+                                <span className="qs-card-weight">{w.label}</span>
+                                <span className="qs-card-price">₹{unitPrice}</span>
                             </div>
 
-                            <div className="qs-item-controls">
-                                <button
-                                    type="button"
-                                    className="qs-btn qs-btn-minus"
-                                    onClick={() => decrement(w.size)}
-                                    disabled={minusDisabled}
-                                    aria-label={`Decrease ${w.label}`}
-                                >
-                                    <i className="fa-solid fa-minus"></i>
-                                </button>
-                                <div className="qs-qty-display">
-                                    <span className="qs-qty">{qty}</span>
-                                </div>
-                                <button
-                                    type="button"
-                                    className="qs-btn qs-btn-plus"
-                                    onClick={() => increment(w.size)}
-                                    disabled={plusDisabled}
-                                    aria-label={`Increase ${w.label}`}
-                                >
-                                    <i className="fa-solid fa-plus"></i>
-                                </button>
+                            <div className="qs-card-footer">
+                                {qty === 0 ? (
+                                    <button
+                                        type="button"
+                                        className="qs-btn-add"
+                                        onClick={() => increment(w.size)}
+                                        disabled={disabled || globalPlusDisabled}
+                                        aria-label={`Add ${w.label}`}
+                                    >
+                                        ADD
+                                    </button>
+                                ) : (
+                                    <div className="qs-controls">
+                                        <button
+                                            type="button"
+                                            className="qs-action-btn qs-btn-minus"
+                                            onClick={() => decrement(w.size)}
+                                            disabled={minusDisabled}
+                                            aria-label={`Decrease ${w.label}`}
+                                        >
+                                            <i className="fa-solid fa-minus"></i>
+                                        </button>
+                                        
+                                        <span className="qs-card-qty">
+                                            {qty}
+                                        </span>
+
+                                        <button
+                                            type="button"
+                                            className="qs-action-btn qs-btn-plus"
+                                            onClick={() => increment(w.size)}
+                                            disabled={plusDisabled}
+                                            aria-label={`Increase ${w.label}`}
+                                        >
+                                            <i className="fa-solid fa-plus"></i>
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     );
