@@ -148,6 +148,7 @@
             font-weight: 600;
             color: var(--text-primary);
             line-height: 1.4;
+            word-break: break-all; // Fix for long emails overflowing
           }
 
           .phone-display {
@@ -385,7 +386,9 @@
 
 @media (max-width: 480px) {
   .profile-dashboard {
-    padding-top: 60px; // Match mobile header height
+  .profile-dashboard {
+    padding-top: 80px; // Increased match mobile header height + space
+  }
   }
 }
 
