@@ -16,8 +16,12 @@ a {
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
   line-height: 1.6;
+  overflow-x: hidden;
+  width: 100%;
 }
