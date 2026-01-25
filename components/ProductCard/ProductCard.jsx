@@ -32,12 +32,15 @@ const ProductCard = ({ data }) => {
         </div>
 
         <div className="card-footer">
-          <span className={`stock-badge ${inStock ? 'in' : 'out'}`}>
-            {inStock ? '✓ In stock' : 'Out of stock'}
-          </span>
-          <button className="add-btn" disabled={!inStock}>
-            {inStock ? 'Add' : 'Sold out'}
-          </button>
+          {inStock ? (
+            <button className="add-btn">
+              Add
+            </button>
+          ) : (
+            <span className="stock-badge out">
+              Out of stock
+            </span>
+          )}
         </div>
       </div>
     </div>
