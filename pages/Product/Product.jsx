@@ -89,6 +89,7 @@ const Product = () => {
                     weight: weight.label,
                     price: product[weight.priceKey] || 0,
                     quantity: qty,
+                    maxQuantity: Number(product.quantity || 0), // Pass total available stock
                 }));
             });
 

@@ -28,6 +28,11 @@ const cartSlice = createSlice({
                 // Calculate total price for the product
                 product.totalPrice = product.variants.reduce((sum, v) => sum + v.price * v.quantity, 0);
 
+                // Update maxQuantity if provided
+                if (action.payload.maxQuantity !== undefined) {
+                    product.maxQuantity = action.payload.maxQuantity;
+                }
+                
                 // Update the product in the cart
                 state.items[productIndex] = product;
             } else {
@@ -36,6 +41,7 @@ const cartSlice = createSlice({
                     productId,
                     name,
                     image,
+                    maxQuantity: action.payload.maxQuantity || 0, // Store max quantity
                     variants: [{ weight, price, quantity }],
                     totalPrice: price * quantity,
                 });

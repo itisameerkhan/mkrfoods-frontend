@@ -6,6 +6,12 @@ import { useEffect, useState } from "react";
 import { db } from "../../config/firebase";
 import CheckoutHeader from "../../components/CheckoutHeader/CheckoutHeader";
 
+const getWeightInGrams = (weightLabel) => {
+    const lower = weightLabel ? weightLabel.toLowerCase() : "";
+    if (lower.includes('kg')) return parseFloat(lower) * 1000;
+    return parseFloat(lower);
+};
+
 const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,6 +30,18 @@ const Cart = () => {
     if (newQuantity <= 0) {
       handleRemoveVariant(productId, weight);
     } else {
+      const product = cartItems.find(p => p.productId === productId);
+      if (product && product.maxQuantity) {
+          const currentTotalGrams = product.variants.reduce((sum, v) => {
+             const qty = v.weight === weight ? newQuantity : v.quantity;
+             return sum + (getWeightInGrams(v.weight) * qty);
+          }, 0);
+          
+          if (currentTotalGrams > product.maxQuantity) {
+              // Optionally show a toast or alert, or just return
+              return; 
+          }
+      }
       dispatch(updateQuantity({ productId, weight, quantity: newQuantity }));
     }
   };
@@ -227,6 +245,12 @@ const Cart = () => {
                                 <button
                                   className="qty-btn"
                                   onClick={() => handleQuantityChange(product.productId, variant.weight, variant.quantity + 1)}
+                                  disabled={(() => {
+                                      if (!product.maxQuantity) return false;
+                                      const currentProductGrams = product.variants.reduce((sum, v) => sum + (getWeightInGrams(v.weight) * v.quantity), 0);
+                                      const variantGrams = getWeightInGrams(variant.weight);
+                                      return currentProductGrams + variantGrams > product.maxQuantity;
+                                  })()}
                                 >
                                   +
                                 </button>
