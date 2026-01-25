@@ -221,10 +221,7 @@ const Cart = () => {
                                   type="number"
                                   className="qty-value"
                                   value={variant.quantity}
-                                  onChange={(e) => {
-                                    const val = parseInt(e.target.value) || 1;
-                                    handleQuantityChange(product.productId, variant.weight, val);
-                                  }}
+                                  readOnly
                                   min="1"
                                 />
                                 <button
