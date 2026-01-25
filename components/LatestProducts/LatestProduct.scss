@@ -153,13 +153,18 @@
     grid-template-columns: repeat(2, 1fr); // Force 2 columns
     gap: 0.8rem;
     
-    // Ensure links behave exactly like block containers
-    a {
+    // Ensure links and skeletons behave exactly like block containers taking full width
+    a, .skeleton-card {
         display: block;
         width: 100%;
         text-decoration: none;
         color: inherit;
         box-sizing: border-box;
+    }
+    
+    .skeleton-card {
+        display: flex; /* Restore flex for skeleton internals */
+        flex-direction: column;
     }
   }
 }
