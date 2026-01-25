@@ -67,10 +67,7 @@ const Hero = () => {
                 <div className="hero-main">
                   <p>{slide.title}</p>
                   <p>{slide.description}</p>
-                  <div className="hero-btn">
-                    <button>Shop Now</button>
-                    <button>Explore Products</button>
-                  </div>
+
                 </div>
               </div>
             </div>
