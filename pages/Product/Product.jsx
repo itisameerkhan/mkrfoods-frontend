@@ -1,8 +1,8 @@
 import "./Product.scss";
 import { useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../config/firebase.js";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import QuantitySelector from "../../components/QuantitySelector/QuantitySelector.jsx";
@@ -43,31 +43,34 @@ const Product = () => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [adding, setAdding] = useState(false);
 
-    const getProductDetails = useCallback(async () => {
-        try {
-            const productRef = doc(db, "products", id);
-            const productSnap = await getDoc(productRef);
-
-            if (productSnap.exists()) {
+    useEffect(() => {
+        if (!id) return;
+        setLoading(true);
+        const productRef = doc(db, "products", id);
+        
+        // Listen for real-time updates using onSnapshot
+        const unsubscribe = onSnapshot(productRef, (docSnap) => {
+            if (docSnap.exists()) {
                 setProduct({
-                    id: productSnap.id,
-                    ...productSnap.data(),
+                    id: docSnap.id,
+                    ...docSnap.data(),
                 });
             } else {
                 setProduct(null);
                 console.log("product not found");
             }
-        } catch (e) {
-            console.log(e);
-        } finally {
             setLoading(false);
-        }
+        }, (error) => {
+            console.error("Error fetching product:", error);
+            setLoading(false);
+        });
+
+        return () => unsubscribe();
     }, [id]);
 
     useEffect(() => {
-        if (id) getProductDetails();
         setSelectedQuantities({ 250: 0, 500: 0, 1000: 0 });
-    }, [id, getProductDetails]);
+    }, [id]);
 
     const addToCart = () => {
         const items = WEIGHTS.filter((w) => (selectedQuantities[w.size] || 0) > 0);
@@ -148,6 +151,9 @@ const Product = () => {
     if (!product) return <InvalidProduct />;
 
     const spiceLevel = parseInt(product.spice_level || 0, 10);
+    // Explicitly parse quantity to number to handle "0" strings or undefined safely
+    const productQuantity = Number(product.quantity || 0);
+    const isOutOfStock = productQuantity <= 0;
 
     return (
         <div className="product">
@@ -181,7 +187,7 @@ const Product = () => {
                         <div className="category">{product.category}</div>
                         <h1 className="product-title">{product.name}</h1>
 
-                        <Stock quantity={product.quantity} />
+                        <Stock quantity={productQuantity} />
 
                         <hr className="sep" />
 
@@ -211,8 +217,9 @@ const Product = () => {
                         </div>
 
                         <QuantitySelector
-                            totalAvailableGrams={product.quantity || 0}
+                            totalAvailableGrams={productQuantity}
                             initialQuantities={selectedQuantities}
+                            disabled={isOutOfStock}
                             priceMap={{
                                 250: product.price_250 || 0,
                                 500: product.price_500 || 0,
@@ -233,8 +240,8 @@ const Product = () => {
                             <button
                                 className={`btn add ${adding ? 'loading' : ''}`}
                                 onClick={addToCart}
-                                disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || adding}
-                                aria-disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || adding}
+                                disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || adding || isOutOfStock}
+                                aria-disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || adding || isOutOfStock}
                             >
                                 {adding ? (
                                     <span className="btn-content">
@@ -242,7 +249,7 @@ const Product = () => {
                                     </span>
                                 ) : (
                                     <span className="btn-content">
-                                        <i className="fa-solid fa-cart-shopping" aria-hidden="true"></i> Add to Cart
+                                        <i className="fa-solid fa-cart-shopping" aria-hidden="true"></i> {isOutOfStock ? "Out of Stock" : "Add to Cart"}
                                     </span>
                                 )}
                             </button>
@@ -250,8 +257,8 @@ const Product = () => {
                             <button
                                 className="btn buy"
                                 onClick={() => alert('Buy now - flow not implemented')}
-                                disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0}
-                                aria-disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0}
+                                disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || isOutOfStock}
+                                aria-disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || isOutOfStock}
                             >
                                 <span className="btn-content">Buy Now</span>
                             </button>
@@ -261,6 +268,7 @@ const Product = () => {
             </div>
         </div>
     );
+
 };
 
 export default Product;

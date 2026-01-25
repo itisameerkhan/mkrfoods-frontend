@@ -11,6 +11,7 @@ export default function QuantitySelector({
     totalAvailableGrams = 0,
     initialQuantities = {},
     priceMap = {},
+    disabled = false,
     onChange,
 }) {
     const [quantities, setQuantities] = useState({
@@ -48,7 +49,7 @@ export default function QuantitySelector({
     // Global + disable rules: disable all + when totalSelected === available
     // But allow unlimited if totalAvailableGrams is 0 or not set
     const anyIncrementWouldExceed = totalAvailableGrams > 0 && WEIGHTS.some((w) => totalSelectedGrams + w.size > totalAvailableGrams);
-    const globalPlusDisabled = totalAvailableGrams > 0 && totalSelectedGrams === totalAvailableGrams || anyIncrementWouldExceed;
+    const globalPlusDisabled = (totalAvailableGrams > 0 && totalSelectedGrams === totalAvailableGrams) || anyIncrementWouldExceed;
 
     // Only call onChange when user clicks +/-, not during initialization
     // Prevent calling onChange by not including it in dependencies
@@ -57,6 +58,7 @@ export default function QuantitySelector({
     }, [quantities]);
 
     const increment = (size) => {
+        if (disabled) return;
         setQuantities((prev) => {
             const currentTotal = WEIGHTS.reduce((s, w) => s + (prev[w.size] || 0) * w.size, 0);
             const newTotal = currentTotal + size;
@@ -67,13 +69,14 @@ export default function QuantitySelector({
     };
 
     const decrement = (size) => {
+        if (disabled) return;
         setQuantities((prev) => ({ ...prev, [size]: Math.max(0, (prev[size] || 0) - 1) }));
     };
 
     const totalItems = Object.values(quantities).reduce((sum, q) => sum + q, 0);
 
     return (
-        <div className="qs-container" aria-live="polite">
+        <div className={`qs-container ${disabled ? 'qs-disabled' : ''}`} aria-live="polite">
             <div className="qs-header">
                 <h3 className="qs-title">Select Size & Quantity</h3>
                 <div className="qs-summary">
@@ -92,8 +95,8 @@ export default function QuantitySelector({
             <div className="qs-list">
                 {WEIGHTS.map((w) => {
                     const qty = quantities[w.size] || 0;
-                    const minusDisabled = qty === 0;
-                    const plusDisabled = globalPlusDisabled;
+                    const minusDisabled = disabled || qty === 0;
+                    const plusDisabled = disabled || globalPlusDisabled;
                     const unitPrice = Number(priceMap[w.size] || 0);
                     const itemTotal = qty * unitPrice;
                     return (

@@ -812,18 +812,19 @@
       }
 
       .btn-mobile-checkout {
-        background: #FFD814; // Amazon Primary Yellow
-        border: 1px solid #FCD200;
-        color: #0F1111;
+        background: #D33131; // Updated to requested Red
+        border: 1px solid #D33131;
+        color: white; // White text for better contrast on red
         padding: 0.8rem 1.8rem;
         border-radius: 20px;
-        font-weight: 500;
+        font-weight: 600;
         font-size: 0.95rem;
-        box-shadow: 0 2px 5px rgba(213,217,217,.5);
+        box-shadow: 0 4px 10px rgba(211, 49, 49, 0.3);
         cursor: pointer;
+        transition: background 0.2s;
         
         &:hover {
-            background: #F7CA00;
+            background: #b92b2b; // Darker red on hover
         }
       }
     }
