@@ -20,6 +20,7 @@ import CheckoutPayment from "../pages/Checkout/CheckoutPayment.jsx";
 import OtpVerification from "../pages/OtpVerification/OtpVerification.jsx";
 import AmeerKhan from "../pages/AmeerKhan/AmeerKhan.jsx";
 import MyOrders from "../pages/MyOrders/MyOrders.jsx";
+import NotFound from "../pages/NotFound/NotFound.jsx";
 
 // Load cart from localStorage and initialize Redux
 const initialCart = loadCartFromStorage();
@@ -74,6 +75,11 @@ const appRouter = createBrowserRouter([
       {
         path: "/my/orders",
         element: <MyOrders />,
+      },
+
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },
