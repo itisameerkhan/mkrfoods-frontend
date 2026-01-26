@@ -29,25 +29,61 @@ const Header = () => {
     { text: "Chillies", path: "/category/chillies" },
   ];
 
+  /* Icons mapping */
+  const getIcon = (text) => {
+    switch(text) {
+      case "Pickles": return "fa-solid fa-jar"; 
+      case "Snacks": return "fa-solid fa-cookie-bite";
+      case "Sweets": return "fa-solid fa-ice-cream";
+      case "Chillies": return "fa-solid fa-pepper-hot";
+      default: return "fa-solid fa-utensils";
+    }
+  };
+
   const list = () => (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: 320, backgroundColor: "#fff", height: "100%" }}
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <div className="drawer-header">
-        <h2>Menu</h2>
+      <div className="custom-drawer-content">
+        <div className="drawer-header-section">
+          <p className="drawer-logo">MKR FOODS</p>
+          <div className="close-btn">
+            <i className="fa-solid fa-xmark"></i>
+          </div>
+        </div>
+        
+        <div className="drawer-menu-list">
+          {menuItems.map((item) => (
+            <div 
+              key={item.text} 
+              className="drawer-item"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(item.path);
+                setDrawerOpen(false);
+              }}
+            >
+              <div className="icon-box">
+                <i className={getIcon(item.text)}></i>
+              </div>
+              <span className="menu-text">{item.text}</span>
+              <i className="fa-solid fa-arrow-right arrow-icon"></i>
+            </div>
+          ))}
+        </div>
+
+        <div className="drawer-footer-section">
+          <div className="social-links">
+             <i className="fa-brands fa-instagram"></i>
+             <i className="fa-brands fa-facebook"></i>
+             <i className="fa-brands fa-twitter"></i>
+          </div>
+          <p>© 2026 MKR Foods</p>
+        </div>
       </div>
-      <List>
-        {menuItems.map((item) => (
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton onClick={() => navigate(item.path)}>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
     </Box>
   );
 
