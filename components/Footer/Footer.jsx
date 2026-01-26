@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Footer.scss";
 
 const Footer = () => {
@@ -53,7 +54,7 @@ const Footer = () => {
                 <div className="footer-bottom">
                     <div className="copy">© 2024 MKR Foods. All rights reserved.</div>
                     <div className="policies">
-                        <a href="#">Privacy Policy</a>
+                        <Link to="/policy">Privacy Policy</Link>
                         <a href="#">Terms of Service</a>
                     </div>
                 </div>

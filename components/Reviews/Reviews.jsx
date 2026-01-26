@@ -31,10 +31,10 @@ const reviews = [
     },
     {
         id: 4,
-        name: "Vikram Singh",
-        city: "Bangalore",
-        initials: "VS",
-        rating: 4,
+        name: "Ameer Khan",
+        city: "Tamil Nadu",
+        initials: "AK",
+        rating: 5,
         text:
             "Great variety of snacks and pickles. The namkeen mix is our family's new favourite for evening tea.",
     },

@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client";
+import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary.jsx";
 import "./index.scss";
 import "./toastStyles.css";
 import App from "./App.jsx";
@@ -21,6 +22,7 @@ import OtpVerification from "../pages/OtpVerification/OtpVerification.jsx";
 import AmeerKhan from "../pages/AmeerKhan/AmeerKhan.jsx";
 import MyOrders from "../pages/MyOrders/MyOrders.jsx";
 import NotFound from "../pages/NotFound/NotFound.jsx";
+import CompanyPolicy from "../pages/CompanyPolicy/CompanyPolicy.jsx";
 
 // Load cart from localStorage and initialize Redux
 const initialCart = loadCartFromStorage();
@@ -78,6 +80,11 @@ const appRouter = createBrowserRouter([
       },
 
       {
+        path: "/policy",
+        element: <CompanyPolicy />,
+      },
+
+      {
         path: "*",
         element: <NotFound />,
       },
@@ -85,7 +92,6 @@ const appRouter = createBrowserRouter([
   },
 ]);
 
-import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary.jsx";
 
 createRoot(document.getElementById("root")).render(
   <ErrorBoundary>

@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+.company-policy-page {
+  background-color: #f9fafb;
+  min-height: 100vh;
+  padding: 120px 20px 60px; /* Top padding accounts for fixed header */
+  font-family: 'Poppins', sans-serif;
+  color: #374151;
+
+  @media (max-width: 768px) {
+    padding-top: 100px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+.privacy-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 40px 50px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+
+  @media (max-width: 768px) {
+    padding: 30px 20px;
+  }
+}
+
+.policy-header {
+  text-align: center;
+  margin-bottom: 40px;
+  border-bottom: 2px solid #f3f4f6;
+  padding-bottom: 30px;
+
+  h1 {
+    font-size: 2.5rem;
+    color: #111827;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  .last-updated {
+    color: #6b7280;
+    font-size: 0.95rem;
+  }
+}
+
+.policy-intro {
+  margin-bottom: 40px;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #4b5563;
+}
+
+.policy-section {
+  margin-bottom: 35px;
+
+  h2 {
+    font-size: 1.5rem;
+    color: #1f2937;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #4b5563;
+    margin-bottom: 15px;
+  }
+
+  ul {
+    padding-left: 20px;
+    margin-bottom: 15px;
+
+    li {
+      margin-bottom: 10px;
+      line-height: 1.6;
+      list-style-type: disc;
+      color: #374151;
+
+      strong {
+        color: #111827;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .note {
+    background-color: #fff8f1;
+    border-left: 4px solid #f97316;
+    padding: 15px;
+    font-size: 0.95rem;
+    color: #9a3412;
+    margin-top: 15px;
+    border-radius: 4px;
+  }
+}
+
+.contact-box {
+  background-color: #f3f4f6;
+  padding: 30px;
+  border-radius: 12px;
+  margin-top: 50px;
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    color: #111827;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+
+    strong {
+      font-size: 1.2rem;
+      color: #111827;
+    }
+
+    span {
+      display: block;
+      color: #6b7280;
+      margin-bottom: 15px;
+    }
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1rem;
+    
+    i {
+      color: #d33131;
+      width: 20px;
+    }
+
+    a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #1d4ed8;
+        text-decoration: underline;
+      }
+    }
+  }
+}
