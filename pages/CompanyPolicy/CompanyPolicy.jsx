@@ -12,7 +12,7 @@ const CompanyPolicy = () => {
 
         <section className="policy-intro">
           <p>
-            <strong>MKR Foods (Brar’s)</strong> (“MKR Foods,” “we,” “our,” or “us”) values your privacy. 
+            <strong>MKR Foods</strong> (“MKR Foods,” “we,” “our,” or “us”) values your privacy. 
             This Privacy Policy explains how we collect, use, protect, and handle your personal information 
             when you visit or make purchases through our website.
           </p>
