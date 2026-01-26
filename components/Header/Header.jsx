@@ -22,13 +22,6 @@ const Header = () => {
     setDrawerOpen(open);
   };
 
-  const menuItems = [
-    { text: "Pickles", path: "/category/pickles" },
-    { text: "Snacks", path: "/category/snacks" },
-    { text: "Sweets", path: "/category/sweets" },
-    { text: "Chillies", path: "/category/chillies" },
-  ];
-
   /* Icons mapping */
   const getIcon = (text) => {
     switch(text) {
@@ -36,9 +29,34 @@ const Header = () => {
       case "Snacks": return "fa-solid fa-cookie-bite";
       case "Sweets": return "fa-solid fa-ice-cream";
       case "Chillies": return "fa-solid fa-pepper-hot";
+      case "My Orders": return "fa-solid fa-clipboard-list";
+      case "Cart": return "fa-solid fa-cart-shopping";
+      case "Profile": return "fa-solid fa-user";
+      case "Home": return "fa-solid fa-house";
       default: return "fa-solid fa-utensils";
     }
   };
+
+  const menuSections = [
+    {
+      title: "Menu",
+      items: [
+        { text: "Home", path: "/" },
+        { text: "My Orders", path: "/my/orders" },
+        { text: "Cart", path: "/cart" },
+        { text: "Profile", path: "/profile" },
+      ]
+    },
+    {
+      title: "Categories",
+      items: [
+        { text: "Pickles", path: "/category/pickles" },
+        { text: "Snacks", path: "/category/snacks" },
+        { text: "Sweets", path: "/category/sweets" },
+        { text: "Chillies", path: "/category/chillies" },
+      ]
+    }
+  ];
 
   const list = () => (
     <Box
@@ -56,21 +74,26 @@ const Header = () => {
         </div>
         
         <div className="drawer-menu-list">
-          {menuItems.map((item) => (
-            <div 
-              key={item.text} 
-              className="drawer-item"
-              onClick={(e) => {
-                e.stopPropagation();
-                navigate(item.path);
-                setDrawerOpen(false);
-              }}
-            >
-              <div className="icon-box">
-                <i className={getIcon(item.text)}></i>
-              </div>
-              <span className="menu-text">{item.text}</span>
-              <i className="fa-solid fa-arrow-right arrow-icon"></i>
+          {menuSections.map((section, index) => (
+            <div key={index} className="drawer-section">
+              {section.title && <h3 className="section-title">{section.title}</h3>}
+              {section.items.map((item) => (
+                <div 
+                  key={item.text} 
+                  className="drawer-item"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(item.path);
+                    setDrawerOpen(false);
+                  }}
+                >
+                  <div className="icon-box">
+                    <i className={getIcon(item.text)}></i>
+                  </div>
+                  <span className="menu-text">{item.text}</span>
+                  <i className="fa-solid fa-arrow-right arrow-icon"></i>
+                </div>
+              ))}
             </div>
           ))}
         </div>
