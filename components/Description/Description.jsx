@@ -53,12 +53,12 @@ const Description = () => {
                         </div>
 
                         <div className="stat">
-                            <div className="stat-num">10,000+</div>
+                            <div className="stat-num">500+</div>
                             <div className="stat-label">Happy Customers</div>
                         </div>
 
                         <div className="stat">
-                            <div className="stat-num">500+</div>
+                            <div className="stat-num">3+</div>
                             <div className="stat-label">Cities Delivered</div>
                         </div>
 
