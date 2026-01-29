@@ -139,7 +139,15 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
-  align-items: start;
+  gap: 16px;
+  /* align-items: start; Removed to allow stretching */
+}
+
+.product-link {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
 }
 
 .skeleton-grid {

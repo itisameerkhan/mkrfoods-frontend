@@ -41,6 +41,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1.5rem;
+
+  a {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 /* Skeleton card styles */
