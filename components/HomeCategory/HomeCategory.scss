@@ -42,22 +42,46 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
 
-  a {
+  .cat-item {
     width: 100%;
-  }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
 
-  img {
-    width: 100%;
-    height: auto;
-    border-radius: 15px;
-    border: 2px solid #e8e8e8;
-    transition: all 300ms ease-in-out;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    img {
+      width: 100%;
+      height: auto; // Aspect ratio handled by image
+      aspect-ratio: 1/1; // Force square if needed, or let natural
+      object-fit: cover;
+      border-radius: 20px; // Softer corners
+      border: 2px solid transparent; // Reserve space for border
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); // Bouncy transition
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .cat-label {
+      margin-top: 1rem;
+      font-family: "Poppins", sans-serif; // Or 'Bebas Neue' if available globally
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #333;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+    }
 
     &:hover {
-      border-color: #d33131;
-      transform: scale(1.05) translateY(-8px);
-      box-shadow: 0 8px 20px rgba(211, 49, 49, 0.2);
+      img {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 15px 30px rgba(211, 49, 49, 0.15);
+        border-color: rgba(211, 49, 49, 0.1); 
+      }
+      
+      .cat-label {
+        color: #d33131; // Brand color on hover
+      }
     }
   }
 }
