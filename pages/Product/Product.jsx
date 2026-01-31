@@ -1,5 +1,5 @@
 import "./Product.scss";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../config/firebase.js";
 import { useState, useEffect } from "react";
@@ -36,6 +36,7 @@ const AboutProduct = ({ description }) => (
 
 const Product = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -114,7 +115,27 @@ const Product = () => {
                     boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
                 },
             });
+
         }, 700);
+    };
+
+    const handleBuyNow = () => {
+        const items = WEIGHTS.filter((w) => (selectedQuantities[w.size] || 0) > 0);
+        if (items.length === 0) return;
+
+        items.forEach((weight) => {
+            const qty = selectedQuantities[weight.size];
+            dispatch(addToCartAction({
+                productId: product.id,
+                name: product.name,
+                image: product.imageURL || "",
+                weight: weight.label,
+                price: product[weight.priceKey] || 0,
+                quantity: qty,  
+                maxQuantity: Number(product.quantity || 0),
+            }));
+        });
+        navigate('/cart');
     };
 
     if (loading)
@@ -257,7 +278,7 @@ const Product = () => {
 
                             <button
                                 className="btn buy"
-                                onClick={() => alert('Buy now - flow not implemented')}
+                                onClick={handleBuyNow}
                                 disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || isOutOfStock}
                                 aria-disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || isOutOfStock}
                             >

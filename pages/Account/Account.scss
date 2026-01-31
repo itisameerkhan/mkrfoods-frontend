@@ -1,209 +1,220 @@
-$primary: #4f46e5;
-$primary-hover: #4338ca;
-$text: #1f2937;
+$primary-color: #d33131; // Brand Red
+$text-dark: #1f2937;
 $text-light: #6b7280;
-$border: #e5e7eb;
-$bg: #f9fafb;
+$border-color: #e5e7eb;
 
-.account-page-wrapper {
-  // Use padding to clear fixed header (assuming header is ~70-80px)
-  // Use min-height to ensure full screen coverage
+.login-split-container {
+  display: flex;
   min-height: 100vh;
   width: 100%;
-  background-color: $bg;
-  
-  // Flex centering
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  // Important: Add padding top to account for the fixed header
-  // AND prevent the card from touching the top edge
-  padding-top: 100px; 
-  padding-bottom: 40px;
-  box-sizing: border-box;
+  background-color: #ffffff;
+  font-family: 'Poppins', sans-serif;
 
-  .auth-card {
-    background: #ffffff;
-    width: 100%;
-    max-width: 400px;
-    padding: 2.5rem 2rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    // Ensure no scroll visible on card unless screen is tiny
+  // -- LEFT SIDE: IMAGE --
+  .login-image-section {
+    width: 50%;
     position: relative;
-    overflow: visible; 
-  }
+    // Premium food background
+    background-image: url('https://res.cloudinary.com/dnyehgbeu/image/upload/v1769851831/mkrfoods/Gemini_Generated_Image_9cuxgv9cuxgv9cux_wx6aui.png'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: flex-end;
 
-  .auth-header {
-    text-align: center;
-    margin-bottom: 2rem;
-
-    .subtitle {
-      color: $text-light;
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-    
-    h1 {
-      color: $text;
-      font-size: 1.875rem;
-      font-weight: 800;
-      margin: 0;
-      line-height: 1.2;
-    }
-  }
-
-  .auth-form {
-    .form-group {
-      margin-bottom: 1.25rem;
-
-      label {
-        display: block;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: $text;
-        margin-bottom: 0.5rem;
-      }
-
-      input {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        font-size: 1rem;
-        border: 1px solid $border;
-        border-radius: 8px;
-        background: #fff;
-        color: $text;
-        outline: none;
-        transition: all 0.2s;
-        box-sizing: border-box; // Fix width overflow
-
-        &::placeholder {
-          color: #9ca3af;
-        }
-
-        &:focus {
-          border-color: $primary;
-          box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-        }
-      }
-    }
-
-    .form-options {
+    // Gradient overlay to separate text from image
+    .image-overlay {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0,0,0,0) 100%);
       display: flex;
+      flex-direction: column;
       justify-content: flex-end;
-      margin-bottom: 1.5rem;
+      padding: 4rem;
+      box-sizing: border-box;
 
-      .forgot-link {
-        // Reset button styles
-        appearance: none;
-        background: transparent;
-        border: none;
-        padding: 0;
-        
-        color: $primary;
-        font-size: 0.875rem;
-        font-weight: 600;
-        cursor: pointer;
-        
-        &:hover {
-          color: $primary-hover;
-          text-decoration: underline;
+      .overlay-content {
+        color: #ffffff;
+        animation: fadeIn 1s ease-out;
+
+        h1 {
+          font-family: 'Bebas Neue', sans-serif; // Assuming you have this font or fallback
+          font-size: 4rem;
+          line-height: 1;
+          margin-bottom: 1rem;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          text-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
-      }
-    }
 
-    .btn-primary {
-      width: 100%;
-      padding: 0.875rem;
-      background-color: $primary;
-      color: #ffffff;
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      
-      &:hover:not(:disabled) {
-        background-color: $primary-hover;
-      }
-      
-      &:disabled {
-        opacity: 0.7;
-        cursor: not-allowed;
-      }
-    }
-
-    .divider {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      color: $text-light;
-      font-size: 0.875rem;
-      margin: 1.5rem 0;
-      
-      &::before,
-      &::after {
-        content: '';
-        flex: 1;
-        border-bottom: 1px solid $border;
-      }
-      
-      span {
-        padding: 0 1rem;
-      }
-    }
-
-    .btn-google {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 0.75rem;
-      background-color: #ffffff;
-      border: 1px solid $border;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 500;
-      color: $text;
-      cursor: pointer;
-      transition: background-color 0.2s;
-      
-      &:hover {
-        background-color: #f9fafb;
-      }
-      
-      // Ensure SVG icon alignment
-      svg {
-        display: block;
+        p {
+          font-size: 1.1rem;
+          opacity: 0.9;
+          max-width: 400px;
+          line-height: 1.6;
+        }
       }
     }
   }
 
-  .footer-text {
-    margin-top: 1.5rem;
-    text-align: center;
-    font-size: 0.875rem;
-    color: $text-light;
-    
-    span {
-      color: $primary;
-      font-weight: 600;
-      cursor: pointer;
-      margin-left: 0.25rem;
-      
-      &:hover {
-        text-decoration: underline;
+  // -- RIGHT SIDE: FORM --
+  .login-form-section {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: #ffffff;
+
+    .login-form-content {
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      animation: slideIn 0.8s ease-out;
+
+      .brand-header {
+        margin-bottom: 3rem;
+
+        .brand-logo {
+          height: 60px;
+          margin-bottom: 1.5rem;
+          object-fit: contain;
+        }
+
+        h2 {
+          font-size: 2rem;
+          font-weight: 700;
+          color: $text-dark;
+          margin: 0 0 0.5rem 0;
+        }
+
+        .subtitle {
+          color: $text-light;
+          font-size: 1rem;
+        }
+      }
+
+      .action-buttons {
+        margin-bottom: 2.5rem;
+
+        .google-signin-btn {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
+          background: #ffffff;
+          border: 1px solid $border-color;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+          height: 56px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+
+          .icon-box {
+            position: absolute;
+            left: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+          }
+
+          span {
+            font-size: 1rem;
+            font-weight: 500;
+            color: $text-dark;
+            padding-left: 24px; // Balance the icon
+          }
+
+          &:hover {
+            border-color: #cbd5e1;
+            background-color: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+          }
+          
+          &:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+          }
+        }
+      }
+
+      .legal-text {
+        color: #9ca3af;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        
+        strong {
+          color: $text-dark;
+          font-weight: 600;
+          cursor: pointer;
+          
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       }
     }
   }
 }
 
-// Add these to global or toastStyles, but for now specific to account page logic if needed 
-// (though toast styles are global).
-// Just keeping the file clean.
+// -- ANIMATIONS --
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+// -- MOBILE RESPONSIVE --
+@media (max-width: 900px) {
+  .login-split-container {
+    flex-direction: column;
+    
+    // Hide image on very small screens, or show it as a header
+    .login-image-section {
+      width: 100%;
+      height: 35vh; // Show top part of image
+      min-height: 250px;
+      
+      .image-overlay {
+        padding: 2rem;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        
+        .overlay-content {
+          h1 { font-size: 2.5rem; }
+          p { display: none; } // Hide desc on mobile
+        }
+      }
+    }
+
+    .login-form-section {
+      width: 100%;
+      flex: 1;
+      align-items: center; 
+      padding-top: 8rem; // Clears fixed header (70px) + spacing
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login-image-section {
+    display: none !important; // Completely hide image on phones for cleaner login
+  }
+  
+  .login-form-section {
+    padding: 1.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
