@@ -19,10 +19,16 @@
   inset: 0;
   z-index: 1;
 
-  img {
+  picture {
+    display: block;
     height: 100%;
     width: 100%;
-    object-fit: cover;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
   }
 
   .overlay {

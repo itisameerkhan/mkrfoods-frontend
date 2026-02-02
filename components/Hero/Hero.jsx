@@ -5,10 +5,16 @@ const Hero = () => {
     <div className="hero">
       <div className="slide-content">
         <div className="bg-image">
-          <img 
-            src="https://res.cloudinary.com/dnyehgbeu/image/upload/v1768748388/mkrfoods/Gemini_Generated_Image_owid27owid27owid_na4giy.png" 
-            alt="Hero Background" 
-          />
+          <picture>
+            <source
+              media="(max-width: 768px)"
+              srcSet="https://res.cloudinary.com/dnyehgbeu/image/upload/v1770049133/mkrfoods/Gemini_Generated_Image_hhjqhchhjqhchhjq_tu4iyt.png"
+            />
+            <img
+              src="https://res.cloudinary.com/dnyehgbeu/image/upload/v1768748388/mkrfoods/Gemini_Generated_Image_owid27owid27owid_na4giy.png"
+              alt="Hero Background"
+            />
+          </picture>
           <div className="overlay"></div>
         </div>
         <div className="hero-obj">
