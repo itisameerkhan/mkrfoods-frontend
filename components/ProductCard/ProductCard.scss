@@ -57,6 +57,34 @@
     letter-spacing: 0.3px;
     text-transform: uppercase;
   }
+
+  .bestseller-tag {
+    position: absolute;
+    top: 20px;
+    left: -32px;
+    background: linear-gradient(135deg, #ff7e29 0%, #ff4b1f 100%);
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 6px 40px;
+    transform: rotate(-45deg);
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    letter-spacing: 1px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  @media (max-width: 480px) {
+    .bestseller-tag {
+      font-size: 0.5rem;
+      padding: 4px 30px;
+      top: 15px;
+      left: -28px;
+    }
+  }
 }
 
 .product-details {

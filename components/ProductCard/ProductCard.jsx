@@ -15,6 +15,7 @@ const ProductCard = ({ data }) => {
       <div className="product-image">
         <img src={imageURL} alt={name} />
         {category && <div className="category-tag">{category}</div>}
+        {data.bestseller && <div className="bestseller-tag">Bestseller</div>}
       </div>
 
       <div className="product-details">
