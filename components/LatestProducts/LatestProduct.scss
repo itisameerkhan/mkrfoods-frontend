@@ -47,6 +47,7 @@
     height: 100%;
     text-decoration: none;
     color: inherit;
+    min-width: 0;
   }
 }
 
@@ -143,7 +144,7 @@
 
 @media (max-width: 480px) {
   .latest-products {
-    padding: 2.5rem 1rem;
+    padding: 2.5rem 0.5rem;
   }
 
   .latest-products-main {
@@ -158,7 +159,7 @@
 
   .product-cards {
     grid-template-columns: repeat(2, 1fr); // Force 2 columns
-    gap: 0.8rem;
+    gap: 0.5rem;
     
     // Ensure links and skeletons behave exactly like block containers taking full width
     a, .skeleton-card {
