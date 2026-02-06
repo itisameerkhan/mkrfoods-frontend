@@ -209,13 +209,12 @@
 .skel-grid-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    gap: 3px;
     margin-bottom: 8px;
     
     .skel-box {
-        aspect-ratio: 1/0.8; // Roughly squarish/tall
-        height: 40px; // Approx height of size card
-        border-radius: 8px;
+        height: 30px; // Match real size card height approx on mobile
+        border-radius: 6px;
     }
 }
 
@@ -246,11 +245,14 @@
 // FORCE OVERRIDES for Mobile Skeleton
 @media (max-width: 600px) {
   .latest-products .product-cards .skeleton-card {
-      display: block !important;
+      display: flex !important;
+      flex-direction: column !important;
       width: 100% !important;
       padding: 0 !important;
       margin: 0 !important;
       border: 1px solid #f0f0f0;
+      box-sizing: border-box !important; /* Force border-box */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Ensure shadow matches */
       
       .skel-img {
           width: 100% !important;
@@ -258,12 +260,53 @@
           height: 0 !important;
           display: block !important;
           margin: 0 !important;
-          border-radius: 0 !important; // Ensure no rounded corners cut it off
+          border-radius: 0 !important;
       }
 
       .skel-details {
           width: 100% !important;
-          padding: 8px !important;
+          padding: clamp(9px, 3vw, 10px) !important; /* Dynamically match ProductCard padding */
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          
+          @media (max-width: 360px) {
+            padding: 9px !important; /* Exact match for <360px */
+          }
+      }
+      
+      .skel-line.title {
+        height: 12px;
+        margin-bottom: 4px;
+        width: 100%; /* Full width to match product name potential width */
+      }
+
+      .skel-grid-row {
+        gap: 2px;
+        margin-bottom: 4px;
+        width: 100%;
+        
+        .skel-box {
+           height: 28px;
+           border-radius: 4px;
+        }
+      }
+      
+      .skel-footer-row {
+        margin-top: auto;
+        gap: 6px;
+        width: 100%;
+        
+        .skel-badge {
+            width: 40px;
+            height: 16px;
+        }
+        
+        .skel-btn {
+            height: 28px;
+            flex: 1;
+        }
       }
   }
 }
