@@ -244,20 +244,21 @@
   }
 
   .sizes-grid {
-    gap: 3px;
+    gap: 2px;
     margin: 3px 0;
   }
 
   .size-card {
-    padding: 4px;
+    padding: 2px;
+    min-width: 0;
   }
 
   .size-label {
-    font-size: 0.6rem;
+    font-size: 0.5rem;
   }
 
   .size-price {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     margin-top: 1px;
   }
 
@@ -288,12 +289,23 @@
   }
 
   .sizes-grid {
-    gap: 4px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
     margin: 4px 0;
   }
 
   .size-card {
-    padding: 5px;
+    padding: 3px;
+    min-width: 0; /* Allow shrinking below content size if needed */
+  }
+
+  .size-label {
+    font-size: 0.6rem;
+  }
+
+  .size-price {
+    font-size: 0.75rem;
   }
 
   .add-btn {
