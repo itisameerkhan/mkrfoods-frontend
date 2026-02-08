@@ -205,70 +205,72 @@ const Cart = () => {
             <div className="items-list">
               {cartItems.map((product) => (
                 <div key={product.productId} className="cart-item-card">
-                  <div className="product-row">
-                    {/* Product Image */}
+                  {/* Product Header (Image & Name) */}
+                  <div className="card-header">
                     <div className="product-image-wrapper">
                       <img src={product.image} alt={product.name} className="product-image" />
                     </div>
-
-                    {/* Product Details */}
-                    <div className="product-details-column">
+                    <div className="product-info">
                       <h3 className="product-title">{product.name}</h3>
-
-                      {/* Weight Options */}
-                      <div className="variants-container">
-                        {product.variants.map((variant) => (
-                          <div key={`${product.productId}_${variant.weight}`} className="variant-item">
-                            <div className="variant-info">
-                              <span className="variant-weight">{variant.weight}</span>
-                              <span className="variant-price">₹ {variant.price}</span>
-                            </div>
-
-                            <div className="variant-controls">
-                              <div className="quantity-selector">
-                                <button
-                                  className="qty-btn"
-                                  onClick={() => handleQuantityChange(product.productId, variant.weight, variant.quantity - 1)}
-                                >
-                                  −
-                                </button>
-                                <input
-                                  type="number"
-                                  className="qty-value"
-                                  value={variant.quantity}
-                                  readOnly
-                                  min="1"
-                                />
-                                <button
-                                  className="qty-btn"
-                                  onClick={() => handleQuantityChange(product.productId, variant.weight, variant.quantity + 1)}
-                                  disabled={(() => {
-                                      if (!product.maxQuantity) return false;
-                                      const currentProductGrams = product.variants.reduce((sum, v) => sum + (getWeightInGrams(v.weight) * v.quantity), 0);
-                                      const variantGrams = getWeightInGrams(variant.weight);
-                                      return currentProductGrams + variantGrams > product.maxQuantity;
-                                  })()}
-                                >
-                                  +
-                                </button>
-                              </div>
-
-                              <div className="variant-subtotal">
-                                ₹ {(variant.price * variant.quantity).toFixed(2)}
-                              </div>
-
-                              <button
-                                className="btn-delete"
-                                onClick={() => handleRemoveVariant(product.productId, variant.weight)}
-                                title="Remove"
-                              >
-                                <i className="fas fa-trash-alt"></i>
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                      {/* Optional: Add category or short desc if available */}
                     </div>
+                  </div>
+
+                  {/* Variants List */}
+                  <div className="variants-list">
+                    {product.variants.map((variant) => (
+                      <div key={`${product.productId}_${variant.weight}`} className="variant-row">
+                        
+                        {/* Row 1: Weight & Unit Price */}
+                        <div className="variant-details">
+                          <span className="variant-weight">{variant.weight}</span>
+                          <span className="unit-price">₹ {variant.price}</span>
+                        </div>
+
+                        {/* Row 2: Controls (Qty & Subtotal & Delete) */}
+                        <div className="variant-actions">
+                          
+                          <div className="quantity-selector">
+                            <button
+                              className="qty-btn"
+                              onClick={() => handleQuantityChange(product.productId, variant.weight, variant.quantity - 1)}
+                            >
+                              <i className="fas fa-minus"></i>
+                            </button>
+                            <input
+                              type="number"
+                              className="qty-value"
+                              value={variant.quantity}
+                              readOnly
+                            />
+                            <button
+                              className="qty-btn"
+                              onClick={() => handleQuantityChange(product.productId, variant.weight, variant.quantity + 1)}
+                              disabled={(() => {
+                                  if (!product.maxQuantity) return false;
+                                  const currentProductGrams = product.variants.reduce((sum, v) => sum + (getWeightInGrams(v.weight) * v.quantity), 0);
+                                  const variantGrams = getWeightInGrams(variant.weight);
+                                  return currentProductGrams + variantGrams > product.maxQuantity;
+                              })()}
+                            >
+                              <i className="fas fa-plus"></i>
+                            </button>
+                          </div>
+
+                          <div className="variant-total">
+                            ₹ {(variant.price * variant.quantity).toFixed(0)}
+                          </div>
+
+                          <button
+                            className="btn-remove"
+                            onClick={() => handleRemoveVariant(product.productId, variant.weight)}
+                            aria-label="Remove item"
+                          >
+                            <i className="fas fa-trash"></i>
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
