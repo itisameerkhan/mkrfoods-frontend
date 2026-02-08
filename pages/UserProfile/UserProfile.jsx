@@ -107,17 +107,35 @@ const UserProfile = () => {
   };
 
   const [isSavingPhone, setIsSavingPhone] = useState(false);
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    setImgError(false);
+  }, [user?.photoURL]);
 
   const handleLogout = async () => {
     await signOut(auth);
     navigate("/account");
   };
 
-  const MobileMenu = () => (
+  const MobileMenu = () => {
+    const photoUrl = user?.photoURL || firestoreUser?.photoURL;
+
+    return (
     <div className="mobile-menu-container">
       <div className="user-hero-card">
         <div className="avatar-placeholder">
-          {firestoreUser?.name?.[0] || user?.email?.[0] || "U"}
+          {photoUrl && !imgError ? (
+            <img 
+              src={photoUrl} 
+              alt="Profile" 
+              referrerPolicy="no-referrer"
+              onError={() => setImgError(true)}
+              style={{width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover'}} 
+            />
+          ) : (
+            firestoreUser?.name?.[0] || user?.email?.[0] || "U"
+          )}
         </div>
         <div className="user-details">
           <h3>{firestoreUser?.name || user?.displayName || "User"}</h3>
@@ -159,6 +177,7 @@ const UserProfile = () => {
       </div>
     </div>
   );
+  };
 
   const handleAddressFormChange = (e) => {
     const { name, value } = e.target;
