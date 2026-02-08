@@ -1164,7 +1164,7 @@
           display: flex;
           align-items: center;
           width: 100%;
-          padding: 1.25rem 1.5rem;
+          padding: 1.25rem 1rem; // Reduced horizontal padding
           background: white;
           border: 1px solid #f0f0f0;
           border-radius: 12px;
@@ -1180,7 +1180,7 @@
              display: flex;
              align-items: center;
              justify-content: center;
-             margin-right: 1rem;
+             margin-right: 0.75rem; // Reduced margin
              color: var(--primary);
              
              svg { width: 20px; height: 20px; }
@@ -1192,6 +1192,7 @@
              color: var(--text-primary);
              flex: 1;
              text-align: left;
+             white-space: nowrap; // Prevent wrapping
           }
 
           .chevron {
