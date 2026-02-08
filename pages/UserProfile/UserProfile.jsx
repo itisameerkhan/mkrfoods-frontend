@@ -493,24 +493,16 @@ const UserProfile = () => {
 
       {/* MAIN CONTENT */}
       <main className="content">
-         {/* Mobile Back Header */}
-         <div className="mobile-content-header">
-            <button className="back-btn" onClick={() => setMobileView('menu')}>
-               ←
-            </button>
-            <h3>
-               {active === 'profile' && 'Profile Details'}
-               {active === 'address' && 'My Addresses'}
-               {active === 'orders' && 'Order History'}
-            </h3>
-         </div>
          
         {active === "profile" && (
           <section className="card">
             <div className="profile-header">
-              <h3>
-                Welcome, {firestoreUser?.name || user?.displayName || "Guest"}!
-              </h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <button className="mobile-back-btn" onClick={() => setMobileView('menu')} style={{ display: 'none' }}>←</button>
+                  <h3>
+                    Welcome, {firestoreUser?.name || user?.displayName || "Guest"}!
+                  </h3>
+              </div>
               <p>Here is your profile information.</p>
             </div>
 
@@ -532,7 +524,10 @@ const UserProfile = () => {
         {active === "address" && (
           <section className="card">
             <div className="address-header">
-              <h3>Your Addresses</h3>
+               <div className="header-left" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <button className="mobile-back-btn" onClick={() => setMobileView('menu')} style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer' }}>←</button>
+                  <h3>Your Addresses</h3>
+               </div>
               <button className="add-address-btn" onClick={openAddAddressModal}>
                 <span className="plus-icon">+</span>
                 Add address
