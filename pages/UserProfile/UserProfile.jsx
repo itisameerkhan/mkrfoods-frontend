@@ -97,7 +97,6 @@ const UserProfile = () => {
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const [countryCode, setCountryCode] = useState("+1");
   const [phone, setPhone] = useState("");
-  const [savingPhone, setSavingPhone] = useState(false);
 
   /* Mobile View State (Vertical Stack) */
   const [mobileView, setMobileView] = useState("menu"); // 'menu' | 'content'
@@ -105,6 +104,13 @@ const UserProfile = () => {
   const handleMobileNav = (view) => {
     setActive(view);
     setMobileView("content");
+  };
+
+  const [isSavingPhone, setIsSavingPhone] = useState(false);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate("/account");
   };
 
   const MobileMenu = () => (
@@ -153,11 +159,6 @@ const UserProfile = () => {
       </div>
     </div>
   );
-
-  const handleLogout = async () => {
-    await signOut(auth);
-    navigate("/account");
-  };
 
   const handleAddressFormChange = (e) => {
     const { name, value } = e.target;
@@ -368,7 +369,7 @@ const UserProfile = () => {
       return;
     }
 
-    setSavingPhone(true);
+    setIsSavingPhone(true);
     try {
       await updateDoc(doc(db, "users", userDocId), {
         mobile: combined,
@@ -383,7 +384,7 @@ const UserProfile = () => {
       console.error("Error saving mobile number:", error);
       toast.error("Failed to save mobile number");
     } finally {
-      setSavingPhone(false);
+      setIsSavingPhone(false);
     }
   };
 
