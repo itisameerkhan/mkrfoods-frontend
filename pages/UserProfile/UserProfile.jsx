@@ -99,6 +99,61 @@ const UserProfile = () => {
   const [phone, setPhone] = useState("");
   const [savingPhone, setSavingPhone] = useState(false);
 
+  /* Mobile View State (Vertical Stack) */
+  const [mobileView, setMobileView] = useState("menu"); // 'menu' | 'content'
+
+  const handleMobileNav = (view) => {
+    setActive(view);
+    setMobileView("content");
+  };
+
+  const MobileMenu = () => (
+    <div className="mobile-menu-container">
+      <div className="user-hero-card">
+        <div className="avatar-placeholder">
+          {firestoreUser?.name?.[0] || user?.email?.[0] || "U"}
+        </div>
+        <div className="user-details">
+          <h3>{firestoreUser?.name || user?.displayName || "User"}</h3>
+          <p>{user?.email}</p>
+        </div>
+      </div>
+
+      <div className="mobile-nav-list">
+        <button className="nav-item" onClick={() => handleMobileNav("profile")}>
+          <div className="icon-wrapper">
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+          <span>My Profile</span>
+          <span className="chevron">›</span>
+        </button>
+
+        <button className="nav-item" onClick={() => handleMobileNav("address")}>
+          <div className="icon-wrapper">
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          </div>
+          <span>Addresses</span>
+          <span className="chevron">›</span>
+        </button>
+
+        <button className="nav-item" onClick={() => { navigate('/my/orders'); }}>
+          <div className="icon-wrapper">
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          </div>
+          <span>Order History</span>
+          <span className="chevron">›</span>
+        </button>
+        
+        <button className="nav-item logout-item" onClick={handleLogout}>
+          <div className="icon-wrapper">
+             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" x2="9" y1="12" y2="12"></line></svg>
+          </div>
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
+  );
+
   const handleLogout = async () => {
     await signOut(auth);
     navigate("/account");
@@ -333,9 +388,15 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="profile-dashboard">
-      {/* SIDEBAR */}
-      <aside className="sidebar">
+    <div className={`profile-dashboard ${mobileView === 'content' ? 'viewing-content' : 'viewing-menu'}`}>
+      
+      {/* MOBILE MENU (Visible only on mobile when view is 'menu') */}
+      <div className="mobile-only-wrapper">
+         {mobileView === 'menu' && <MobileMenu />}
+      </div>
+
+      {/* DESKTOP SIDEBAR (Hidden on mobile) */}
+      <aside className="sidebar desktop-sidebar">
         <h2 className="logo">MyAccount</h2>
 
         <nav>
@@ -431,6 +492,18 @@ const UserProfile = () => {
 
       {/* MAIN CONTENT */}
       <main className="content">
+         {/* Mobile Back Header */}
+         <div className="mobile-content-header">
+            <button className="back-btn" onClick={() => setMobileView('menu')}>
+               ←
+            </button>
+            <h3>
+               {active === 'profile' && 'Profile Details'}
+               {active === 'address' && 'My Addresses'}
+               {active === 'orders' && 'Order History'}
+            </h3>
+         </div>
+         
         {active === "profile" && (
           <section className="card">
             <div className="profile-header">
