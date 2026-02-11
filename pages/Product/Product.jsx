@@ -1,5 +1,5 @@
 import "./Product.scss";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../config/firebase.js";
 import { useState, useEffect } from "react";
@@ -180,113 +180,123 @@ const Product = () => {
     return (
         <div className="product">
             <div className="product-inner">
-                <div className="product-left">
-                    <div className="gallery">
-                        <div className="main-image">
-                            <img src={product.imageURL} alt={product.name} />
-                        </div>
-                    </div>
-
-                    <div className="product-details-wrapper">
-                        <AboutProduct name={product.name} description={product.description} />
-
-                        <div className="ingredients">
-                            <h4>Ingredients</h4>
-                            <div className="ing-list">
-                                {Array.isArray(product.ingredients) &&
-                                    product.ingredients.map((ing, idx) => (
-                                        <span key={idx} className="chip">
-                                            {ing}
-                                        </span>
-                                    ))}
-                            </div>
-                        </div>
-                    </div>
+                <div className="breadcrumb">
+                    <Link to="/">Home</Link>
+                    <span>/</span>
+                    <Link to={`/category/${product.category}`}>{product.category}</Link>
+                    <span>/</span>
+                    <span>{product.name}</span>
                 </div>
 
-                <aside className="product-right">
-                    <div className="product-meta">
-                        <div className="category">{product.category}</div>
-                        <h1 className="product-title">{product.name}</h1>
-
-                        <Stock quantity={productQuantity} />
-
-                        <hr className="sep" />
-
-                        <div className="spice-level">
-                            <div className="label">Spice Level:</div>
-                            <div className="chilis">
-                                {Array.from({ length: 5 }).map((_, i) => (
-                                    <i
-                                        key={i}
-                                        className={`fa-solid fa-pepper-hot ${i < spiceLevel ? 'active' : ''}`}
-                                    ></i>
-                                ))}
+                <div className="product-content">
+                    <div className="product-left">
+                        <div className="gallery">
+                            <div className="main-image">
+                                <img src={product.imageURL} alt={product.name} />
                             </div>
                         </div>
 
-                        <hr className="sep" />
+                        <div className="product-details-wrapper">
+                            <AboutProduct name={product.name} description={product.description} />
 
-                        <div className="prices-section">
-                            {WEIGHTS.map((w) => (
-                                <div key={w.size} className="price-row">
-                                    <div className="price-label">
-                                        <span className="weight">{w.label}</span>
-                                        <span className="price">₹ {product[w.priceKey] || 0}</span>
-                                    </div>
+                            <div className="ingredients">
+                                <h4>Ingredients</h4>
+                                <div className="ing-list">
+                                    {Array.isArray(product.ingredients) &&
+                                        product.ingredients.map((ing, idx) => (
+                                            <span key={idx} className="chip">
+                                                {ing}
+                                            </span>
+                                        ))}
                                 </div>
-                            ))}
-                        </div>
-
-                        <QuantitySelector
-                            totalAvailableGrams={productQuantity}
-                            initialQuantities={selectedQuantities}
-                            disabled={isOutOfStock}
-                            priceMap={{
-                                250: product.price_250 || 0,
-                                500: product.price_500 || 0,
-                                1000: product.price_1000 || 0,
-                            }}
-                            onChange={(q, totalGrams, price) => {
-                                setSelectedQuantities(q);
-                                setTotalPrice(price);
-                            }}
-                        />
-
-                        <div className="price-summary">
-                            <span className="price-label">Total Price:</span>
-                            <span className="price-amount">₹ {totalPrice.toFixed(2)}</span>
-                        </div>
-
-                        <div className="actions">
-                            <button
-                                className={`btn add ${adding ? 'loading' : ''}`}
-                                onClick={addToCart}
-                                disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || adding || isOutOfStock}
-                                aria-disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || adding || isOutOfStock}
-                            >
-                                {adding ? (
-                                    <span className="btn-content">
-                                        <span className="spinner" aria-hidden="true" /> Adding...
-                                    </span>
-                                ) : (
-                                    <span className="btn-content">
-                                        <i className="fa-solid fa-cart-shopping" aria-hidden="true"></i> {isOutOfStock ? "Out of Stock" : "Add to Cart"}
-                                    </span>
-                                )}
-                            </button>
-
-                            <button
-                                className="btn buy"
-                                onClick={handleBuyNow}
-                                disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || isOutOfStock}
-                                aria-disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || isOutOfStock}
-                            >
-                                <span className="btn-content">Buy Now</span>
-                            </button>
+                            </div>
                         </div>
                     </div>
-                </aside>
+
+                    <aside className="product-right">
+                        <div className="product-meta">
+                            <div className="category">{product.category}</div>
+                            <h1 className="product-title">{product.name}</h1>
+
+                            <Stock quantity={productQuantity} />
+
+                            <hr className="sep" />
+
+                            <div className="spice-level">
+                                <div className="label">Spice Level:</div>
+                                <div className="chilis">
+                                    {Array.from({ length: 5 }).map((_, i) => (
+                                        <i
+                                            key={i}
+                                            className={`fa-solid fa-pepper-hot ${i < spiceLevel ? 'active' : ''}`}
+                                        ></i>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <hr className="sep" />
+
+                            <div className="prices-section">
+                                {WEIGHTS.map((w) => (
+                                    <div key={w.size} className="price-row">
+                                        <div className="price-label">
+                                            <span className="weight">{w.label}</span>
+                                            <span className="price">₹ {product[w.priceKey] || 0}</span>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <QuantitySelector
+                                totalAvailableGrams={productQuantity}
+                                initialQuantities={selectedQuantities}
+                                disabled={isOutOfStock}
+                                priceMap={{
+                                    250: product.price_250 || 0,
+                                    500: product.price_500 || 0,
+                                    1000: product.price_1000 || 0,
+                                }}
+                                onChange={(q, totalGrams, price) => {
+                                    setSelectedQuantities(q);
+                                    setTotalPrice(price);
+                                }}
+                            />
+
+                            <div className="price-summary">
+                                <span className="price-label">Total Price:</span>
+                                <span className="price-amount">₹ {totalPrice.toFixed(2)}</span>
+                            </div>
+
+                            <div className="actions">
+                                <button
+                                    className={`btn add ${adding ? 'loading' : ''}`}
+                                    onClick={addToCart}
+                                    disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || adding || isOutOfStock}
+                                    aria-disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || adding || isOutOfStock}
+                                >
+                                    {adding ? (
+                                        <span className="btn-content">
+                                            <span className="spinner" aria-hidden="true" /> Adding...
+                                        </span>
+                                    ) : (
+                                        <span className="btn-content">
+                                            <i className="fa-solid fa-cart-shopping" aria-hidden="true"></i> {isOutOfStock ? "Out of Stock" : "Add to Cart"}
+                                        </span>
+                                    )}
+                                </button>
+
+                                <button
+                                    className="btn buy"
+                                    onClick={handleBuyNow}
+                                    disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || isOutOfStock}
+                                    aria-disabled={Object.values(selectedQuantities).reduce((s, v) => s + v, 0) === 0 || isOutOfStock}
+                                >
+                                    <span className="btn-content">Buy Now</span>
+                                </button>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
             </div>
         </div>
     );
