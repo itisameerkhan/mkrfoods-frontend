@@ -165,6 +165,19 @@
     filter: drop-shadow(0 2px 4px rgba(255, 107, 107, 0.3));
   }
 
+  .spice-level.sweet-mode {
+    background: #fff0f5; /* Lavender blush or similar sweet background */
+  }
+
+  .spice-level.sweet-mode .chilis i {
+    color: #e0e0e0;
+  }
+
+  .spice-level.sweet-mode .chilis i.active {
+    color: #ff69b4; /* Hot pink or similar sweet color */
+    filter: drop-shadow(0 2px 4px rgba(255, 105, 180, 0.3));
+  }
+
   .weights .weight-buttons {
     display: flex;
     gap: 0.8rem;

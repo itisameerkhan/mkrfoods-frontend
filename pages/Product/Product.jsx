@@ -173,6 +173,8 @@ const Product = () => {
     if (!product) return <InvalidProduct />;
 
     const spiceLevel = parseInt(product.spice_level || 0, 10);
+    const sweetLevel = parseInt(product.sweet_level || 0, 10);
+    const isSweet = product.category?.toLowerCase().includes("sweet") || sweetLevel > 0;
     // Explicitly parse quantity to number to handle "0" strings or undefined safely
     const productQuantity = Number(product.quantity || 0);
     const isOutOfStock = productQuantity <= 0;
@@ -222,13 +224,15 @@ const Product = () => {
 
                             <hr className="sep" />
 
-                            <div className="spice-level">
-                                <div className="label">Spice Level:</div>
+                            <div className={`spice-level ${isSweet ? 'sweet-mode' : ''}`}>
+                                <div className="label">{isSweet ? "Sweet Level:" : "Spice Level:"}</div>
                                 <div className="chilis">
                                     {Array.from({ length: 5 }).map((_, i) => (
                                         <i
                                             key={i}
-                                            className={`fa-solid fa-pepper-hot ${i < spiceLevel ? 'active' : ''}`}
+                                            className={`fa-solid ${isSweet ? 'fa-ice-cream' : 'fa-pepper-hot'} ${
+                                                i < (isSweet ? sweetLevel : spiceLevel) ? 'active' : ''
+                                            }`}
                                         ></i>
                                     ))}
                                 </div>
