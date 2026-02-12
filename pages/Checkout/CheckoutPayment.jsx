@@ -296,7 +296,9 @@ const CheckoutPayment = () => {
                 )}
                 <div className="price-row">
                     <span>Delivery Charges</span>
-                    <span className="free">FREE</span>
+                    <span className={!pricing.deliveryCharge ? "free" : ""}>
+                        {!pricing.deliveryCharge ? "FREE" : `₹${pricing.deliveryCharge}`}
+                    </span>
                 </div>
                 <div className="divider"></div>
                 <div className="price-row total">

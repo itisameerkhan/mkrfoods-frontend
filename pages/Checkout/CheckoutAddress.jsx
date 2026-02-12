@@ -10,7 +10,8 @@ import {
     doc, 
     updateDoc, 
     arrayUnion, 
-    arrayRemove 
+    arrayRemove,
+    getDoc
 } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import "./CheckoutAddress.scss";
@@ -36,6 +37,9 @@ const CheckoutAddress = () => {
     const [showAddForm, setShowAddForm] = useState(false);
     const [loading, setLoading] = useState(true);
     const [userDocId, setUserDocId] = useState(null);
+    const [deliveryChargesMap, setDeliveryChargesMap] = useState({});
+    
+    const [isDeliveryLoading, setIsDeliveryLoading] = useState(true);
     
     // New Address Form State matching UserProfile schema
     const [formData, setFormData] = useState({
@@ -60,6 +64,23 @@ const CheckoutAddress = () => {
             variantSum + (variant.price * variant.quantity), 0);
         return sum + productTotal;
     }, 0);
+
+    // Calculate Delivery Charge
+    const getDeliveryCharge = () => {
+        if (selectedAddressIndex === null || !savedAddresses[selectedAddressIndex]) return 0;
+        
+        const selectedAddress = savedAddresses[selectedAddressIndex];
+        const stateKey = selectedAddress.state.replace(/\s+/g, ''); // Remove spaces to match Firestore keys
+        
+        if (deliveryChargesMap[stateKey]) {
+            return Number(deliveryChargesMap[stateKey]);
+        }
+        
+        return 100; // Default delivery charge if state not found
+    };
+
+    const deliveryCharge = getDeliveryCharge();
+    const finalAmount = cartTotal + deliveryCharge - couponDiscount;
 
     // Load coupon from local storage
     useEffect(() => {
@@ -86,8 +107,6 @@ const CheckoutAddress = () => {
         }
     }, [cartTotal]);
 
-    const finalAmount = cartTotal - couponDiscount;
-
     // --- Effects ---
     // Sync selection to session storage so header navigation works
     useEffect(() => {
@@ -98,6 +117,7 @@ const CheckoutAddress = () => {
              const pricingDetails = {
                 cartTotal,
                 couponDiscount,
+                deliveryCharge,
                 finalAmount
             };
             sessionStorage.setItem("checkoutPricing", JSON.stringify(pricingDetails));
@@ -106,7 +126,7 @@ const CheckoutAddress = () => {
             sessionStorage.removeItem("checkoutAddress");
             sessionStorage.removeItem("checkoutPricing");
         }
-    }, [selectedAddressIndex, savedAddresses, cartTotal, couponDiscount, finalAmount]);
+    }, [selectedAddressIndex, savedAddresses, cartTotal, couponDiscount, finalAmount, deliveryCharge]);
 
     useEffect(() => {
         const auth = getAuth();
@@ -116,7 +136,26 @@ const CheckoutAddress = () => {
         }
 
         fetchAddresses();
+        fetchDeliveryCharges();
     }, [user, navigate]);
+
+    const fetchDeliveryCharges = async () => {
+        setIsDeliveryLoading(true);
+        try {
+            const docRef = doc(db, "deliveryCharges", "amount");
+            const docSnap = await getDoc(docRef);
+            
+            if (docSnap.exists()) {
+                setDeliveryChargesMap(docSnap.data());
+            } else {
+                console.log("No delivery charges document found!");
+            }
+        } catch (error) {
+            console.error("Error fetching delivery charges:", error);
+        } finally {
+            setIsDeliveryLoading(false);
+        }
+    };
 
     const fetchAddresses = async () => {
         if (!user?.email) return;
@@ -253,10 +292,11 @@ const CheckoutAddress = () => {
         const selectedAddress = savedAddresses[selectedAddressIndex];
         sessionStorage.setItem("checkoutAddress", JSON.stringify(selectedAddress));
         
-        // Save pricing details including coupon
+        // Save pricing details including coupon and delivery
         const pricingDetails = {
             cartTotal,
             couponDiscount,
+            deliveryCharge,
             finalAmount
         };
         sessionStorage.setItem("checkoutPricing", JSON.stringify(pricingDetails));
@@ -427,18 +467,40 @@ const CheckoutAddress = () => {
                             <span>Total MRP</span>
                             <span>₹{cartTotal.toFixed(2)}</span>
                         </div>
+
+                        {couponDiscount > 0 && (
+                            <div className="price-row discount">
+                                <span>Coupon Discount</span>
+                                <span className="green">-₹{couponDiscount.toFixed(2)}</span>
+                            </div>
+                        )}
+
+                        <div className="price-row">
+                            <span>Delivery Charges</span>
+                            {isDeliveryLoading ? (
+                                <span className="skeleton-price"></span>
+                            ) : (
+                                <span className={deliveryCharge === 0 ? "free" : ""}>
+                                    {deliveryCharge === 0 ? "FREE" : `₹${deliveryCharge}`}
+                                </span>
+                            )}
+                        </div>
                         
                         <div className="price-divider"></div>
                         <div className="price-row total">
                             <span>Total Amount</span>
-                            <span>₹{finalAmount.toFixed(2)}</span>
+                            {isDeliveryLoading ? (
+                                <span className="skeleton-price"></span>
+                            ) : (
+                                <span>₹{finalAmount.toFixed(2)}</span>
+                            )}
                         </div>
 
                         <button 
-                            className={`btn-continue-blob ${(!savedAddresses.length || selectedAddressIndex === null) ? 'disabled' : ''}`}
+                            className={`btn-continue-blob ${(!savedAddresses.length || selectedAddressIndex === null || isDeliveryLoading) ? 'disabled' : ''}`}
                             onClick={handleContinue}
-                            disabled={!savedAddresses.length || selectedAddressIndex === null}
-                            style={{ opacity: (!savedAddresses.length || selectedAddressIndex === null) ? 0.5 : 1, cursor: (!savedAddresses.length || selectedAddressIndex === null) ? 'not-allowed' : 'pointer' }}
+                            disabled={!savedAddresses.length || selectedAddressIndex === null || isDeliveryLoading}
+                            style={{ opacity: (!savedAddresses.length || selectedAddressIndex === null || isDeliveryLoading) ? 0.5 : 1, cursor: (!savedAddresses.length || selectedAddressIndex === null || isDeliveryLoading) ? 'not-allowed' : 'pointer' }}
                         >
                             CONTINUE
                         </button>
