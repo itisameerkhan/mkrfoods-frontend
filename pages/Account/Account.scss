@@ -201,7 +201,7 @@ $border-color: #e5e7eb;
       width: 100%;
       flex: 1;
       align-items: center; 
-      padding-top: 8rem; // Clears fixed header (70px) + spacing
+      padding-top: 1rem; // Header is sticky now
     }
   }
 }

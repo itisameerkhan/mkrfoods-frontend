@@ -8,6 +8,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 
+
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
@@ -110,30 +111,33 @@ const Header = () => {
     </Box>
   );
 
+
   return (
-    <div className="header">
-      {/* <div className="header-temp"></div> */}
-      <div className="header-main">
-        <div className="header-main-1">
-          <div className="hamburger-menu" onClick={toggleDrawer(true)}>
-            <i className="fa-solid fa-bars"></i>
+    <div className="header-container">
+      <div className="header">
+        {/* <div className="header-temp"></div> */}
+        <div className="header-main">
+          <div className="header-main-1">
+            <div className="hamburger-menu" onClick={toggleDrawer(true)}>
+              <i className="fa-solid fa-bars"></i>
+            </div>
+            <Link to={"/"}>
+              <p>MKR Foods</p>
+            </Link>
           </div>
-          <Link to={"/"}>
-            <p>MKR Foods</p>
-          </Link>
+          <div className="header-main-2">
+            <NavLink to={"/cart"}>
+              <i className="fa-solid fa-cart-shopping"></i>
+            </NavLink>
+            <NavLink to={"/profile"}>
+              <i className="fa-solid fa-user"></i>
+            </NavLink>
+          </div>
         </div>
-        <div className="header-main-2">
-          <NavLink to={"/cart"}>
-            <i className="fa-solid fa-cart-shopping"></i>
-          </NavLink>
-          <NavLink to={"/profile"}>
-            <i className="fa-solid fa-user"></i>
-          </NavLink>
-        </div>
+        <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+          {list()}
+        </Drawer>
       </div>
-      <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-        {list()}
-      </Drawer>
     </div>
   );
 };

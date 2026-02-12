@@ -1,4 +1,5 @@
 import Hero from "../../components/Hero/Hero";
+import AnnouncementBar from "../../components/AnnouncementBar/AnnouncementBar";
 import HomeCategory from "../../components/HomeCategory/HomeCategory";
 import LatestProducts from "../../components/LatestProducts/LatestProducts";
 import Description from "../../components/Description/Description";
@@ -10,6 +11,7 @@ const Home = () => {
   return (
     <div className="home">
       <Hero />
+      <AnnouncementBar />
       <HomeCategory />
       <LatestProducts />
       <Description />

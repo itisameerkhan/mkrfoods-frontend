@@ -67,6 +67,8 @@ const CheckoutAddress = () => {
 
     // Calculate Delivery Charge
     const getDeliveryCharge = () => {
+        if (cartTotal > 1000) return 0;
+
         if (selectedAddressIndex === null || !savedAddresses[selectedAddressIndex]) return 0;
         
         const selectedAddress = savedAddresses[selectedAddressIndex];
