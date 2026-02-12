@@ -326,10 +326,7 @@ const Cart = () => {
                 </div>
               )}
 
-              <div className="summary-row">
-                <span className="label">Shipping</span>
-                <span className="amount shipping-free">₹ Free shipping</span>
-              </div>
+
 
               <div className="summary-row total-row">
                 <span className="label">Total:</span>
@@ -357,12 +354,9 @@ const Cart = () => {
                   </div>
                 )}
 
-                <div className="summary-row">
-                  <span className="label">Shipping</span>
-                  <span className="amount shipping-free">₹ Free shipping</span>
-                </div>
 
-                <div className="summary-divider"></div>
+
+
 
                 <div className="summary-row total-row">
                   <span className="label">Total:</span>
