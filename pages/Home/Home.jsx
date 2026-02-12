@@ -10,8 +10,8 @@ import Comparison from "../../components/Comparison/Comparison";
 const Home = () => {
   return (
     <div className="home">
-      <Hero />
       <AnnouncementBar />
+      <Hero />
       <HomeCategory />
       <LatestProducts />
       <Description />
