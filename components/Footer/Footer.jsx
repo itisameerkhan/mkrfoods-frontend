@@ -59,6 +59,15 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
+
+            <div className="footer-marquee">
+                <div className="marquee-content">
+                    <span>Designed & Developed by <strong>Ameer Khan</strong> • Contact for Web Designs & Server Management: <strong>itisameerkhan@gmail.com</strong></span>
+                    <span>Designed & Developed by <strong>Ameer Khan</strong> • Contact for Web Designs & Server Management: <strong>itisameerkhan@gmail.com</strong></span>
+                    <span>Designed & Developed by <strong>Ameer Khan</strong> • Contact for Web Designs & Server Management: <strong>itisameerkhan@gmail.com</strong></span>
+                    <span>Designed & Developed by <strong>Ameer Khan</strong> • Contact for Web Designs & Server Management: <strong>itisameerkhan@gmail.com</strong></span>
+                </div>
+            </div>
         </footer>
     );
 };
