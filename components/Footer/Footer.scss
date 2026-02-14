@@ -109,15 +109,15 @@
 
 
 .footer-marquee {
-  background: #231e1c; // Slightly darker than footer for distinction but blending well
-  color: #8b8080; // Muted text for subtle look
-  padding: 12px 0;
+  background: #000000;
+  color: #9ca3af;
+  padding: 14px 0;
   overflow: hidden;
   white-space: nowrap;
   font-family: 'Poppins', sans-serif;
   font-size: 0.85rem;
   letter-spacing: 0.5px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   
   .marquee-content {
     display: inline-block;

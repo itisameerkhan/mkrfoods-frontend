@@ -235,12 +235,14 @@
   }
 
   .product-details {
-    padding: 9px;
-    gap: 5px;
+    padding: 6px;
+    gap: 4px;
   }
 
   .product-name {
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 2;
+    font-size: 0.75rem; /* Slightly smaller to prevent overflow */
+    min-height: 2.4em; /* Reserve space for 2 lines */
   }
 
   .sizes-grid {
@@ -273,8 +275,10 @@
   }
 
   .stock-badge {
-    font-size: 0.65rem;
-    padding: 2px 5px;
+    font-size: 0.6rem;
+    padding: 2px 4px;
+    white-space: normal; /* Allow wrapping if needed */
+    text-align: center;
   }
 }
 

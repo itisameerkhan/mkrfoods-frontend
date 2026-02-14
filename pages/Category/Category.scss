@@ -215,7 +215,9 @@
 /* Mobile tweaks */
 @media (max-width: 600px) {
   .category-page {
-    padding: 16px;
+    padding: 8px; /* Reduced to ensure max width for grid */
+    width: 100%;
+    overflow-x: hidden; /* Force containment */
   }
 
   .category-header h1 {
@@ -223,8 +225,8 @@
   }
 
   .products-grid {
-    gap: 12px;
-    grid-template-columns: repeat(2, 1fr);
+    gap: 8px; /* Tighter gap for mobile 2-col layout */
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* Force columns to shrink below content width */
   }
 
   .skeleton-card {
@@ -237,13 +239,17 @@
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .search-box {
     width: 100%;
+    max-width: 100%;
     padding: 12px 14px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    box-sizing: border-box;
   }
 
   .filter-input {
@@ -254,6 +260,7 @@
 
   .sort-group {
     width: 100%;
+    max-width: 100%;
     display: flex;
     overflow-x: auto;
     white-space: nowrap;
