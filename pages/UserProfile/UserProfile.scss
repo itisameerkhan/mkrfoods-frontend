@@ -13,12 +13,13 @@
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   display: flex;
-  min-height: 60vh; // Reduced from 100vh to avoid large gap above footer
+  min-height: 60vh;
   background: var(--bg-light);
   font-family: "Poppins", sans-serif;
-  // padding-top: 70px; // Removed due to sticky header
+  margin-top: 0;
+  padding-top: 0;
 
-  // Hide mobile elements by default (Desktop view)
+  // Hide mobile elements by default
   .mobile-only-wrapper,
   .content .mobile-content-header {
     display: none;
@@ -29,13 +30,15 @@
     width: 260px;
     background: var(--bg-dark);
     color: #fff;
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem; // Restore padding for internal spacing, background covers it
+    margin-top: 0;
+    
     display: flex;
     flex-direction: column;
-    position: sticky; // Make it sticky
-    top: 90px; // Adjusted for better alignment
-    height: calc(100vh - 90px); 
-    overflow-y: auto; // Allow scrolling within sidebar if needed
+    position: sticky;
+    top: 70px; // Standard header height is ~70px
+    height: calc(100vh - 70px); 
+    overflow-y: auto;
 
     .logo {
       font-size: 1.5rem;
@@ -104,7 +107,7 @@
   /* MAIN CONTENT */
   .content {
     flex: 1;
-    padding: 2rem 2.5rem; // Reduced top padding from 3rem
+    padding: 1rem 2.5rem; // Reduced top padding
     overflow-y: auto;
 
     .card {
@@ -1095,10 +1098,11 @@
 /* RESPONSIVE DESIGN - MOBILE REDESIGN (VERTICAL STACK) */
 @media (max-width: 992px) {
   .profile-dashboard {
-    padding-top: 60px;
+    padding-top: 1.5rem; // Matches global mobile padding
     flex-direction: column;
-    height: calc(100vh - 60px); // Full height for scrolling
-    overflow: hidden; // Manage scroll internally
+    height: auto; // Allow growing
+    min-height: 60vh; // Minimum height
+    overflow: visible; // Let page scroll
 
     // Hide Desktop Sidebar
     .sidebar.desktop-sidebar {
@@ -1107,13 +1111,13 @@
 
     // Toggle Views
     &.viewing-menu {
-      .mobile-only-wrapper { display: block; height: 100%; overflow-y: auto; }
+      .mobile-only-wrapper { display: block; }
       .content { display: none !important; }
     }
 
     &.viewing-content {
       .mobile-only-wrapper { display: none !important; }
-      .content { display: block; height: 100%; overflow-y: auto; }
+      .content { display: block; height: auto; overflow: visible; }
     }
 
     // Mobile Menu Styles
@@ -1284,7 +1288,7 @@
          }
          
          // Fix Address Grid for mobile
-         .addresses-list {
+         .addresses-grid {
             grid-template-columns: 1fr;
          }
       }
