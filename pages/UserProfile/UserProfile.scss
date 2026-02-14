@@ -13,7 +13,8 @@
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   display: flex;
-  min-height: 60vh;
+  // min-height: 60vh; // Removed, now using flex-grow
+  flex-grow: 1; // Fill available space between header and footer
   background: var(--bg-light);
   font-family: "Poppins", sans-serif;
   margin-top: 0;
@@ -30,14 +31,16 @@
     width: 260px;
     background: var(--bg-dark);
     color: #fff;
-    padding: 2rem 1.5rem; // Restore padding for internal spacing, background covers it
+    padding: 2rem 1.5rem; 
     margin-top: 0;
     
     display: flex;
     flex-direction: column;
     position: sticky;
-    top: 70px; // Standard header height is ~70px
-    height: calc(100vh - 70px); 
+    top: 70px;
+    // height: calc(100vh - 70px); // Changed to min-height to allow stretching
+    min-height: calc(100vh - 70px);
+    height: auto; // Allow growing if content is longer
     overflow-y: auto;
 
     .logo {
