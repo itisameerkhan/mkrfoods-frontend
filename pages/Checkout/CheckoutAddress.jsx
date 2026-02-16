@@ -74,11 +74,11 @@ const CheckoutAddress = () => {
         const selectedAddress = savedAddresses[selectedAddressIndex];
         const stateKey = selectedAddress.state.replace(/\s+/g, ''); // Remove spaces to match Firestore keys
         
-        if (deliveryChargesMap[stateKey]) {
+        if (deliveryChargesMap[stateKey] !== undefined) {
             return Number(deliveryChargesMap[stateKey]);
         }
         
-        return 100; // Default delivery charge if state not found
+        return deliveryChargesMap.others !== undefined ? Number(deliveryChargesMap.others) : 100; // Default to 'others' or 100 if fetch fails
     };
 
     const deliveryCharge = getDeliveryCharge();

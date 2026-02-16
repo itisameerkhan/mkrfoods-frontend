@@ -1,8 +1,9 @@
 .checkout-payment-page {
-    padding: 2rem;
+    padding: 1rem;
+    padding-top: 0;
     max-width: 1200px;
     margin: 0 auto;
-    margin-top: 80px; // Spacing for header
+    // margin-top: 80px; // Removed spacing as header is sticky
     min-height: 80vh;
     background-color: #f4f6f8; // Light background
 
