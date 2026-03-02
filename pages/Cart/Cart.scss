@@ -1,10 +1,8 @@
 // Maximalist Empty Cart State
 .cart-empty-maximalist {
-  position: fixed;
-  top: 70px;
-  left: 0;
+  position: relative;
   width: 100%;
-  height: calc(100vh - 70px);
+  min-height: calc(100vh - 70px);
   background: url("../../src/assets/indian_snacks_bg.png"); 
   background-size: 400px; /* Adjust based on pattern size */
   background-repeat: repeat;
@@ -13,7 +11,7 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  z-index: 10;
+  z-index: 1;
 
 
 
@@ -92,6 +90,32 @@
 
           i {
               transition: transform 0.3s ease;
+          }
+      }
+
+      @media (max-width: 600px) {
+          padding: 2.5rem 1.5rem;
+          width: 95%;
+
+          .empty-cart-icon {
+              width: 60px;
+              height: 60px;
+              font-size: 1.8rem;
+              margin-bottom: 1.5rem;
+          }
+
+          .empty-title {
+              font-size: 1.6rem;
+          }
+
+          .empty-desc {
+              font-size: 0.95rem;
+              margin-bottom: 1.5rem;
+          }
+
+          .btn-browse-menu {
+              padding: 0.8rem 2rem;
+              font-size: 0.95rem;
           }
       }
   }

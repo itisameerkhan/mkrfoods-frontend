@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Header.scss";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import Drawer from "@mui/material/Drawer";
@@ -12,6 +12,20 @@ import ListItemText from "@mui/material/ListItemText";
 const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (drawerOpen) {
+      document.documentElement.style.setProperty("overflow", "hidden", "important");
+      document.body.style.setProperty("overflow", "hidden", "important");
+    } else {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    };
+  }, [drawerOpen]);
 
   const toggleDrawer = (open) => (event) => {
     if (
