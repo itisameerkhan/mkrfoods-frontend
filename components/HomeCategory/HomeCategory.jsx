@@ -15,28 +15,28 @@ const HomeCategory = () => {
       <div className="hc-main">
         <Link to={"/category/pickles"} className="cat-item">
           <img
-            src="https://res.cloudinary.com/dnyehgbeu/image/upload/v1769853068/mkrfoods/Gemini_Generated_Image_yfigauyfigauyfig_qlbfrz.png"
+            src="https://ik.imagekit.io/itisameerkhan/Gemini_Generated_Image_yfigauyfigauyfig_qlbfrz.png?updatedAt=1772546391389"
             alt="Pickles"
           />
           <p className="cat-label">PICKLES</p>
         </Link>
         <Link to={"/category/sweets"} className="cat-item">
           <img
-            src="https://res.cloudinary.com/dnyehgbeu/image/upload/v1769853811/mkrfoods/Gemini_Generated_Image_t0v7npt0v7npt0v7_wbrp88.png"
+            src="https://ik.imagekit.io/itisameerkhan/Gemini_Generated_Image_t0v7npt0v7npt0v7_wbrp88.png?updatedAt=1772546391942"
             alt="Sweets"
           />
           <p className="cat-label">SWEETS</p>
         </Link>
         <Link to={"/category/snacks"} className="cat-item">
           <img
-            src="https://res.cloudinary.com/dnyehgbeu/image/upload/v1769853811/mkrfoods/Gemini_Generated_Image_tv12kktv12kktv12_xlvx2c.png"
+            src="https://ik.imagekit.io/itisameerkhan/Gemini_Generated_Image_tv12kktv12kktv12_xlvx2c.png?updatedAt=1772546393097"
             alt="Snacks"
           />
           <p className="cat-label">SNACKS</p>
         </Link>
         <Link to={"/category/chillies"} className="cat-item">
           <img
-            src="https://res.cloudinary.com/dnyehgbeu/image/upload/v1769853820/mkrfoods/Gemini_Generated_Image_snfs7isnfs7isnfs_ygxzmn.png"
+            src="https://ik.imagekit.io/itisameerkhan/Gemini_Generated_Image_snfs7isnfs7isnfs_ygxzmn.png?updatedAt=1772546389068"
             alt="Chillies"
           />
           <p className="cat-label">CHILLIES</p>

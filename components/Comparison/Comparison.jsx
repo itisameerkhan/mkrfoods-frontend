@@ -17,7 +17,7 @@ const Comparison = () => {
       <div className="comparison-container">
         <div className="image-side">
           <img 
-            src="https://res.cloudinary.com/dnyehgbeu/image/upload/v1769411104/mkrfoods/Gemini_Generated_Image_2cplys2cplys2cpl_sjgloy.png" 
+            src="https://ik.imagekit.io/itisameerkhan/Gemini_Generated_Image_2cplys2cplys2cpl_sjgloy.png?updatedAt=1772546393193" 
             alt="MKR Foods Product" 
           />
         </div>

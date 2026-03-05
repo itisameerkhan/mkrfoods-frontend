@@ -8,7 +8,7 @@ import "./Hero.scss";
 const Hero = () => {
   const [bannerData, setBannerData] = useState({
     bannerMobile: "https://res.cloudinary.com/dnyehgbeu/image/upload/v1770049133/mkrfoods/Gemini_Generated_Image_hhjqhchhjqhchhjq_tu4iyt.png",
-    bannerPC: "https://res.cloudinary.com/dnyehgbeu/image/upload/v1768748388/mkrfoods/Gemini_Generated_Image_owid27owid27owid_na4giy.png",
+    bannerPC: "https://ik.imagekit.io/itisameerkhan/Gemini_Generated_Image_owid27owid27owid_na4giy.png?updatedAt=1772546393411",
     heading: (
       <>
         Taste of <span>Mother's Hands</span>
